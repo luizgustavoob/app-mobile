@@ -1,0 +1,134 @@
+package br.com.paraondeirapp.servidor.sincronizacao.impl;
+
+import android.app.ProgressDialog;
+import android.content.Context;
+
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import br.com.paraondeirapp.entity.RegistroDeletado;
+import br.com.paraondeirapp.interfaces.IConstantesDatabase;
+import br.com.paraondeirapp.interfaces.IConstantesServidorSinc;
+import br.com.paraondeirapp.persistence.dao.AvaliacaoDAO;
+import br.com.paraondeirapp.persistence.dao.CidadeDAO;
+import br.com.paraondeirapp.persistence.dao.EnderecoDAO;
+import br.com.paraondeirapp.persistence.dao.EstabelecimentoDAO;
+import br.com.paraondeirapp.persistence.dao.EstadoDAO;
+import br.com.paraondeirapp.servidor.sincronizacao.Sincronizacao;
+
+public class SincronizacaoRegistroDeletado extends Sincronizacao<RegistroDeletado> {
+
+    private Context ctx;
+
+    public SincronizacaoRegistroDeletado(Context ctx, ProgressDialog progressDialog, String jsonPost) {
+        super(progressDialog, 1, IConstantesServidorSinc.LINK_SINCRONIZACAO_REGISTROS_DELETADOS, jsonPost);
+        this.ctx = ctx;
+    }
+
+    @Override
+    protected boolean isPost() {
+        return true;
+    }
+
+    @Override
+    protected Type getCollectionType() {
+        return new TypeToken<Collection<RegistroDeletado>>() {}.getType();
+    }
+
+    @Override
+    protected void salvarSincronizacao(List<RegistroDeletado> lista) {
+        List<Integer> listaAvaliacao = new ArrayList<>();
+        List<Integer> listaEstab = new ArrayList<>();
+        List<Integer> listaEndereco = new ArrayList<>();
+        List<Integer> listaCidade = new ArrayList<>();
+        List<Integer> listaEstado = new ArrayList<>();
+
+        for (RegistroDeletado registro : lista) {
+            switch (registro.getNome_tabela().toUpperCase().trim()){
+                case IConstantesDatabase.TABELA_AVALIACAO:
+                    listaAvaliacao.add(registro.getChave_tabela());
+                    break;
+                case IConstantesDatabase.TABELA_ESTABELECIMENTO:
+                    listaEstab.add(registro.getChave_tabela());
+                    break;
+                case IConstantesDatabase.TABELA_ENDERECO:
+                    listaEndereco.add(registro.getChave_tabela());
+                    break;
+                case IConstantesDatabase.TABELA_CIDADE:
+                    listaCidade.add(registro.getChave_tabela());
+                    break;
+                case IConstantesDatabase.TABELA_ESTADO:
+                    listaEstado.add(registro.getChave_tabela());
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (lista.size() > 0) {
+            try {
+                deletarAvaliacoes(listaAvaliacao);
+                deletarEstabelecimentos(listaEstab);
+                deletarEnderecos(listaEndereco);
+                deletarCidades(listaCidade);
+                deletarEstados(listaEstado);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private void deletarAvaliacoes(List<Integer> chaves) {
+        try {
+            AvaliacaoDAO dao = new AvaliacaoDAO(ctx);
+            dao.deleteByListIdEstabelecimento(chaves);
+            dao.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void deletarEstabelecimentos(List<Integer> chaves) {
+        try {
+            EstabelecimentoDAO dao = new EstabelecimentoDAO(ctx);
+            dao.deleteByListIdEstabelecimento(chaves);
+            dao.close();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    private void deletarEnderecos(List<Integer> chaves) {
+        try {
+            EnderecoDAO dao = new EnderecoDAO(ctx);
+            dao.deleteByListIdEndereco(chaves);
+            dao.close();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    private void deletarCidades(List<Integer> chaves) {
+        try {
+            CidadeDAO dao = new CidadeDAO(ctx);
+            dao.deleteByListIdCidade(chaves);
+            dao.close();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    private void deletarEstados(List<Integer> chaves) {
+        try {
+            EstadoDAO dao = new EstadoDAO(ctx);
+            dao.deleteByListIdEstado(chaves);
+            dao.close();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+}

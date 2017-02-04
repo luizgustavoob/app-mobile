@@ -1,0 +1,13 @@
+package br.com.paraondeirapp.interfaces;
+
+public interface IConstantesServidorSinc {
+
+    static final int TIMEOUT = 30000;
+    static final String LINK_SINCRONIZACAO_REGISTROS_DELETADOS = "/web-service/deletado/sincronizaDeletado";
+    static final String LINK_SINCRONIZACAO_ESTADOS = "/web-service/estado/sincronizaEstado";
+    static final String LINK_SINCRONIZACAO_CIDADES = "/web-service/cidade/sincronizaCidade";
+    static final String LINK_SINCRONIZACAO_ENDERECOS = "/web-service/endereco/sincronizaEndereco";
+    static final String LINK_SINCRONIZACAO_ESTABELECIMENTOS = "/web-service/estab/sincronizaEstab";
+    static final String LINK_SINCRONIZACAO_AVALIACOES = "/web-service/avaliacao/sincronizaAvaliacao";
+    static final String LINK_SINCRONIZACAO_INDICACAO = "/web-service/indicacao/";
+}

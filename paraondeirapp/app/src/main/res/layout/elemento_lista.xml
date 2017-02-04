@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="4dp"
+    android:paddingBottom="2dp">
+
+    <LinearLayout
+        android:id="@+id/dados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_nome_estab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="16dp"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:textColor="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/tv_endereco_estab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:textColor="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/tv_cidade_estab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:textColor="@android:color/black"/>
+    </LinearLayout>
+</LinearLayout>

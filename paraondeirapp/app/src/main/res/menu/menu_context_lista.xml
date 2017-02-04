@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mn_banco_local"
+        android:title="@string/consultar_banco_local">
+    </item>
+
+    <item
+        android:id="@+id/mn_testar_conexao"
+        android:title="@string/testar_conexao">
+    </item>
+
+</menu>

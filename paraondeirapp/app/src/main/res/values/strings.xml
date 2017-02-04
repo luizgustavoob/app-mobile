@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Para Onde Ir?!</string>
+    <string name="gostei">Gostei! :)</string>
+    <string name="nao_gostei">Hmm.. Não gostei :(</string>
+    <string name="erro_ligacao">Não foi possível realizar a ligação.</string>
+    <string name="msg_sincronizacao">Sincronizando os registros com o servidor.</string>
+    <string name="titulo_sincronizacao">Sincronização</string>
+    <string name="avaliacao_salva_sucesso">Avaliação salva com sucesso!</string>
+    <string name="titulo_confirmacao">Confirmação</string>
+    <string name="sincronizacao_sucesso">Sincronização concluída com sucesso!</string>
+    <string name="erro_sincronizacao">Não foi possível sincronizar os registros.
+        Verifique sua conexão e tente novamente!</string>
+    <string name="titulo_erro_conexao">Problemas com a conexão</string>
+    <string name="erro_conexao">Ocorreram erros com a conexão.</string>
+    <string name="ok">OK</string>
+    <string name="conexao_ok">Conexão OK!</string>
+    <string name="conexao_erro">Ops.. Falha na conexão!</string>
+    <string name="testar_conexao">Testar conexão</string>
+    <string name="consultar_banco_local">Consultar banco local</string>
+    <string name="ligar_estabelecimento">Ligar para estabelecimento</string>
+    <string name="fim_sincronizacao">Sincronização automática concluída com sucesso.
+        Acesse a aplicação para consultar.</string>
+    <string name="aguarde">Aguarde...</string>
+    <string name="tracar_rota">Traçando a rota até $e</string>
+    <string name="informa_ip">Informe o IP/Porta para conexão com o servidor</string>
+    <string name="ops">Ops..</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="permissao">Permissão</string>
+    <string name="msg_permissao_conta">Precisamos da sua permissão para utilizar a sua conta
+        Google como identificação.
+        Fique tranquilo! Esta é apenas uma forma de lhe identificar como usuário do aplicativo,
+        já que não utilizamos cadastros de usuários.</string>
+    <string name="msg_encerra_app">Sem o seu usuário, o aplicativo não terá efetividade.
+        Encerraremos a execução!</string>
+    <string name="msg_permissao_ligar">Precisamos da sua permissão para realizar ligações para os
+        estabelecimentos desejados.</string>
+    <string name="msg_permissao_mapa">Precisamos da sua permissão para localizarmos sua posição no
+        mapa.</string>
+    <string name="titulo_mapa">Mapa</string>
+    <string name="msg_indicacao">Gerando indicações de visita.</string>
+</resources>
