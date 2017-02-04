@@ -2,10 +2,8 @@ package br.com.paraondeirapp;
 
 import android.app.Application;
 import android.content.Intent;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.paraondeirapp.entity.Estabelecimento;
 import br.com.paraondeirapp.entity.Usuario;
 import br.com.paraondeirapp.enumeration.TipoConsultaEstabelecimento;
