@@ -20,6 +20,7 @@ import br.com.paraondeirapp.servidor.sincronizacao.impl.SincronizacaoAvaliacao;
 import br.com.paraondeirapp.servidor.sincronizacao.impl.SincronizacaoCidade;
 import br.com.paraondeirapp.servidor.sincronizacao.impl.SincronizacaoEndereco;
 import br.com.paraondeirapp.servidor.sincronizacao.impl.SincronizacaoEstabelecimento;
+import br.com.paraondeirapp.servidor.sincronizacao.impl.SincronizacaoFirebase;
 import br.com.paraondeirapp.servidor.sincronizacao.impl.SincronizacaoRegistroDeletado;
 import br.com.paraondeirapp.servidor.sincronizacao.impl.SincronizacaoUF;
 import br.com.paraondeirapp.utils.SharedPreferencesUtils;
@@ -53,6 +54,15 @@ public class ListaSincronizacao {
                         new TypeToken<List<Avaliacao>>() {}.getType());
                 String jsonPost = element.getAsJsonArray().toString();
                 listaSincronizacao.add(new SincronizacaoAvaliacao(ctx, progressDialog, jsonPost));
+            }
+
+            SharedPreferencesUtils shared = new SharedPreferencesUtils();
+            if (shared.getTokenFirebase() != "") {
+                JSONStringer tokenFirebase = new JSONStringer();
+                tokenFirebase.object();
+                tokenFirebase.key("token").value(shared.getTokenFirebase());
+                tokenFirebase.endObject();
+                listaSincronizacao.add(new SincronizacaoFirebase(ctx, progressDialog, tokenFirebase.toString()));
             }
 
             for (Sincronizacao sinc : listaSincronizacao) {

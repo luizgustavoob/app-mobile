@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.service;
+package br.com.paraondeirapp.firebase;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,10 +8,10 @@ import java.util.Calendar;
 import java.util.List;
 
 import br.com.paraondeirapp.entity.Avaliacao;
+import br.com.paraondeirapp.servidor.sincronizacao.ListaSincronizacao;
 import br.com.paraondeirapp.utils.ConexaoUtils;
 import br.com.paraondeirapp.persistence.dao.AvaliacaoDAO;
 import br.com.paraondeirapp.interfaces.IObservador;
-import br.com.paraondeirapp.servidor.sincronizacao.ListaSincronizacao;
 
 public class SincronizacaoRunnable implements Runnable {
 

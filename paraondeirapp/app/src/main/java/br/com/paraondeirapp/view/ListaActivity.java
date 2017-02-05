@@ -12,11 +12,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.paraondeirapp.AppParaOndeIr;
 import br.com.paraondeirapp.R;
 import br.com.paraondeirapp.adapter.ListAdapter;

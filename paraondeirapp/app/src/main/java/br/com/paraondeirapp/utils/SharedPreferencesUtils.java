@@ -35,4 +35,14 @@ public class SharedPreferencesUtils {
         editor.putString(IConstantesPreferences.PREF_IP_SERVIDOR, ipServidor);
         editor.commit();
     }
+
+    public void setTokenFirebase(String token){
+        SharedPreferences.Editor editor = getEditor();
+        editor.putString(IConstantesPreferences.PREF_TOKEN_FIREBASE, token);
+        editor.commit();
+    }
+
+    public String getTokenFirebase(){
+        return getSharedPreferences().getString(IConstantesPreferences.PREF_TOKEN_FIREBASE, "");
+    }
 }

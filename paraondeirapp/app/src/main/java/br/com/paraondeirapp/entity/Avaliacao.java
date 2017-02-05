@@ -3,17 +3,19 @@ package br.com.paraondeirapp.entity;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-
 import java.io.Serializable;
-
 import br.com.paraondeirapp.enumeration.YesNo;
 import br.com.paraondeirapp.interfaces.IConstantesDatabase;
 
 @DatabaseTable(tableName = IConstantesDatabase.TABELA_AVALIACAO)
 public class Avaliacao implements Serializable {
 
-    @DatabaseField(columnName = IConstantesDatabase.AVALIACAO_ID, id = true,
-            canBeNull = false, dataType = DataType.INTEGER)
+    @DatabaseField(columnName = IConstantesDatabase.AVALIACAO_IDSEQ, id = true, canBeNull = false,
+            dataType = DataType.INTEGER)
+    private int idSeq;
+
+    @DatabaseField(columnName = IConstantesDatabase.AVALIACAO_ID, canBeNull = false,
+            dataType = DataType.INTEGER)
     private int idAvaliacao;
 
     @DatabaseField(columnName = IConstantesDatabase.AVALIACAO_ESTABELECIMENTO, canBeNull = false,

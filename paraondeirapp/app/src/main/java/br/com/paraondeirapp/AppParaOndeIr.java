@@ -1,15 +1,11 @@
 package br.com.paraondeirapp;
 
 import android.app.Application;
-import android.content.Intent;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.paraondeirapp.entity.Estabelecimento;
 import br.com.paraondeirapp.entity.Usuario;
 import br.com.paraondeirapp.enumeration.TipoConsultaEstabelecimento;
-import br.com.paraondeirapp.interfaces.IObservador;
-import br.com.paraondeirapp.observer.NotificacaoObservadora;
-import br.com.paraondeirapp.service.SincronizacaoService;
 
 public class AppParaOndeIr extends Application {
 
@@ -17,7 +13,6 @@ public class AppParaOndeIr extends Application {
     private static AppParaOndeIr uniqueInstance = null;
     private Usuario user;
     private List<Estabelecimento> estabelecimentos;
-    private List<IObservador> observadoresSincronizacao;
     private TipoConsultaEstabelecimento tipoConsulta;
 
     public static AppParaOndeIr getInstance(){
@@ -29,21 +24,14 @@ public class AppParaOndeIr extends Application {
 
     @Override
     public void onCreate() {
-        //File file = new File("/data/data/br.com.projetoparaondeir/databases/paraondeir_db");
-        //file.delete();
         estabelecimentos = new ArrayList<>();
-        observadoresSincronizacao = new ArrayList<>();
-        observadoresSincronizacao.add(new NotificacaoObservadora());
         uniqueInstance = this;
-        Intent i = new Intent(this, SincronizacaoService.class);
-        startService(i);
     }
 
     @Override
     public void onTerminate() {
         this.user = null;
         this.estabelecimentos = null;
-        this.observadoresSincronizacao = null;
         super.onTerminate();
     }
 
@@ -69,9 +57,5 @@ public class AppParaOndeIr extends Application {
 
     public void setTipoConsulta(TipoConsultaEstabelecimento tipoConsulta) {
         this.tipoConsulta = tipoConsulta;
-    }
-
-    public List<IObservador> getObservadoresSincronizacao() {
-        return this.observadoresSincronizacao;
     }
 }

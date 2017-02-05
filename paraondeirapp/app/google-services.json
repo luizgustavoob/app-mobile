@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "828242913418",
+    "firebase_url": "https://paraondeir-4fc38.firebaseio.com",
+    "project_id": "paraondeir-4fc38",
+    "storage_bucket": "paraondeir-4fc38.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:828242913418:android:711b5daa6f14d4ea",
+        "android_client_info": {
+          "package_name": "br.com.paraondeirapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "828242913418-7cuvldadh10uc29u9hfu5ko6v51d33mt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5dG4lx7IUrFPPoiyaz5f1CzL9EsYpBQc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

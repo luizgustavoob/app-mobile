@@ -10,4 +10,5 @@ public interface IConstantesServidorSinc {
     static final String LINK_SINCRONIZACAO_ESTABELECIMENTOS = "/web-service/estab/sincronizaEstab";
     static final String LINK_SINCRONIZACAO_AVALIACOES = "/web-service/avaliacao/sincronizaAvaliacao";
     static final String LINK_SINCRONIZACAO_INDICACAO = "/web-service/indicacao/";
+    static final String LINK_SINCRONIZACAO_FIREBASE = "/web-service/token/";
 }

@@ -1,10 +1,8 @@
 package br.com.paraondeirapp.persistence.dao;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.j256.ormlite.stmt.DeleteBuilder;
-import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
@@ -12,8 +10,6 @@ import java.util.List;
 
 import br.com.paraondeirapp.entity.Avaliacao;
 import br.com.paraondeirapp.entity.Estabelecimento;
-import br.com.paraondeirapp.entity.Usuario;
-import br.com.paraondeirapp.enumeration.YesNo;
 import br.com.paraondeirapp.interfaces.IConstantesDatabase;
 
 public class AvaliacaoDAO extends GenericDAO<Avaliacao> {
@@ -26,7 +22,7 @@ public class AvaliacaoDAO extends GenericDAO<Avaliacao> {
     public boolean save(Avaliacao obj) throws SQLException {
         Avaliacao avaliacaoTemp = findByIdEstabelecimentoAndUsuario(obj);
         if (avaliacaoTemp == null){
-            obj.setIdAvaliacao( getNextId(obj.getUsuario(), obj.getEstabelecimento()) );
+            obj.setIdAvaliacao( getProximoId(obj.getUsuario(), obj.getEstabelecimento()) );
             return super.insert(obj);
         } else {
             obj.setIdAvaliacao(avaliacaoTemp.getIdAvaliacao());
@@ -41,17 +37,18 @@ public class AvaliacaoDAO extends GenericDAO<Avaliacao> {
      * @return
      * @throws SQLException
      */
-    private int getNextId(String usuario, Estabelecimento estabelecimento) throws SQLException{
+    private int getProximoId(String usuario, Estabelecimento estabelecimento) throws SQLException{
+        int nextID = 1;
         try {
             QueryBuilder<Avaliacao, Integer> builder = getDao().queryBuilder();
-            builder.selectRaw("MAX(" + IConstantesDatabase.AVALIACAO_ID + ") + 1")
+            builder.selectRaw("MAX(" + IConstantesDatabase.AVALIACAO_IDSEQ + ")")
                     .where()
                     .eq(IConstantesDatabase.AVALIACAO_USER, usuario)
                     .and()
                     .eq(IConstantesDatabase.AVALIACAO_ESTABELECIMENTO, estabelecimento.getIdEstabelecimento());
 
             String[] resultado = getDao().queryRaw(builder.prepareStatementString()).getFirstResult();
-            return Integer.parseInt(resultado[0]);
+            return nextID;
         } catch (Exception ex){
             throw new SQLException("Erro consultando próximo ID. Detalhe: " + ex.getMessage());
         }

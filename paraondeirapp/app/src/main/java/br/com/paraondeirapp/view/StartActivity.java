@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-
 import br.com.paraondeirapp.AppParaOndeIr;
 import br.com.paraondeirapp.R;
 import br.com.paraondeirapp.entity.Usuario;
@@ -22,7 +21,7 @@ public class StartActivity extends Activity {
             DeviceUtils.solicitarPermissao(this, getString(R.string.msg_permissao_conta),
                     Manifest.permission.GET_ACCOUNTS);
         } else {
-            inicializa();
+            inicializar();
         }
     }
 
@@ -33,7 +32,7 @@ public class StartActivity extends Activity {
                 for (int i = 0; i < permissions.length; i++){
                     if (permissions[i].equalsIgnoreCase(Manifest.permission.GET_ACCOUNTS)){
                         if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                            inicializa();
+                            inicializar();
                         } else {
                             MensagemUtils mu = new MensagemUtils(){
                                 @Override
@@ -50,8 +49,8 @@ public class StartActivity extends Activity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    private void inicializa(){
-        setUserApplication();
+    private void inicializar(){
+        setUsuarioAplicacao();
         SharedPreferencesUtils shared = new SharedPreferencesUtils();
         try {
             Intent intent = new Intent(this, shared.isPrimeiroAcesso()
@@ -63,7 +62,7 @@ public class StartActivity extends Activity {
         finish();
     }
 
-    private void setUserApplication() {
+    private void setUsuarioAplicacao() {
         AppParaOndeIr app = AppParaOndeIr.getInstance();
         if (app.getUser() == null ){
             String conta = DeviceUtils.getContaDispositivo(this);

@@ -3,7 +3,6 @@ package br.com.paraondeirapp.observer;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-
 import br.com.paraondeirapp.AppParaOndeIr;
 import br.com.paraondeirapp.R;
 import br.com.paraondeirapp.interfaces.IConstantesNotificacao;
