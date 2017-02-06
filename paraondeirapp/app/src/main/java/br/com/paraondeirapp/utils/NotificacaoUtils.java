@@ -5,9 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.support.v4.app.NotificationCompat;
-
 import br.com.paraondeirapp.R;
-import br.com.paraondeirapp.interfaces.IConstantesNotificacao;
 
 public class NotificacaoUtils {
 
