@@ -2,9 +2,7 @@ package br.com.paraondeirapp.servidor.sincronizacao;
 
 import android.app.ProgressDialog;
 import android.util.Log;
-
 import com.google.gson.Gson;
-
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -32,14 +30,26 @@ public abstract class Sincronizacao<T> {
     protected abstract Type getCollectionType();
     protected abstract void salvarSincronizacao(List<T> lista);
 
-    private void atualizarProgressBar() {
+    protected int getEtapa(){
+        return this.etapa;
+    }
+
+    protected String getLinkSincronizacao(){
+        return this.linkSincronizacao;
+    }
+
+    protected String getJsonPost(){
+        return this.jsonPost;
+    }
+
+    protected void atualizarProgressBar() {
         if (progressDialog != null) { // Serviço background manda null.
-            progressDialog.setMax(6);
+            progressDialog.setMax(7);
             progressDialog.setProgress(etapa);
         }
     }
 
-    private List<T> post() throws Exception {
+    protected List<T> post() throws Exception {
         List<T> lista = null;
         try {
             InputStream stream = ConexaoUtils.post(linkSincronizacao, jsonPost);
@@ -53,7 +63,7 @@ public abstract class Sincronizacao<T> {
         return lista;
     }
 
-    private List<T> get() throws Exception {
+    protected List<T> get() throws Exception {
         List<T> lista = null;
         try {
             InputStream stream = ConexaoUtils.get(linkSincronizacao);
@@ -68,7 +78,6 @@ public abstract class Sincronizacao<T> {
     }
 
     public void sincronizar() throws Exception {
-        Log.i("Sincronizacao.sincronizar()", Calendar.getInstance() + " >> Sincronizando etapa " + etapa);
         atualizarProgressBar();
         try {
             if (isPost()) {
