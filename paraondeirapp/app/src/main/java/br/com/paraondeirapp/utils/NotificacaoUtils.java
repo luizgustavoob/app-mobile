@@ -16,7 +16,7 @@ public class NotificacaoUtils {
         builder.setTicker(ticker)
                 .setContentTitle(titulo)
                 .setContentText(texto)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_notificacao)
                 .setContentIntent(intent)
                 .setAutoCancel(false);
 
