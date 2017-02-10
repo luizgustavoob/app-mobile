@@ -18,8 +18,7 @@
     <string name="testar_conexao">Testar conexão</string>
     <string name="consultar_banco_local">Consultar banco local</string>
     <string name="ligar_estabelecimento">Ligar para estabelecimento</string>
-    <string name="fim_sincronizacao">Sincronização automática concluída com sucesso.
-        Acesse a aplicação para consultar.</string>
+    <string name="fim_sincronizacao">Sincronização concluída com sucesso.</string>
     <string name="aguarde">Aguarde...</string>
     <string name="tracar_rota">Traçando a rota até $e</string>
     <string name="informa_ip">Informe o IP/Porta para conexão com o servidor</string>
