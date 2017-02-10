@@ -1,6 +1,7 @@
 package br.com.paraondeirapp.view;
 
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,11 +22,13 @@ import br.com.paraondeirapp.adapter.ListAdapter;
 import br.com.paraondeirapp.entity.Avaliacao;
 import br.com.paraondeirapp.entity.Estabelecimento;
 import br.com.paraondeirapp.enumeration.TipoConsultaEstabelecimento;
+import br.com.paraondeirapp.interfaces.IConstantesNotificacao;
 import br.com.paraondeirapp.interfaces.IDelegateIndicacao;
 import br.com.paraondeirapp.servidor.indicacao.SolicitaIndicacao;
 import br.com.paraondeirapp.utils.ConexaoUtils;
 import br.com.paraondeirapp.utils.DeviceUtils;
 import br.com.paraondeirapp.utils.MensagemUtils;
+import br.com.paraondeirapp.utils.NotificacaoUtils;
 import br.com.paraondeirapp.utils.SharedPreferencesUtils;
 import br.com.paraondeirapp.interfaces.IDelegateSinc;
 import br.com.paraondeirapp.persistence.dao.AvaliacaoDAO;
@@ -161,6 +164,9 @@ public class ListaActivity extends AppCompatActivity implements
         app = AppParaOndeIr.getInstance();
         shared = new SharedPreferencesUtils();
         listaActivity = this;
+
+        NotificationManager manager = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
+        manager.cancel(IConstantesNotificacao.NOTIFICA_SINCRONIZACAO);
     }
 
     @Override
