@@ -2,14 +2,9 @@ package br.com.paraondeirapp.persistence.helper;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Environment;
-
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-
-import java.io.File;
-
 import br.com.paraondeirapp.entity.Avaliacao;
 import br.com.paraondeirapp.entity.Cidade;
 import br.com.paraondeirapp.entity.Endereco;
