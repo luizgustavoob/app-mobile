@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import br.com.paraondeirapp.entity.Avaliacao;
-import br.com.paraondeirapp.entity.Estabelecimento;
 import br.com.paraondeirapp.interfaces.IConstantesDatabase;
 
 public class AvaliacaoDAO extends GenericDAO<Avaliacao> {
@@ -22,7 +21,7 @@ public class AvaliacaoDAO extends GenericDAO<Avaliacao> {
     public boolean save(Avaliacao obj) throws SQLException {
         Avaliacao avaliacaoTemp = findByIdEstabelecimentoAndUsuario(obj);
         if (avaliacaoTemp == null){
-            obj.setIdAvaliacao( getProximoId(obj.getUsuario(), obj.getEstabelecimento()) );
+            obj.setIdAvaliacao( getProximoId(obj.getUsuario()) );
             return super.insert(obj);
         } else {
             obj.setIdAvaliacao(avaliacaoTemp.getIdAvaliacao());
@@ -37,18 +36,19 @@ public class AvaliacaoDAO extends GenericDAO<Avaliacao> {
      * @return
      * @throws SQLException
      */
-    private int getProximoId(String usuario, Estabelecimento estabelecimento) throws SQLException{
-        int nextID = 1;
+    private int getProximoId(String usuario) throws SQLException {
         try {
             QueryBuilder<Avaliacao, Integer> builder = getDao().queryBuilder();
-            builder.selectRaw("MAX(" + IConstantesDatabase.AVALIACAO_IDSEQ + ")")
+            builder.selectRaw("MAX(" + IConstantesDatabase.AVALIACAO_ID + ")")
                     .where()
-                    .eq(IConstantesDatabase.AVALIACAO_USER, usuario)
-                    .and()
-                    .eq(IConstantesDatabase.AVALIACAO_ESTABELECIMENTO, estabelecimento.getIdEstabelecimento());
+                    .eq(IConstantesDatabase.AVALIACAO_USER, usuario);
 
             String[] resultado = getDao().queryRaw(builder.prepareStatementString()).getFirstResult();
-            return nextID;
+            if (resultado[0] != null ){
+                return Integer.parseInt(resultado[0]) + 1;
+            } else {
+                return 1;
+            }
         } catch (Exception ex){
             throw new SQLException("Erro consultando próximo ID. Detalhe: " + ex.getMessage());
         }

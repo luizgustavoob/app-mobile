@@ -6,7 +6,7 @@ public interface IConstantesDatabase {
     static final int VERSION_DATABASE = 1;
 
     static final String TABELA_AVALIACAO = "AVALIACAO",
-            AVALIACAO_IDSEQ = "IDSEQ",
+            //AVALIACAO_IDSEQ = "IDSEQ",
             AVALIACAO_ID = "IDAVALIACAO",
             AVALIACAO_ESTABELECIMENTO = "IDESTABELECIMENTO",
             AVALIACAO_LIKE = "GOSTOU",

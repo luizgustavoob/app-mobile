@@ -10,11 +10,7 @@ import br.com.paraondeirapp.interfaces.IConstantesDatabase;
 @DatabaseTable(tableName = IConstantesDatabase.TABELA_AVALIACAO)
 public class Avaliacao implements Serializable {
 
-    @DatabaseField(columnName = IConstantesDatabase.AVALIACAO_IDSEQ, id = true, canBeNull = false,
-            dataType = DataType.INTEGER)
-    private int idSeq;
-
-    @DatabaseField(columnName = IConstantesDatabase.AVALIACAO_ID, canBeNull = false,
+    @DatabaseField(columnName = IConstantesDatabase.AVALIACAO_ID, id = true, canBeNull = false,
             dataType = DataType.INTEGER)
     private int idAvaliacao;
 
