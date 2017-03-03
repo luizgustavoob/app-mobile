@@ -45,4 +45,8 @@ public class SharedPreferencesUtils {
     public String getTokenFirebase(){
         return getSharedPreferences().getString(IConstantesPreferences.PREF_TOKEN_FIREBASE, "");
     }
+
+    public void deleteAll(){
+        getEditor().clear().commit();
+    }
 }
