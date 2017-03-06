@@ -11,6 +11,7 @@ import java.util.List;
 
 import br.com.paraondeirapp.entity.Avaliacao;
 import br.com.paraondeirapp.interfaces.IConstantesServidorSinc;
+import br.com.paraondeirapp.persistence.dao.AvaliacaoDAO;
 import br.com.paraondeirapp.servidor.sincronizacao.Sincronizacao;
 
 public class SincronizacaoAvaliacao extends Sincronizacao<Avaliacao> {
@@ -34,6 +35,14 @@ public class SincronizacaoAvaliacao extends Sincronizacao<Avaliacao> {
 
     @Override
     protected void salvarSincronizacao(List<Avaliacao> lista) {
-
+        try {
+            AvaliacaoDAO dao = new AvaliacaoDAO(ctx);
+            for (int i = 0; i < lista.size(); i++){
+                dao.delete(lista.get(i));
+            }
+            dao.close();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 }
