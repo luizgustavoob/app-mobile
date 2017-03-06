@@ -37,4 +37,7 @@
         mapa.</string>
     <string name="titulo_mapa">Mapa</string>
     <string name="msg_indicacao">Gerando indicações de visita.</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
+    <string name="title_activity_mapa">Mapa</string>
 </resources>
