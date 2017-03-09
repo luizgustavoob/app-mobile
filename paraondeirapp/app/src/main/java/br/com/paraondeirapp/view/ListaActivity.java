@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +24,13 @@ import br.com.paraondeirapp.adapter.ListAdapter;
 import br.com.paraondeirapp.entity.Avaliacao;
 import br.com.paraondeirapp.entity.Estabelecimento;
 import br.com.paraondeirapp.enumeration.TipoConsultaEstabelecimento;
+import br.com.paraondeirapp.interfaces.IConstantesDatabase;
 import br.com.paraondeirapp.interfaces.IConstantesNotificacao;
 import br.com.paraondeirapp.interfaces.IDelegateIndicacao;
 import br.com.paraondeirapp.servidor.indicacao.SolicitaIndicacao;
 import br.com.paraondeirapp.utils.ConexaoUtils;
 import br.com.paraondeirapp.utils.DeviceUtils;
 import br.com.paraondeirapp.utils.MensagemUtils;
-import br.com.paraondeirapp.utils.NotificacaoUtils;
 import br.com.paraondeirapp.utils.SharedPreferencesUtils;
 import br.com.paraondeirapp.interfaces.IDelegateSinc;
 import br.com.paraondeirapp.persistence.dao.AvaliacaoDAO;
@@ -57,10 +59,10 @@ public class ListaActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista);
         inicializarComponentes();
+
         if (shared.isPrimeiroAcesso()){
             if (shared.getIPServidor().isEmpty()){
                 MensagemUtils mu = new MensagemUtils(){
-                    // Sobreescrever métodos que terão interação do usuário.
                     @Override
                     protected void clicouSim() {
                         EditText temp = (EditText) customDialog.findViewById(R.id.et_valordigitado);
@@ -188,7 +190,6 @@ public class ListaActivity extends AppCompatActivity implements
 
         mu.gerarEExibirAlertDialogOK(this, getString(R.string.titulo_confirmacao),
                 getString(R.string.sincronizacao_sucesso), getString(R.string.ok));
-
     }
 
     @Override

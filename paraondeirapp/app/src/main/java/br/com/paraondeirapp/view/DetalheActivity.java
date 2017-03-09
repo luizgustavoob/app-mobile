@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.sql.SQLException;
 
@@ -66,6 +67,8 @@ public class DetalheActivity extends AppCompatActivity implements
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.mn_ver_no_mapa:
+                MensagemUtils.gerarEExibirToast(this, "Vai abrir o mapa");
         }
         return true;
     }

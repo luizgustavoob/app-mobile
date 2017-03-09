@@ -34,8 +34,7 @@ public class AppParaOndeIr extends Application {
         if (file != null) {
             file.delete();
         }
-        SharedPreferencesUtils shared = new SharedPreferencesUtils();
-        shared.deleteAll();*/
+        new SharedPreferencesUtils().deleteAll();*/
     }
 
     @Override
