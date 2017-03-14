@@ -7,6 +7,11 @@
     </item>
 
     <item
+        android:id="@+id/mn_lista_indicacao"
+        android:title="@string/msg_consulta_indicacoes">
+    </item>
+
+    <item
         android:id="@+id/mn_testar_conexao"
         android:title="@string/testar_conexao">
     </item>

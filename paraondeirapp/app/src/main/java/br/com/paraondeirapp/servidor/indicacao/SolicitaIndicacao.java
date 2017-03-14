@@ -47,7 +47,7 @@ public class SolicitaIndicacao {
             progressDialog = new ProgressDialog(ctx);
             progressDialog.setMessage(ctx.getString(R.string.msg_indicacao));
             progressDialog.setTitle(ctx.getString(R.string.app_name));
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progressDialog.setCancelable(false);
             progressDialog.show();
         }
@@ -74,11 +74,6 @@ public class SolicitaIndicacao {
         }
 
         @Override
-        protected void onProgressUpdate(String... progress) {
-            progressDialog.setProgress(Integer.parseInt(progress[0]));
-        }
-
-        @Override
         protected void onCancelled() {
             super.onCancelled();
             progressDialog.dismiss();
@@ -88,6 +83,7 @@ public class SolicitaIndicacao {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            progressDialog.dismiss();
             delegate.processarRetornoIndicacao(lista);
         }
     }

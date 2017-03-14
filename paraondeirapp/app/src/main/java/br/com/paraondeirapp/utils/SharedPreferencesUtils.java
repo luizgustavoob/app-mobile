@@ -47,6 +47,7 @@ public class SharedPreferencesUtils {
     }
 
     public void deleteAll(){
-        getEditor().clear().commit();
+        setIPServidor("");
+        setPrimeiroAcesso(true);
     }
 }

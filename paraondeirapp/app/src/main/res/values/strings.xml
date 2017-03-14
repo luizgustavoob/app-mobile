@@ -40,4 +40,5 @@
     <string name="sim">Sim</string>
     <string name="nao">Não</string>
     <string name="title_activity_mapa">Mapa</string>
+    <string name="msg_consulta_indicacoes">Consultar últimas indicações</string>
 </resources>

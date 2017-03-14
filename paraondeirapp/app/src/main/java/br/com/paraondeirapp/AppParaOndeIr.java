@@ -16,8 +16,9 @@ public class AppParaOndeIr extends Application {
     //Para manter em memória algumas informações úteis.
     private static AppParaOndeIr uniqueInstance = null;
     private Usuario user;
-    private List<Estabelecimento> estabelecimentos;
+    private List<Estabelecimento> estabelecimentos; //Mantém os últimos estabelecimentos retornados da solicitação de indicações.
     private TipoConsultaEstabelecimento tipoConsulta;
+    private int ultimaVisualizacao; //0 - BD local; 1 - Ultima indicação.
 
     public static AppParaOndeIr getInstance(){
         if (uniqueInstance == null)
@@ -29,6 +30,7 @@ public class AppParaOndeIr extends Application {
     @Override
     public void onCreate() {
         estabelecimentos = new ArrayList<>();
+        ultimaVisualizacao = 0;
         uniqueInstance = this;
         /*File file = getDatabasePath(IConstantesDatabase.NAME_DATABASE);
         if (file != null) {
@@ -66,5 +68,13 @@ public class AppParaOndeIr extends Application {
 
     public void setTipoConsulta(TipoConsultaEstabelecimento tipoConsulta) {
         this.tipoConsulta = tipoConsulta;
+    }
+
+    public int getUltimaVisualizacao(){
+        return ultimaVisualizacao;
+    }
+
+    public void setUltimaVisualizacao(int ultimaVisualizacao){
+        this.ultimaVisualizacao = ultimaVisualizacao;
     }
 }

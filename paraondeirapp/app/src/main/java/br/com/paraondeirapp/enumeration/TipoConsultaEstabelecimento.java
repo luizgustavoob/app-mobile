@@ -23,6 +23,14 @@ public enum TipoConsultaEstabelecimento {
         public void executar(ListaActivity activity) {
             activity.solicitarIndicacoes();
         }
+
+    },
+
+    ULTIMA_INDICACAO {
+        @Override
+        public void executar(ListaActivity activity) {
+            activity.consultarUltimasIndicacoes();
+        }
     };
 
     public abstract void executar(ListaActivity activity);

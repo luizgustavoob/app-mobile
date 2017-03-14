@@ -142,6 +142,9 @@ public class ListaActivity extends AppCompatActivity implements
             case R.id.mn_banco_local:
                 consultarNoBancoLocal();
                 break;
+            case R.id.mn_lista_indicacao:
+                consultarUltimasIndicacoes();
+                break;
             case R.id.mn_testar_conexao:
                 testarConexao();
                 break;
@@ -207,11 +210,28 @@ public class ListaActivity extends AppCompatActivity implements
     // IDelegateIndicacao
     @Override
     public void processarRetornoIndicacao(List<Estabelecimento> lista) {
+        List<Estabelecimento> listaFiltrada = new ArrayList<>();
+        try {
+            EstabelecimentoDAO estabelecimentoDAO = new EstabelecimentoDAO(this);
+            for (Estabelecimento estab : lista) {
+                if (estabelecimentoDAO.findByID(estab.getIdEstabelecimento()) != null){
+                    listaFiltrada.add(estab);
+                }
+            }
+            estabelecimentoDAO.close();
+        } catch (Exception ex){
+            MensagemUtils.gerarEExibirToast(this, "Erro na geração de indicações. Detalhe: " + ex.getMessage());
+        }
+
         lvEstabelecimentos.setAdapter(null);
+        app.setEstabelecimentos(listaFiltrada);
         adapter.setContext(this);
-        adapter.setEstabelecimentos(lista);
+        adapter.setEstabelecimentos(listaFiltrada);
         lvEstabelecimentos.setAdapter(adapter);
         lvEstabelecimentos.requestFocus();
+
+        app.setUltimaVisualizacao(1);
+
         DeviceUtils.esconderTeclado(this, etPesquisa);
     }
 
@@ -285,23 +305,22 @@ public class ListaActivity extends AppCompatActivity implements
     }
 
     public void consultarNoBancoLocal(){
-        if (app.getEstabelecimentos().size() <= 0) {
-            List<Estabelecimento> estabelecimentos = new ArrayList<>();
-            try {
-                EstabelecimentoDAO dao = new EstabelecimentoDAO(this);
-                estabelecimentos = dao.findAll();
-                dao.close();
-            } catch (Exception ex) {
-                estabelecimentos = null;
-            } finally {
-                app.setEstabelecimentos(estabelecimentos);
-            }
+        List<Estabelecimento> estabelecimentos = new ArrayList<>();
+        try {
+            EstabelecimentoDAO dao = new EstabelecimentoDAO(this);
+            estabelecimentos = dao.findAll();
+            dao.close();
+        } catch (Exception ex) {
+            estabelecimentos = null;
         }
         lvEstabelecimentos.setAdapter(null);
         adapter.setContext(this);
-        adapter.setEstabelecimentos(app.getEstabelecimentos());
+        adapter.setEstabelecimentos(estabelecimentos);
         lvEstabelecimentos.setAdapter(adapter);
         lvEstabelecimentos.requestFocus();
+
+        app.setUltimaVisualizacao(0);
+
         DeviceUtils.esconderTeclado(this, etPesquisa);
     }
 
@@ -332,7 +351,11 @@ public class ListaActivity extends AppCompatActivity implements
     }
 
     private void exibirTelaInicial(){
-        executar(TipoConsultaEstabelecimento.BDLOCAL);
+        if (app.getUltimaVisualizacao() == 1){
+            executar(TipoConsultaEstabelecimento.ULTIMA_INDICACAO);
+        } else {
+            executar(TipoConsultaEstabelecimento.BDLOCAL);
+        }
         this.etPesquisa.setText("");
         this.lvEstabelecimentos.requestFocus();
     }
@@ -369,5 +392,17 @@ public class ListaActivity extends AppCompatActivity implements
             mu.gerarEExibirAlertDialogOK(this, getString(R.string.titulo_erro_conexao),
                     getString(R.string.erro_conexao), getString(R.string.ok));
         }
+    }
+
+    public void consultarUltimasIndicacoes(){
+        lvEstabelecimentos.setAdapter(null);
+        adapter.setContext(this);
+        adapter.setEstabelecimentos(app.getEstabelecimentos());
+        lvEstabelecimentos.setAdapter(adapter);
+        lvEstabelecimentos.requestFocus();
+
+        app.setUltimaVisualizacao(1);
+
+        DeviceUtils.esconderTeclado(this, etPesquisa);
     }
 }
