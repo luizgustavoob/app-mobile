@@ -110,7 +110,7 @@ public class ListaActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.mn_sincronizar:
-                consultarNoServidor();
+                executar(TipoConsultaEstabelecimento.SINCRONIZACAO);
                 break;
             case R.id.mn_indicacao:
                 executar(TipoConsultaEstabelecimento.SOLICITACAO);
@@ -140,10 +140,10 @@ public class ListaActivity extends AppCompatActivity implements
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.mn_banco_local:
-                consultarNoBancoLocal();
+                executar(TipoConsultaEstabelecimento.BDLOCAL);
                 break;
             case R.id.mn_lista_indicacao:
-                consultarUltimasIndicacoes();
+                executar(TipoConsultaEstabelecimento.ULTIMA_INDICACAO);
                 break;
             case R.id.mn_testar_conexao:
                 testarConexao();
@@ -187,7 +187,7 @@ public class ListaActivity extends AppCompatActivity implements
         MensagemUtils mu = new MensagemUtils() {
             @Override
             protected void clicouSim() {
-                consultarNoBancoLocal();
+                executar(TipoConsultaEstabelecimento.BDLOCAL);
             }
         };
 
@@ -200,7 +200,7 @@ public class ListaActivity extends AppCompatActivity implements
         MensagemUtils mu = new MensagemUtils(){
             @Override
             protected void clicouSim() {
-                consultarNoBancoLocal();
+                executar(TipoConsultaEstabelecimento.BDLOCAL);
             }
         };
 
@@ -240,7 +240,7 @@ public class ListaActivity extends AppCompatActivity implements
         MensagemUtils mu = new MensagemUtils(){
             @Override
             protected void clicouSim(){
-                consultarNoBancoLocal();
+                executar(TipoConsultaEstabelecimento.BDLOCAL);
             }
         };
 
@@ -293,7 +293,7 @@ public class ListaActivity extends AppCompatActivity implements
             MensagemUtils mu = new MensagemUtils(){
                 @Override
                 protected void clicouSim() {
-                    consultarNoBancoLocal();
+                    executar(TipoConsultaEstabelecimento.BDLOCAL);
                 }
             };
 
@@ -333,7 +333,7 @@ public class ListaActivity extends AppCompatActivity implements
     }
 
     private void pesquisarEstabelecimentos() throws SQLException {
-        List<Estabelecimento> lista;
+        List<Estabelecimento> lista = null;
         try {
             EstabelecimentoDAO dao = new EstabelecimentoDAO(this);
             lista = dao.getEstabelecimentosByNomeOrEndereco(etPesquisa.getText().toString().trim());
@@ -343,9 +343,24 @@ public class ListaActivity extends AppCompatActivity implements
         }
 
         if (lista != null){
+            List<Estabelecimento> listaFinal = new ArrayList<>();
+
+            if (app.getUltimaVisualizacao() == 1){
+                for (Estabelecimento estab : lista) {
+                    for (int i = 0; i < app.getEstabelecimentos().size(); i++){
+                        Estabelecimento e = app.getEstabelecimentos().get(i);
+                        if (estab.equals(e)){
+                            listaFinal.add(estab);
+                        }
+                    }
+                }
+            } else {
+                listaFinal = lista;
+            }
+
             lvEstabelecimentos.setAdapter(null);
             adapter.setContext(this);
-            adapter.setEstabelecimentos(lista);
+            adapter.setEstabelecimentos(listaFinal);
             lvEstabelecimentos.setAdapter(adapter);
         }
     }
@@ -385,7 +400,7 @@ public class ListaActivity extends AppCompatActivity implements
             MensagemUtils mu = new MensagemUtils(){
                 @Override
                 protected void clicouSim() {
-                    consultarNoBancoLocal();
+                    executar(TipoConsultaEstabelecimento.BDLOCAL);
                 }
             };
 
