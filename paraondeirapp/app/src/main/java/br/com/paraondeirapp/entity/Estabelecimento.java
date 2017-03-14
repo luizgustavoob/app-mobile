@@ -75,4 +75,14 @@ public class Estabelecimento implements Serializable {
     public String toString() {
         return this.nome;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Estabelecimento){
+            Estabelecimento e = (Estabelecimento) o;
+            return e.getNome().trim().equalsIgnoreCase(this.getNome()) ? true : false;
+        } else {
+            return false;
+        }
+    }
 }
