@@ -8,14 +8,14 @@ import br.com.paraondeirapp.R;
 import br.com.paraondeirapp.interfaces.IConstantesNotificacao;
 import br.com.paraondeirapp.utils.NotificacaoUtils;
 import br.com.paraondeirapp.interfaces.IObservador;
-import br.com.paraondeirapp.view.ListaActivity;
+import br.com.paraondeirapp.view.StartActivity;
 
 public class NotificacaoObservadora implements IObservador {
 
     @Override
     public void notificarObservadores() {
         Context ctx = AppParaOndeIr.getInstance();
-        PendingIntent intent = PendingIntent.getActivity(ctx, 0, new Intent(ctx, ListaActivity.class), 0);
+        PendingIntent intent = PendingIntent.getActivity(ctx, 0, new Intent(ctx, StartActivity.class), 0);
         NotificacaoUtils.notificar(IConstantesNotificacao.NOTIFICA_SINCRONIZACAO, ctx, intent,
                 ctx.getString(R.string.app_name), ctx.getString(R.string.app_name),
                 ctx.getString(R.string.fim_sincronizacao));
