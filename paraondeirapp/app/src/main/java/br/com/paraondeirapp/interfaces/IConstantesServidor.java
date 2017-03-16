@@ -1,6 +1,6 @@
 package br.com.paraondeirapp.interfaces;
 
-public interface IConstantesServidorSinc {
+public interface IConstantesServidor {
 
     static final int TIMEOUT = 15000;
     static final String LINK_SINCRONIZACAO_REGISTROS_DELETADOS = "/web-service/deletado/sincronizaDeletado";

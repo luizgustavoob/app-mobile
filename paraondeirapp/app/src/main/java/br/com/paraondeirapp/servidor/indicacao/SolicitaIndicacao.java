@@ -18,7 +18,7 @@ import java.util.List;
 import br.com.paraondeirapp.R;
 import br.com.paraondeirapp.entity.Estabelecimento;
 import br.com.paraondeirapp.entity.Usuario;
-import br.com.paraondeirapp.interfaces.IConstantesServidorSinc;
+import br.com.paraondeirapp.interfaces.IConstantesServidor;
 import br.com.paraondeirapp.interfaces.IDelegateIndicacao;
 import br.com.paraondeirapp.utils.ConexaoUtils;
 
@@ -59,7 +59,7 @@ public class SolicitaIndicacao {
                 builder.object();
                 builder.key("usuario").value(user.getEmail());
                 builder.endObject();
-                InputStream stream = ConexaoUtils.post(IConstantesServidorSinc.LINK_SINCRONIZACAO_INDICACAO, builder.toString());
+                InputStream stream = ConexaoUtils.post(IConstantesServidor.LINK_SINCRONIZACAO_INDICACAO, builder.toString());
                 if (stream != null) {
                     Reader reader = new InputStreamReader(stream);
                     lista = (List<Estabelecimento>) new Gson().fromJson(reader, new TypeToken<Collection<Estabelecimento>>() {
@@ -71,13 +71,6 @@ public class SolicitaIndicacao {
                 cancel(true);
             }
             return null;
-        }
-
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
-            progressDialog.dismiss();
-            delegate.processarErroIndicacao(erro);
         }
 
         @Override
