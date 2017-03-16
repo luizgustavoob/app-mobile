@@ -10,14 +10,14 @@ import java.util.Calendar;
 import java.util.List;
 
 import br.com.paraondeirapp.entity.Firebase;
-import br.com.paraondeirapp.interfaces.IConstantesServidorSinc;
+import br.com.paraondeirapp.interfaces.IConstantesServidor;
 import br.com.paraondeirapp.servidor.sincronizacao.Sincronizacao;
 import br.com.paraondeirapp.utils.ConexaoUtils;
 
 public class SincronizacaoFirebase extends Sincronizacao<Firebase> {
 
     public SincronizacaoFirebase(Context ctx, ProgressDialog progressDialog, String json){
-        super(progressDialog, 7, IConstantesServidorSinc.LINK_SINCRONIZACAO_FIREBASE, json);
+        super(progressDialog, 7, IConstantesServidor.LINK_SINCRONIZACAO_FIREBASE, json);
     }
 
     @Override

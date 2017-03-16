@@ -7,7 +7,7 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 import br.com.paraondeirapp.entity.Cidade;
-import br.com.paraondeirapp.interfaces.IConstantesServidorSinc;
+import br.com.paraondeirapp.interfaces.IConstantesServidor;
 import br.com.paraondeirapp.persistence.dao.CidadeDAO;
 import br.com.paraondeirapp.servidor.sincronizacao.Sincronizacao;
 
@@ -16,7 +16,7 @@ public class SincronizacaoCidade extends Sincronizacao<Cidade> {
     private Context ctx;
 
     public SincronizacaoCidade(Context ctx, ProgressDialog progressDialog) {
-        super(progressDialog, 3, IConstantesServidorSinc.LINK_SINCRONIZACAO_CIDADES, "");
+        super(progressDialog, 3, IConstantesServidor.LINK_SINCRONIZACAO_CIDADES, "");
         this.ctx = ctx;
     }
 

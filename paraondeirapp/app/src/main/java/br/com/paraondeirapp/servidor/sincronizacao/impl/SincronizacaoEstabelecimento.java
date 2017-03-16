@@ -7,7 +7,7 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 import br.com.paraondeirapp.entity.Estabelecimento;
-import br.com.paraondeirapp.interfaces.IConstantesServidorSinc;
+import br.com.paraondeirapp.interfaces.IConstantesServidor;
 import br.com.paraondeirapp.persistence.dao.EstabelecimentoDAO;
 import br.com.paraondeirapp.servidor.sincronizacao.Sincronizacao;
 
@@ -16,7 +16,7 @@ public class SincronizacaoEstabelecimento extends Sincronizacao<Estabelecimento>
     private Context ctx;
 
     public SincronizacaoEstabelecimento(Context ctx, ProgressDialog progressDialog) {
-        super(progressDialog, 5, IConstantesServidorSinc.LINK_SINCRONIZACAO_ESTABELECIMENTOS, "");
+        super(progressDialog, 5, IConstantesServidor.LINK_SINCRONIZACAO_ESTABELECIMENTOS, "");
         this.ctx = ctx;
     }
 

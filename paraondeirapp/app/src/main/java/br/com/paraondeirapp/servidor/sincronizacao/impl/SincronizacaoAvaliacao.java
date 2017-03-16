@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 import br.com.paraondeirapp.entity.Avaliacao;
-import br.com.paraondeirapp.interfaces.IConstantesServidorSinc;
+import br.com.paraondeirapp.interfaces.IConstantesServidor;
 import br.com.paraondeirapp.persistence.dao.AvaliacaoDAO;
 import br.com.paraondeirapp.servidor.sincronizacao.Sincronizacao;
 
@@ -19,7 +19,7 @@ public class SincronizacaoAvaliacao extends Sincronizacao<Avaliacao> {
     private Context ctx;
 
     public SincronizacaoAvaliacao(Context ctx, ProgressDialog progressDialog, String jsonPost) {
-        super(progressDialog, 6, IConstantesServidorSinc.LINK_SINCRONIZACAO_AVALIACOES, jsonPost);
+        super(progressDialog, 6, IConstantesServidor.LINK_SINCRONIZACAO_AVALIACOES, jsonPost);
         this.ctx = ctx;
     }
 

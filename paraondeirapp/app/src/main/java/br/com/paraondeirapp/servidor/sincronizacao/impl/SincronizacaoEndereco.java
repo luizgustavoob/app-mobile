@@ -7,7 +7,7 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 import br.com.paraondeirapp.entity.Endereco;
-import br.com.paraondeirapp.interfaces.IConstantesServidorSinc;
+import br.com.paraondeirapp.interfaces.IConstantesServidor;
 import br.com.paraondeirapp.persistence.dao.EnderecoDAO;
 import br.com.paraondeirapp.servidor.sincronizacao.Sincronizacao;
 
@@ -16,7 +16,7 @@ public class SincronizacaoEndereco extends Sincronizacao<Endereco> {
     private Context ctx;
 
     public SincronizacaoEndereco(Context ctx, ProgressDialog progressDialog) {
-        super(progressDialog, 4, IConstantesServidorSinc.LINK_SINCRONIZACAO_ENDERECOS, "");
+        super(progressDialog, 4, IConstantesServidor.LINK_SINCRONIZACAO_ENDERECOS, "");
         this.ctx = ctx;
     }
 

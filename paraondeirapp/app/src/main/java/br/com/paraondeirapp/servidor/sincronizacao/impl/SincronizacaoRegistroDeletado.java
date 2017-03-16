@@ -12,7 +12,7 @@ import java.util.List;
 
 import br.com.paraondeirapp.entity.RegistroDeletado;
 import br.com.paraondeirapp.interfaces.IConstantesDatabase;
-import br.com.paraondeirapp.interfaces.IConstantesServidorSinc;
+import br.com.paraondeirapp.interfaces.IConstantesServidor;
 import br.com.paraondeirapp.persistence.dao.AvaliacaoDAO;
 import br.com.paraondeirapp.persistence.dao.CidadeDAO;
 import br.com.paraondeirapp.persistence.dao.EnderecoDAO;
@@ -25,7 +25,7 @@ public class SincronizacaoRegistroDeletado extends Sincronizacao<RegistroDeletad
     private Context ctx;
 
     public SincronizacaoRegistroDeletado(Context ctx, ProgressDialog progressDialog, String jsonPost) {
-        super(progressDialog, 1, IConstantesServidorSinc.LINK_SINCRONIZACAO_REGISTROS_DELETADOS, jsonPost);
+        super(progressDialog, 1, IConstantesServidor.LINK_SINCRONIZACAO_REGISTROS_DELETADOS, jsonPost);
         this.ctx = ctx;
     }
 

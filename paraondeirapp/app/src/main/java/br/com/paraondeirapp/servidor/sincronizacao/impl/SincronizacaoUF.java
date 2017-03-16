@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 import br.com.paraondeirapp.entity.Estado;
-import br.com.paraondeirapp.interfaces.IConstantesServidorSinc;
+import br.com.paraondeirapp.interfaces.IConstantesServidor;
 import br.com.paraondeirapp.persistence.dao.EstadoDAO;
 import br.com.paraondeirapp.servidor.sincronizacao.Sincronizacao;
 
@@ -19,7 +19,7 @@ public class SincronizacaoUF extends Sincronizacao<Estado> {
     private Context ctx;
 
     public SincronizacaoUF(Context ctx, ProgressDialog progressDialog) {
-        super(progressDialog, 2, IConstantesServidorSinc.LINK_SINCRONIZACAO_ESTADOS, "");
+        super(progressDialog, 2, IConstantesServidor.LINK_SINCRONIZACAO_ESTADOS, "");
         this.ctx = ctx;
     }
 
