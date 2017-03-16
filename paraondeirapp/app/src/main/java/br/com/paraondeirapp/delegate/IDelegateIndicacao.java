@@ -1,8 +1,8 @@
-package br.com.paraondeirapp.interfaces;
+package br.com.paraondeirapp.delegate;
 
 import java.util.List;
 
-import br.com.paraondeirapp.entity.Estabelecimento;
+import br.com.paraondeirapp.model.Estabelecimento;
 
 public interface IDelegateIndicacao {
 

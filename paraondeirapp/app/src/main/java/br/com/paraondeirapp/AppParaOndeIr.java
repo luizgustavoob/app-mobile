@@ -2,14 +2,11 @@ package br.com.paraondeirapp;
 
 import android.app.Application;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import br.com.paraondeirapp.entity.Estabelecimento;
-import br.com.paraondeirapp.entity.Usuario;
+import br.com.paraondeirapp.model.Estabelecimento;
+import br.com.paraondeirapp.model.Usuario;
 import br.com.paraondeirapp.enumeration.TipoConsultaEstabelecimento;
-import br.com.paraondeirapp.interfaces.IConstantesDatabase;
-import br.com.paraondeirapp.utils.SharedPreferencesUtils;
 
 public class AppParaOndeIr extends Application {
 

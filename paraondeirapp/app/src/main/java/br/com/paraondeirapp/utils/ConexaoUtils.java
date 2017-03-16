@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import br.com.paraondeirapp.interfaces.IConstantesServidor;
+import br.com.paraondeirapp.constantes.IConstantesServidor;
 
 public class ConexaoUtils {
 

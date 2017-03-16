@@ -6,9 +6,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
-import br.com.paraondeirapp.entity.Endereco;
-import br.com.paraondeirapp.interfaces.IConstantesServidor;
-import br.com.paraondeirapp.persistence.dao.EnderecoDAO;
+import br.com.paraondeirapp.model.Endereco;
+import br.com.paraondeirapp.constantes.IConstantesServidor;
+import br.com.paraondeirapp.repository.dao.EnderecoDAO;
 import br.com.paraondeirapp.servidor.sincronizacao.Sincronizacao;
 
 public class SincronizacaoEndereco extends Sincronizacao<Endereco> {

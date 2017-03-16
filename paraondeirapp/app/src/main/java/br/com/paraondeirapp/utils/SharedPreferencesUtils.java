@@ -3,7 +3,7 @@ package br.com.paraondeirapp.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import br.com.paraondeirapp.AppParaOndeIr;
-import br.com.paraondeirapp.interfaces.IConstantesPreferences;
+import br.com.paraondeirapp.constantes.IConstantesPreferences;
 
 public class SharedPreferencesUtils {
 

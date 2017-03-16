@@ -1,13 +1,13 @@
-package br.com.paraondeirapp.observer;
+package br.com.paraondeirapp.observer.impl;
 
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import br.com.paraondeirapp.AppParaOndeIr;
 import br.com.paraondeirapp.R;
-import br.com.paraondeirapp.interfaces.IConstantesNotificacao;
+import br.com.paraondeirapp.constantes.IConstantesNotificacao;
 import br.com.paraondeirapp.utils.NotificacaoUtils;
-import br.com.paraondeirapp.interfaces.IObservador;
+import br.com.paraondeirapp.observer.interfaces.IObservador;
 import br.com.paraondeirapp.view.StartActivity;
 
 public class NotificacaoObservadora implements IObservador {

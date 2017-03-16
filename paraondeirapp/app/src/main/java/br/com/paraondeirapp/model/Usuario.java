@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.entity;
+package br.com.paraondeirapp.model;
 
 import java.io.Serializable;
 

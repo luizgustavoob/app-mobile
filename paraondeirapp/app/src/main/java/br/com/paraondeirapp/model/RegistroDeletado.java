@@ -1,7 +1,6 @@
-package br.com.paraondeirapp.entity;
+package br.com.paraondeirapp.model;
 
 import java.io.Serializable;
-import java.util.Calendar;
 
 public class RegistroDeletado implements Serializable {
 

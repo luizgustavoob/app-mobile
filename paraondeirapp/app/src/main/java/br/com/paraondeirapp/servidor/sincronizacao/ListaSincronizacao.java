@@ -12,10 +12,9 @@ import org.json.JSONStringer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.LinkedList;
 import java.util.List;
 
-import br.com.paraondeirapp.entity.Avaliacao;
+import br.com.paraondeirapp.model.Avaliacao;
 import br.com.paraondeirapp.servidor.sincronizacao.impl.SincronizacaoAvaliacao;
 import br.com.paraondeirapp.servidor.sincronizacao.impl.SincronizacaoCidade;
 import br.com.paraondeirapp.servidor.sincronizacao.impl.SincronizacaoEndereco;

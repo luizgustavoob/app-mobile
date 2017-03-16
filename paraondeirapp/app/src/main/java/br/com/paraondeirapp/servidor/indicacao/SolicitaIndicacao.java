@@ -16,10 +16,10 @@ import java.util.Collection;
 import java.util.List;
 
 import br.com.paraondeirapp.R;
-import br.com.paraondeirapp.entity.Estabelecimento;
-import br.com.paraondeirapp.entity.Usuario;
-import br.com.paraondeirapp.interfaces.IConstantesServidor;
-import br.com.paraondeirapp.interfaces.IDelegateIndicacao;
+import br.com.paraondeirapp.model.Estabelecimento;
+import br.com.paraondeirapp.model.Usuario;
+import br.com.paraondeirapp.constantes.IConstantesServidor;
+import br.com.paraondeirapp.delegate.IDelegateIndicacao;
 import br.com.paraondeirapp.utils.ConexaoUtils;
 
 public class SolicitaIndicacao {

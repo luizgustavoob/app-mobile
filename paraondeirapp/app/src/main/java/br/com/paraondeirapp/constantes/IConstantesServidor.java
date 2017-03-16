@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.interfaces;
+package br.com.paraondeirapp.constantes;
 
 public interface IConstantesServidor {
 

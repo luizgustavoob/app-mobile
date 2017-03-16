@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.persistence.dao;
+package br.com.paraondeirapp.repository.dao;
 
 import android.content.Context;
 
@@ -8,9 +8,9 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import java.sql.SQLException;
 import java.util.List;
 
-import br.com.paraondeirapp.entity.Endereco;
-import br.com.paraondeirapp.entity.Estabelecimento;
-import br.com.paraondeirapp.interfaces.IConstantesDatabase;
+import br.com.paraondeirapp.model.Endereco;
+import br.com.paraondeirapp.model.Estabelecimento;
+import br.com.paraondeirapp.constantes.IConstantesDatabase;
 
 public class EstabelecimentoDAO extends GenericDAO<Estabelecimento> {
 

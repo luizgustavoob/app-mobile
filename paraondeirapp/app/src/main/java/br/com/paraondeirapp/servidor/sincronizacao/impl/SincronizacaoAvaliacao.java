@@ -9,9 +9,9 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 
-import br.com.paraondeirapp.entity.Avaliacao;
-import br.com.paraondeirapp.interfaces.IConstantesServidor;
-import br.com.paraondeirapp.persistence.dao.AvaliacaoDAO;
+import br.com.paraondeirapp.model.Avaliacao;
+import br.com.paraondeirapp.constantes.IConstantesServidor;
+import br.com.paraondeirapp.repository.dao.AvaliacaoDAO;
 import br.com.paraondeirapp.servidor.sincronizacao.Sincronizacao;
 
 public class SincronizacaoAvaliacao extends Sincronizacao<Avaliacao> {

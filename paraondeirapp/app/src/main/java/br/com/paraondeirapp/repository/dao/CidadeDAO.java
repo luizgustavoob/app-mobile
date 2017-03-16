@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.persistence.dao;
+package br.com.paraondeirapp.repository.dao;
 
 import android.content.Context;
 
@@ -7,8 +7,8 @@ import com.j256.ormlite.stmt.DeleteBuilder;
 import java.sql.SQLException;
 import java.util.List;
 
-import br.com.paraondeirapp.entity.Cidade;
-import br.com.paraondeirapp.interfaces.IConstantesDatabase;
+import br.com.paraondeirapp.model.Cidade;
+import br.com.paraondeirapp.constantes.IConstantesDatabase;
 
 public class CidadeDAO extends GenericDAO<Cidade> {
 

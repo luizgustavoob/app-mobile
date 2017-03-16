@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import br.com.paraondeirapp.R;
-import br.com.paraondeirapp.entity.Estabelecimento;
+import br.com.paraondeirapp.model.Estabelecimento;
 
 public class DetalheAdapter extends BaseAdapter {
 

@@ -7,7 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import br.com.paraondeirapp.AppParaOndeIr;
 import br.com.paraondeirapp.R;
-import br.com.paraondeirapp.entity.Usuario;
+import br.com.paraondeirapp.model.Usuario;
 import br.com.paraondeirapp.utils.DeviceUtils;
 import br.com.paraondeirapp.utils.MensagemUtils;
 import br.com.paraondeirapp.utils.SharedPreferencesUtils;

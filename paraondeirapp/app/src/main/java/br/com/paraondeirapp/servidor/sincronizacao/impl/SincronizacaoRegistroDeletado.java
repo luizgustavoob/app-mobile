@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import br.com.paraondeirapp.entity.RegistroDeletado;
-import br.com.paraondeirapp.interfaces.IConstantesDatabase;
-import br.com.paraondeirapp.interfaces.IConstantesServidor;
-import br.com.paraondeirapp.persistence.dao.AvaliacaoDAO;
-import br.com.paraondeirapp.persistence.dao.CidadeDAO;
-import br.com.paraondeirapp.persistence.dao.EnderecoDAO;
-import br.com.paraondeirapp.persistence.dao.EstabelecimentoDAO;
-import br.com.paraondeirapp.persistence.dao.EstadoDAO;
+import br.com.paraondeirapp.model.RegistroDeletado;
+import br.com.paraondeirapp.constantes.IConstantesDatabase;
+import br.com.paraondeirapp.constantes.IConstantesServidor;
+import br.com.paraondeirapp.repository.dao.AvaliacaoDAO;
+import br.com.paraondeirapp.repository.dao.CidadeDAO;
+import br.com.paraondeirapp.repository.dao.EnderecoDAO;
+import br.com.paraondeirapp.repository.dao.EstabelecimentoDAO;
+import br.com.paraondeirapp.repository.dao.EstadoDAO;
 import br.com.paraondeirapp.servidor.sincronizacao.Sincronizacao;
 
 public class SincronizacaoRegistroDeletado extends Sincronizacao<RegistroDeletado> {

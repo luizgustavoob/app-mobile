@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.entity;
+package br.com.paraondeirapp.model;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
@@ -6,7 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
 
-import br.com.paraondeirapp.interfaces.IConstantesDatabase;
+import br.com.paraondeirapp.constantes.IConstantesDatabase;
 
 @DatabaseTable(tableName = IConstantesDatabase.TABELA_ESTADO)
 public class Estado implements Serializable {

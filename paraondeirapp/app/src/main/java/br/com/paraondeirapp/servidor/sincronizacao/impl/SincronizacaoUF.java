@@ -9,9 +9,9 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 
-import br.com.paraondeirapp.entity.Estado;
-import br.com.paraondeirapp.interfaces.IConstantesServidor;
-import br.com.paraondeirapp.persistence.dao.EstadoDAO;
+import br.com.paraondeirapp.model.Estado;
+import br.com.paraondeirapp.constantes.IConstantesServidor;
+import br.com.paraondeirapp.repository.dao.EstadoDAO;
 import br.com.paraondeirapp.servidor.sincronizacao.Sincronizacao;
 
 public class SincronizacaoUF extends Sincronizacao<Estado> {

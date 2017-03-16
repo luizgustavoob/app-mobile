@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.persistence.dao;
+package br.com.paraondeirapp.repository.dao;
 
 import android.content.Context;
 
@@ -8,8 +8,8 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import java.sql.SQLException;
 import java.util.List;
 
-import br.com.paraondeirapp.entity.Avaliacao;
-import br.com.paraondeirapp.interfaces.IConstantesDatabase;
+import br.com.paraondeirapp.model.Avaliacao;
+import br.com.paraondeirapp.constantes.IConstantesDatabase;
 
 public class AvaliacaoDAO extends GenericDAO<Avaliacao> {
 

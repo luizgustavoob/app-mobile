@@ -9,9 +9,9 @@ import java.util.Calendar;
 import java.util.List;
 
 import br.com.paraondeirapp.R;
-import br.com.paraondeirapp.entity.Avaliacao;
+import br.com.paraondeirapp.model.Avaliacao;
 import br.com.paraondeirapp.utils.ConexaoUtils;
-import br.com.paraondeirapp.interfaces.IDelegateSinc;
+import br.com.paraondeirapp.delegate.IDelegateSinc;
 
 public class RealizaSincronizacao {
 

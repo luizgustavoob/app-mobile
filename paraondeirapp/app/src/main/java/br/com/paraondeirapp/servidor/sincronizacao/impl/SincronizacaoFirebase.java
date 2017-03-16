@@ -9,8 +9,8 @@ import java.lang.reflect.Type;
 import java.util.Calendar;
 import java.util.List;
 
-import br.com.paraondeirapp.entity.Firebase;
-import br.com.paraondeirapp.interfaces.IConstantesServidor;
+import br.com.paraondeirapp.model.Firebase;
+import br.com.paraondeirapp.constantes.IConstantesServidor;
 import br.com.paraondeirapp.servidor.sincronizacao.Sincronizacao;
 import br.com.paraondeirapp.utils.ConexaoUtils;
 

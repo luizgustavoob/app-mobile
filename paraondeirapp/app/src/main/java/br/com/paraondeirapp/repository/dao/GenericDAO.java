@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.persistence.dao;
+package br.com.paraondeirapp.repository.dao;
 
 import android.content.Context;
 
@@ -8,7 +8,7 @@ import com.j256.ormlite.dao.DaoManager;
 import java.sql.SQLException;
 import java.util.List;
 
-import br.com.paraondeirapp.persistence.helper.DatabaseHelper;
+import br.com.paraondeirapp.repository.helper.DatabaseHelper;
 
 public abstract class GenericDAO<E> extends DatabaseHelper<E> {
 

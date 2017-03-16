@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import br.com.paraondeirapp.entity.Avaliacao;
+import br.com.paraondeirapp.model.Avaliacao;
 import br.com.paraondeirapp.servidor.sincronizacao.ListaSincronizacao;
 import br.com.paraondeirapp.utils.ConexaoUtils;
-import br.com.paraondeirapp.persistence.dao.AvaliacaoDAO;
-import br.com.paraondeirapp.interfaces.IObservador;
+import br.com.paraondeirapp.repository.dao.AvaliacaoDAO;
+import br.com.paraondeirapp.observer.interfaces.IObservador;
 
 public class SincronizacaoRunnable implements Runnable {
 

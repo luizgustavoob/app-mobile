@@ -6,9 +6,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
-import br.com.paraondeirapp.entity.Cidade;
-import br.com.paraondeirapp.interfaces.IConstantesServidor;
-import br.com.paraondeirapp.persistence.dao.CidadeDAO;
+import br.com.paraondeirapp.model.Cidade;
+import br.com.paraondeirapp.constantes.IConstantesServidor;
+import br.com.paraondeirapp.repository.dao.CidadeDAO;
 import br.com.paraondeirapp.servidor.sincronizacao.Sincronizacao;
 
 public class SincronizacaoCidade extends Sincronizacao<Cidade> {

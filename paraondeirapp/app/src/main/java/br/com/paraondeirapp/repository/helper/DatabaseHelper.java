@@ -1,16 +1,16 @@
-package br.com.paraondeirapp.persistence.helper;
+package br.com.paraondeirapp.repository.helper;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import br.com.paraondeirapp.entity.Avaliacao;
-import br.com.paraondeirapp.entity.Cidade;
-import br.com.paraondeirapp.entity.Endereco;
-import br.com.paraondeirapp.entity.Estabelecimento;
-import br.com.paraondeirapp.entity.Estado;
-import br.com.paraondeirapp.interfaces.IConstantesDatabase;
+import br.com.paraondeirapp.model.Avaliacao;
+import br.com.paraondeirapp.model.Cidade;
+import br.com.paraondeirapp.model.Endereco;
+import br.com.paraondeirapp.model.Estabelecimento;
+import br.com.paraondeirapp.model.Estado;
+import br.com.paraondeirapp.constantes.IConstantesDatabase;
 
 public class DatabaseHelper<E> extends OrmLiteSqliteOpenHelper {
 

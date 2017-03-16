@@ -15,17 +15,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import java.sql.SQLException;
 
 import br.com.paraondeirapp.AppParaOndeIr;
 import br.com.paraondeirapp.R;
 import br.com.paraondeirapp.adapter.DetalheAdapter;
-import br.com.paraondeirapp.entity.Avaliacao;
-import br.com.paraondeirapp.entity.Estabelecimento;
+import br.com.paraondeirapp.model.Avaliacao;
+import br.com.paraondeirapp.model.Estabelecimento;
 import br.com.paraondeirapp.enumeration.YesNo;
-import br.com.paraondeirapp.persistence.dao.AvaliacaoDAO;
+import br.com.paraondeirapp.repository.dao.AvaliacaoDAO;
 import br.com.paraondeirapp.utils.DeviceUtils;
 import br.com.paraondeirapp.utils.FoneUtils;
 import br.com.paraondeirapp.utils.MensagemUtils;

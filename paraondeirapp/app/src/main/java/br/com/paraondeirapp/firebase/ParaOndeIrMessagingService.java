@@ -7,7 +7,7 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-import br.com.paraondeirapp.observer.NotificacaoObservadora;
+import br.com.paraondeirapp.observer.impl.NotificacaoObservadora;
 
 public class ParaOndeIrMessagingService extends FirebaseMessagingService {
 
