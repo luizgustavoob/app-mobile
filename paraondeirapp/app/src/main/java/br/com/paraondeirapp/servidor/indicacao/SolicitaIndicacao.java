@@ -74,6 +74,13 @@ public class SolicitaIndicacao {
         }
 
         @Override
+        protected void onCancelled(String s) {
+            super.onCancelled();
+            progressDialog.dismiss();
+            delegate.processarErroIndicacao(erro);
+        }
+
+        @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             progressDialog.dismiss();
