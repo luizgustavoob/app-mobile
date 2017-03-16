@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import br.com.paraondeirapp.interfaces.IConstantesServidorSinc;
+import br.com.paraondeirapp.interfaces.IConstantesServidor;
 
 public class ConexaoUtils {
 
@@ -45,8 +45,8 @@ public class ConexaoUtils {
         try {
             URL url = new URL(formatarLinkConexao(urlConexao));
             HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
-            conexao.setReadTimeout(IConstantesServidorSinc.TIMEOUT);
-            conexao.setConnectTimeout(IConstantesServidorSinc.TIMEOUT);
+            conexao.setReadTimeout(IConstantesServidor.TIMEOUT);
+            conexao.setConnectTimeout(IConstantesServidor.TIMEOUT);
             conexao.setRequestProperty("Content-Type", "application/json;charset=utf8");
             conexao.setRequestProperty("Accept", "application/json");
             conexao.setRequestProperty("Method", "GET");
@@ -76,8 +76,8 @@ public class ConexaoUtils {
         try {
             URL url = new URL(formatarLinkConexao(urlConexao));
             HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
-            conexao.setReadTimeout(IConstantesServidorSinc.TIMEOUT);
-            conexao.setConnectTimeout(IConstantesServidorSinc.TIMEOUT);
+            conexao.setReadTimeout(IConstantesServidor.TIMEOUT);
+            conexao.setConnectTimeout(IConstantesServidor.TIMEOUT);
             conexao.setRequestProperty("Content-Type", "application/json;charset=utf8");
             conexao.setRequestProperty("Accept", "application/json");
             conexao.setRequestProperty("Method", "POST");
