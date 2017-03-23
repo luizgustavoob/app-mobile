@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import br.com.paraondeirapp.model.Estabelecimento;
 import br.com.paraondeirapp.model.Usuario;
-import br.com.paraondeirapp.enumeration.TipoConsultaEstabelecimento;
 
 public class AppParaOndeIr extends Application {
 
@@ -14,7 +13,6 @@ public class AppParaOndeIr extends Application {
     private static AppParaOndeIr uniqueInstance = null;
     private Usuario user;
     private List<Estabelecimento> estabelecimentos; //Mantém os últimos estabelecimentos retornados da solicitação de indicações.
-    private TipoConsultaEstabelecimento tipoConsulta;
     private int ultimaVisualizacao; //0 - BD local; 1 - Ultima indicação.
 
     public static AppParaOndeIr getInstance(){
@@ -57,14 +55,6 @@ public class AppParaOndeIr extends Application {
 
     public void setEstabelecimentos(List<Estabelecimento> estabelecimentos) {
         this.estabelecimentos = estabelecimentos;
-    }
-
-    public TipoConsultaEstabelecimento getTipoConsulta() {
-        return tipoConsulta;
-    }
-
-    public void setTipoConsulta(TipoConsultaEstabelecimento tipoConsulta) {
-        this.tipoConsulta = tipoConsulta;
     }
 
     public int getUltimaVisualizacao(){

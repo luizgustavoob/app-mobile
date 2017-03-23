@@ -22,7 +22,6 @@ import br.com.paraondeirapp.R;
 import br.com.paraondeirapp.adapter.ListAdapter;
 import br.com.paraondeirapp.model.Avaliacao;
 import br.com.paraondeirapp.model.Estabelecimento;
-import br.com.paraondeirapp.enumeration.TipoConsultaEstabelecimento;
 import br.com.paraondeirapp.constantes.IConstantesNotificacao;
 import br.com.paraondeirapp.delegate.IDelegateIndicacao;
 import br.com.paraondeirapp.servidor.indicacao.SolicitaIndicacao;
@@ -66,7 +65,7 @@ public class ListaActivity extends AppCompatActivity implements
                         EditText temp = (EditText) customDialog.findViewById(R.id.et_valordigitado);
                         String ip = temp.getText().toString();
                         shared.setIPServidor(ip);
-                        executar(TipoConsultaEstabelecimento.SINCRONIZACAO);
+                        consultarNoServidor();
                         shared.setPrimeiroAcesso(false);
                         customDialog.dismiss();
                     }
@@ -80,7 +79,7 @@ public class ListaActivity extends AppCompatActivity implements
                 customDialog = mu.gerarCustomDialog(this, getString(R.string.app_name), getString(R.string.informa_ip));
                 customDialog.show();
             } else {
-                executar(TipoConsultaEstabelecimento.SINCRONIZACAO);
+                consultarNoServidor();
                 shared.setPrimeiroAcesso(false);
             }
         }
@@ -108,10 +107,10 @@ public class ListaActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.mn_sincronizar:
-                executar(TipoConsultaEstabelecimento.SINCRONIZACAO);
+                consultarNoServidor();
                 break;
             case R.id.mn_indicacao:
-                executar(TipoConsultaEstabelecimento.SOLICITACAO);
+                solicitarIndicacoes();
                 break;
         }
         return true;
@@ -138,10 +137,10 @@ public class ListaActivity extends AppCompatActivity implements
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.mn_banco_local:
-                executar(TipoConsultaEstabelecimento.BDLOCAL);
+                consultarNoBancoLocal();
                 break;
             case R.id.mn_lista_indicacao:
-                executar(TipoConsultaEstabelecimento.ULTIMA_INDICACAO);
+                consultarUltimasIndicacoes();
                 break;
             case R.id.mn_testar_conexao:
                 testarConexao();
@@ -179,13 +178,12 @@ public class ListaActivity extends AppCompatActivity implements
         startActivity(i);
     }
 
-    // IDelegateSinc
     @Override
     public void processarRetornoSinc() {
         MensagemUtils mu = new MensagemUtils() {
             @Override
             protected void clicouSim() {
-                executar(TipoConsultaEstabelecimento.BDLOCAL);
+                consultarNoBancoLocal();
             }
         };
 
@@ -198,14 +196,13 @@ public class ListaActivity extends AppCompatActivity implements
         MensagemUtils mu = new MensagemUtils(){
             @Override
             protected void clicouSim() {
-                executar(TipoConsultaEstabelecimento.BDLOCAL);
+                consultarNoBancoLocal();
             }
         };
 
         mu.gerarEExibirAlertDialogOK(this, getString(R.string.ops), erro, getString(R.string.ok));
     }
 
-    // IDelegateIndicacao
     @Override
     public void processarRetornoIndicacao(List<Estabelecimento> lista) {
         List<Estabelecimento> listaFiltrada = new ArrayList<>();
@@ -238,19 +235,14 @@ public class ListaActivity extends AppCompatActivity implements
         MensagemUtils mu = new MensagemUtils(){
             @Override
             protected void clicouSim(){
-                executar(TipoConsultaEstabelecimento.BDLOCAL);
+                consultarNoBancoLocal();
             }
         };
 
         mu.gerarEExibirAlertDialogOK(this, getString(R.string.ops), erro, getString(R.string.ok));
     }
 
-    public void executar(TipoConsultaEstabelecimento tipoConsulta){
-        app.setTipoConsulta(tipoConsulta);
-        app.getTipoConsulta().executar(this);
-    }
-
-    public void consultarNoServidor(){
+    private void consultarNoServidor(){
         if (ConexaoUtils.temConexao(this)) {
             if (shared.getIPServidor().isEmpty()){
                 MensagemUtils mu = new MensagemUtils(){
@@ -291,7 +283,7 @@ public class ListaActivity extends AppCompatActivity implements
             MensagemUtils mu = new MensagemUtils(){
                 @Override
                 protected void clicouSim() {
-                    executar(TipoConsultaEstabelecimento.BDLOCAL);
+                    consultarNoBancoLocal();
                 }
             };
 
@@ -302,8 +294,8 @@ public class ListaActivity extends AppCompatActivity implements
         DeviceUtils.esconderTeclado(this, etPesquisa);
     }
 
-    public void consultarNoBancoLocal(){
-        List<Estabelecimento> estabelecimentos = new ArrayList<>();
+    private void consultarNoBancoLocal(){
+        List<Estabelecimento> estabelecimentos;
         try {
             EstabelecimentoDAO dao = new EstabelecimentoDAO(this);
             estabelecimentos = dao.findAll();
@@ -322,16 +314,64 @@ public class ListaActivity extends AppCompatActivity implements
         DeviceUtils.esconderTeclado(this, etPesquisa);
     }
 
-    private void testarConexao(){
+    private void consultarUltimasIndicacoes(){
+        lvEstabelecimentos.setAdapter(null);
+        adapter.setContext(this);
+        adapter.setEstabelecimentos(app.getEstabelecimentos());
+        lvEstabelecimentos.setAdapter(adapter);
+        lvEstabelecimentos.requestFocus();
+
+        app.setUltimaVisualizacao(1);
+
+        DeviceUtils.esconderTeclado(this, etPesquisa);
+    }
+
+    private void solicitarIndicacoes() {
         if (ConexaoUtils.temConexao(this)) {
-            MensagemUtils.gerarEExibirToast(this, getString(R.string.conexao_ok));
+            if (shared.getIPServidor().isEmpty()) {
+                MensagemUtils mu = new MensagemUtils(){
+                    @Override
+                    protected void clicouSim() {
+                        new SolicitaIndicacao(listaActivity, listaActivity, app.getUser());
+                        customDialog.dismiss();
+                    }
+
+                    @Override
+                    protected void clicouNao() {
+                        customDialog.dismiss();
+                    }
+                };
+
+                customDialog = mu.gerarCustomDialog(this, getString(R.string.app_name), getString(R.string.informa_ip));
+                customDialog.show();
+            } else {
+                new SolicitaIndicacao(listaActivity, listaActivity, app.getUser());
+            }
         } else {
-            MensagemUtils.gerarEExibirToast(this, getString(R.string.conexao_erro));
+            MensagemUtils mu = new MensagemUtils(){
+                @Override
+                protected void clicouSim() {
+                    consultarNoBancoLocal();
+                }
+            };
+
+            mu.gerarEExibirAlertDialogOK(this, getString(R.string.titulo_erro_conexao),
+                    getString(R.string.erro_conexao), getString(R.string.ok));
         }
     }
 
+    private void exibirTelaInicial(){
+        if (app.getUltimaVisualizacao() == 1){
+            consultarUltimasIndicacoes();
+        } else {
+            consultarNoBancoLocal();
+        }
+        this.etPesquisa.setText("");
+        this.lvEstabelecimentos.requestFocus();
+    }
+
     private void pesquisarEstabelecimentos() throws SQLException {
-        List<Estabelecimento> lista = null;
+        List<Estabelecimento> lista;
         try {
             EstabelecimentoDAO dao = new EstabelecimentoDAO(this);
             lista = dao.getEstabelecimentosByNomeOrEndereco(etPesquisa.getText().toString().trim());
@@ -363,59 +403,11 @@ public class ListaActivity extends AppCompatActivity implements
         }
     }
 
-    private void exibirTelaInicial(){
-        if (app.getUltimaVisualizacao() == 1){
-            executar(TipoConsultaEstabelecimento.ULTIMA_INDICACAO);
-        } else {
-            executar(TipoConsultaEstabelecimento.BDLOCAL);
-        }
-        this.etPesquisa.setText("");
-        this.lvEstabelecimentos.requestFocus();
-    }
-
-    public void solicitarIndicacoes() {
+    private void testarConexao(){
         if (ConexaoUtils.temConexao(this)) {
-            if (shared.getIPServidor().isEmpty()) {
-                MensagemUtils mu = new MensagemUtils(){
-                    @Override
-                    protected void clicouSim() {
-                        new SolicitaIndicacao(listaActivity, listaActivity, app.getUser());
-                        customDialog.dismiss();
-                    }
-
-                    @Override
-                    protected void clicouNao() {
-                        customDialog.dismiss();
-                    }
-                };
-
-                customDialog = mu.gerarCustomDialog(this, getString(R.string.app_name), getString(R.string.informa_ip));
-                customDialog.show();
-            } else {
-                new SolicitaIndicacao(listaActivity, listaActivity, app.getUser());
-            }
+            MensagemUtils.gerarEExibirToast(this, getString(R.string.conexao_ok));
         } else {
-            MensagemUtils mu = new MensagemUtils(){
-                @Override
-                protected void clicouSim() {
-                    executar(TipoConsultaEstabelecimento.BDLOCAL);
-                }
-            };
-
-            mu.gerarEExibirAlertDialogOK(this, getString(R.string.titulo_erro_conexao),
-                    getString(R.string.erro_conexao), getString(R.string.ok));
+            MensagemUtils.gerarEExibirToast(this, getString(R.string.conexao_erro));
         }
-    }
-
-    public void consultarUltimasIndicacoes(){
-        lvEstabelecimentos.setAdapter(null);
-        adapter.setContext(this);
-        adapter.setEstabelecimentos(app.getEstabelecimentos());
-        lvEstabelecimentos.setAdapter(adapter);
-        lvEstabelecimentos.requestFocus();
-
-        app.setUltimaVisualizacao(1);
-
-        DeviceUtils.esconderTeclado(this, etPesquisa);
     }
 }
