@@ -2,13 +2,9 @@ package br.com.paraondeirapp.servidor.sincronizacao.impl;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.List;
-
 import br.com.paraondeirapp.model.Avaliacao;
 import br.com.paraondeirapp.constantes.IConstantesServidor;
 import br.com.paraondeirapp.repository.dao.AvaliacaoDAO;
@@ -30,7 +26,7 @@ public class SincronizacaoAvaliacao extends Sincronizacao<Avaliacao> {
 
     @Override
     protected Type getCollectionType() {
-        return new TypeToken<Collection<Avaliacao>>() {}.getType();
+        return new TypeToken<List<Avaliacao>>() {}.getType();
     }
 
     @Override

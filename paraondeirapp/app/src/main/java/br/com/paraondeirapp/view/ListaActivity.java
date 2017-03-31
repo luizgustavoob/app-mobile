@@ -59,25 +59,11 @@ public class ListaActivity extends AppCompatActivity implements
 
         if (shared.isPrimeiroAcesso()){
             if (shared.getIPServidor().isEmpty()){
-                MensagemUtils mu = new MensagemUtils(){
-                    @Override
-                    protected void clicouSim() {
-                        EditText temp = (EditText) customDialog.findViewById(R.id.et_valordigitado);
-                        String ip = temp.getText().toString();
-                        shared.setIPServidor(ip);
-                        consultarNoServidor();
-                        shared.setPrimeiroAcesso(false);
-                        customDialog.dismiss();
-                    }
-
-                    @Override
-                    protected void clicouNao() {
-                        customDialog.dismiss();
-                    }
-                };
-
-                customDialog = mu.gerarCustomDialog(this, getString(R.string.app_name), getString(R.string.informa_ip));
-                customDialog.show();
+                this.setIPServidor();
+                if (!shared.getIPServidor().isEmpty()){
+                    consultarNoServidor();
+                }
+                shared.setPrimeiroAcesso(false);
             } else {
                 consultarNoServidor();
                 shared.setPrimeiroAcesso(false);
@@ -144,6 +130,12 @@ public class ListaActivity extends AppCompatActivity implements
                 break;
             case R.id.mn_testar_conexao:
                 testarConexao();
+                break;
+            case R.id.mn_set_ip_servidor:
+                setIPServidor();
+                break;
+            case R.id.mn_limpar_primeiro_acesso:
+                setPrimeiroAcesso(true);
                 break;
         }
         return super.onContextItemSelected(item);
@@ -409,5 +401,31 @@ public class ListaActivity extends AppCompatActivity implements
         } else {
             MensagemUtils.gerarEExibirToast(this, getString(R.string.conexao_erro));
         }
+    }
+
+    private void setPrimeiroAcesso(boolean primeiroAcesso) {
+        shared.setPrimeiroAcesso(primeiroAcesso);
+    }
+
+    private void setIPServidor() {
+        MensagemUtils mu = new MensagemUtils(){
+            @Override
+            protected void clicouSim() {
+                EditText etInner = (EditText) customDialog.findViewById(R.id.et_valordigitado);
+                String ip = etInner.getText().toString();
+                shared.setIPServidor(ip);
+                customDialog.dismiss();
+            }
+
+            @Override
+            protected void clicouNao() {
+                customDialog.dismiss();
+            }
+        };
+
+        customDialog = mu.gerarCustomDialog(this, getString(R.string.app_name), getString(R.string.informa_ip));
+        EditText et = (EditText) customDialog.findViewById(R.id.et_valordigitado);
+        et.setText(shared.getIPServidor());
+        customDialog.show();
     }
 }

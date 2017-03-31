@@ -57,13 +57,12 @@ public class SolicitaIndicacao {
             try {
                 JSONStringer builder = new JSONStringer();
                 builder.object();
-                builder.key("usuario").value(user.getEmail());
+                builder.key("usuario").value(user.getUsuario());
                 builder.endObject();
                 InputStream stream = ConexaoUtils.post(IConstantesServidor.LINK_SINCRONIZACAO_INDICACAO, builder.toString());
                 if (stream != null) {
                     Reader reader = new InputStreamReader(stream);
-                    lista = (List<Estabelecimento>) new Gson().fromJson(reader, new TypeToken<Collection<Estabelecimento>>() {
-                    }.getType());
+                    lista = (List<Estabelecimento>) new Gson().fromJson(reader, new TypeToken<List<Estabelecimento>>() {}.getType());
                 }
             } catch (Exception ex){
                 lista = null;

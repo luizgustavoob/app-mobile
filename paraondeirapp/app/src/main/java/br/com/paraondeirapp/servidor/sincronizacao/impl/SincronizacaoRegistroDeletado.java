@@ -2,14 +2,10 @@ package br.com.paraondeirapp.servidor.sincronizacao.impl;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-
 import br.com.paraondeirapp.model.RegistroDeletado;
 import br.com.paraondeirapp.constantes.IConstantesDatabase;
 import br.com.paraondeirapp.constantes.IConstantesServidor;
@@ -36,7 +32,7 @@ public class SincronizacaoRegistroDeletado extends Sincronizacao<RegistroDeletad
 
     @Override
     protected Type getCollectionType() {
-        return new TypeToken<Collection<RegistroDeletado>>() {}.getType();
+        return new TypeToken<List<RegistroDeletado>>() {}.getType();
     }
 
     @Override

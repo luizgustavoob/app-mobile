@@ -16,4 +16,14 @@
         android:title="@string/testar_conexao">
     </item>
 
+    <item
+        android:id="@+id/mn_set_ip_servidor"
+        android:title="@string/set_ip_servidor">
+    </item>
+
+    <item
+        android:id="@+id/mn_limpar_primeiro_acesso"
+        android:title="@string/limpar_primeiro_acesso">
+    </item>
+
 </menu>

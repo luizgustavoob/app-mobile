@@ -138,7 +138,7 @@ public class DetalheActivity extends AppCompatActivity implements
             Avaliacao avaliacao = new Avaliacao();
             avaliacao.setEstabelecimento(estabelecimento);
             avaliacao.setGostou(like);
-            avaliacao.setUsuario(AppParaOndeIr.getInstance().getUser().getEmail());
+            avaliacao.setUsuario(AppParaOndeIr.getInstance().getUser().getUsuario());
 
             AvaliacaoDAO dao = new AvaliacaoDAO(this);
             dao.save(avaliacao);

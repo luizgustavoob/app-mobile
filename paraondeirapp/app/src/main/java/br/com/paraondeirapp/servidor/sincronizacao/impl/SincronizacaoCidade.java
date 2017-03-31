@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.List;
 import br.com.paraondeirapp.model.Cidade;
 import br.com.paraondeirapp.constantes.IConstantesServidor;
@@ -27,7 +26,7 @@ public class SincronizacaoCidade extends Sincronizacao<Cidade> {
 
     @Override
     protected Type getCollectionType() {
-        return new TypeToken<Collection<Cidade>>() {}.getType();
+        return new TypeToken<List<Cidade>>() {}.getType();
     }
 
     @Override

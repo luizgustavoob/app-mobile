@@ -41,4 +41,6 @@
     <string name="nao">Não</string>
     <string name="title_activity_mapa">Mapa</string>
     <string name="msg_consulta_indicacoes">Consultar últimas indicações</string>
+    <string name="set_ip_servidor">Redefinir o IP/Porta do servidor</string>
+    <string name="limpar_primeiro_acesso">Limpar a config. \"Primeiro Acesso\"</string>
 </resources>

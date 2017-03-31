@@ -2,13 +2,9 @@ package br.com.paraondeirapp.servidor.sincronizacao.impl;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.List;
-
 import br.com.paraondeirapp.model.Estado;
 import br.com.paraondeirapp.constantes.IConstantesServidor;
 import br.com.paraondeirapp.repository.dao.EstadoDAO;
@@ -30,7 +26,7 @@ public class SincronizacaoUF extends Sincronizacao<Estado> {
 
     @Override
     protected Type getCollectionType() {
-        return new TypeToken<Collection<Estado>>() {}.getType();
+        return new TypeToken<List<Estado>>() {}.getType();
     }
 
     @Override

@@ -67,7 +67,11 @@ public class StartActivity extends Activity {
         if (app.getUser() == null ){
             String conta = DeviceUtils.getContaDispositivo(this);
             if (conta != null){
-                app.setUser(new Usuario(conta));
+                Usuario user = new Usuario();
+                user.setUsuario(conta);
+                SharedPreferencesUtils shared = new SharedPreferencesUtils();
+                user.setFcmid(shared.getTokenFirebase());
+                app.setUser(user);
             }
         }
     }
