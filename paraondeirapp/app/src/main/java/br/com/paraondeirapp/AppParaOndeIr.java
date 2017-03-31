@@ -2,10 +2,14 @@ package br.com.paraondeirapp;
 
 import android.app.Application;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.paraondeirapp.constantes.IConstantesDatabase;
 import br.com.paraondeirapp.model.Estabelecimento;
 import br.com.paraondeirapp.model.Usuario;
+import br.com.paraondeirapp.utils.SharedPreferencesUtils;
 
 public class AppParaOndeIr extends Application {
 
@@ -27,11 +31,6 @@ public class AppParaOndeIr extends Application {
         estabelecimentos = new ArrayList<>();
         ultimaVisualizacao = 0;
         uniqueInstance = this;
-        /*File file = getDatabasePath(IConstantesDatabase.NAME_DATABASE);
-        if (file != null) {
-            file.delete();
-        }
-        new SharedPreferencesUtils().deleteAll();*/
     }
 
     @Override

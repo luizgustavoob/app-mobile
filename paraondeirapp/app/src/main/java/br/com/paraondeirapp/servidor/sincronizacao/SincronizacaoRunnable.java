@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.firebase;
+package br.com.paraondeirapp.servidor.sincronizacao;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import br.com.paraondeirapp.model.Avaliacao;
-import br.com.paraondeirapp.servidor.sincronizacao.ListaSincronizacao;
 import br.com.paraondeirapp.utils.ConexaoUtils;
 import br.com.paraondeirapp.repository.dao.AvaliacaoDAO;
 import br.com.paraondeirapp.observer.interfaces.IObservador;
