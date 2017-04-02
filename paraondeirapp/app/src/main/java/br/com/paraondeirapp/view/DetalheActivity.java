@@ -17,6 +17,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import br.com.paraondeirapp.AppParaOndeIr;
 import br.com.paraondeirapp.R;
@@ -139,6 +143,8 @@ public class DetalheActivity extends AppCompatActivity implements
             avaliacao.setEstabelecimento(estabelecimento);
             avaliacao.setGostou(like);
             avaliacao.setUsuario(AppParaOndeIr.getInstance().getUser().getUsuario());
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+            avaliacao.setData(formato.format(new Date()));
 
             AvaliacaoDAO dao = new AvaliacaoDAO(this);
             dao.save(avaliacao);

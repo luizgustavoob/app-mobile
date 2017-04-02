@@ -4,6 +4,7 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.io.Serializable;
+
 import br.com.paraondeirapp.enumeration.YesNo;
 import br.com.paraondeirapp.constantes.IConstantesDatabase;
 
@@ -25,6 +26,9 @@ public class Avaliacao implements Serializable {
     @DatabaseField(columnName = IConstantesDatabase.AVALIACAO_USER, canBeNull = false,
             dataType = DataType.STRING)
     private String usuario;
+
+    @DatabaseField(columnName = IConstantesDatabase.AVALIACAO_DTAVALIACAO, dataType = DataType.STRING)
+    private String data;
 
     public Avaliacao(){
         super();
@@ -60,5 +64,13 @@ public class Avaliacao implements Serializable {
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
+    }
+
+    public String getData(){
+        return this.data;
+    }
+
+    public void setData(String data){
+        this.data = data;
     }
 }
