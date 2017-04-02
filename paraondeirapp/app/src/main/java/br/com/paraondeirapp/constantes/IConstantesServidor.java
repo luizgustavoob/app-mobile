@@ -2,7 +2,7 @@ package br.com.paraondeirapp.constantes;
 
 public interface IConstantesServidor {
 
-    static final int TIMEOUT = 15000;
+    static final int TIMEOUT = 30000;
     static final String LINK_SINCRONIZACAO_REGISTROS_DELETADOS = "/web-service/deletado/sincronizaDeletado";
     static final String LINK_SINCRONIZACAO_ESTADOS = "/web-service/estado/sincronizaEstado";
     static final String LINK_SINCRONIZACAO_CIDADES = "/web-service/cidade/sincronizaCidade";
