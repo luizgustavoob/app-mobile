@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONStringer;
@@ -15,6 +16,7 @@ import java.io.Reader;
 import java.util.Collection;
 import java.util.List;
 
+import br.com.paraondeirapp.AppParaOndeIr;
 import br.com.paraondeirapp.R;
 import br.com.paraondeirapp.model.Estabelecimento;
 import br.com.paraondeirapp.model.Usuario;
@@ -55,11 +57,11 @@ public class SolicitaIndicacao {
         @Override
         protected String doInBackground(String... params) {
             try {
-                JSONStringer builder = new JSONStringer();
-                builder.object();
-                builder.key("usuario").value(user.getUsuario());
-                builder.endObject();
-                InputStream stream = ConexaoUtils.post(IConstantesServidor.LINK_SINCRONIZACAO_INDICACAO, builder.toString());
+                Gson gson = new Gson();
+                JsonElement element = gson.toJsonTree(AppParaOndeIr.getInstance().getUser(), new TypeToken<Usuario>() {}.getType());
+                String usuario = element.getAsJsonObject().toString();
+
+                InputStream stream = ConexaoUtils.post(IConstantesServidor.LINK_SINCRONIZACAO_INDICACAO, usuario);
                 if (stream != null) {
                     Reader reader = new InputStreamReader(stream);
                     lista = (List<Estabelecimento>) new Gson().fromJson(reader, new TypeToken<List<Estabelecimento>>() {}.getType());
