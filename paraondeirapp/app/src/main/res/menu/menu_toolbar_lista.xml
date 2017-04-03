@@ -10,7 +10,7 @@
         android:orderInCategory="1"
         android:title="Sincronizar"
         android:icon="@drawable/ic_action_download"
-        app:showAsAction="never">
+        app:showAsAction="always">
     </item>
 
     <item
@@ -18,7 +18,7 @@
         android:orderInCategory="2"
         android:title="Solicitar Indicação"
         android:icon="@drawable/ic_action_idea"
-        app:showAsAction="never">
+        app:showAsAction="always">
     </item>
 
     <item
