@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/mn_ligacao"
-        android:title="@string/ligar_estabelecimento">
+        android:title="@string/titulo_ligar_estabelecimento">
     </item>
 
 </menu>

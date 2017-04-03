@@ -59,7 +59,7 @@
 
         <activity
             android:name=".view.MapaActivity"
-            android:label="@string/title_activity_mapa"
+            android:label="@string/titulo_activity_mapa"
             android:screenOrientation="portrait"/>
     </application>
 

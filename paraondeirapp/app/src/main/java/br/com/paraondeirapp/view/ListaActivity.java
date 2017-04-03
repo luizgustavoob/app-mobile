@@ -59,7 +59,7 @@ public class ListaActivity extends AppCompatActivity implements
 
         if (shared.isPrimeiroAcesso()){
             if (shared.getIPServidor().isEmpty()){
-                this.setIPServidor();
+                this.configurarIPServidor();
                 if (!shared.getIPServidor().isEmpty()){
                     consultarNoServidor();
                 }
@@ -67,6 +67,11 @@ public class ListaActivity extends AppCompatActivity implements
             } else {
                 consultarNoServidor();
                 shared.setPrimeiroAcesso(false);
+            }
+        } else if (shared.getIPServidor().isEmpty()){
+            this.configurarIPServidor();
+            if (!shared.getIPServidor().isEmpty()){
+                consultarNoServidor();
             }
         }
     }
@@ -97,6 +102,12 @@ public class ListaActivity extends AppCompatActivity implements
                 break;
             case R.id.mn_indicacao:
                 solicitarIndicacoes();
+                break;
+            case R.id.mn_setipservidor:
+                configurarIPServidor();
+                break;
+            case R.id.mn_limparprimeiroacesso:
+                shared.setPrimeiroAcesso(true);
                 break;
         }
         return true;
@@ -130,12 +141,6 @@ public class ListaActivity extends AppCompatActivity implements
                 break;
             case R.id.mn_testar_conexao:
                 testarConexao();
-                break;
-            case R.id.mn_set_ip_servidor:
-                setIPServidor();
-                break;
-            case R.id.mn_limpar_primeiro_acesso:
-                setPrimeiroAcesso(true);
                 break;
         }
         return super.onContextItemSelected(item);
@@ -180,7 +185,7 @@ public class ListaActivity extends AppCompatActivity implements
         };
 
         mu.gerarEExibirAlertDialogOK(this, getString(R.string.titulo_confirmacao),
-                getString(R.string.sincronizacao_sucesso), getString(R.string.ok));
+                getString(R.string.msg_sucesso_sincronizacao), getString(R.string.ok));
     }
 
     @Override
@@ -207,7 +212,7 @@ public class ListaActivity extends AppCompatActivity implements
             }
             estabelecimentoDAO.close();
         } catch (Exception ex){
-            MensagemUtils.gerarEExibirToast(this, "Erro na geração de indicações. Detalhe: " + ex.getMessage());
+            MensagemUtils.gerarEExibirToast(this, getString(R.string.msg_erro_indicacao).replace("$e", ex.getMessage()));
         }
 
         lvEstabelecimentos.setAdapter(null);
@@ -237,29 +242,22 @@ public class ListaActivity extends AppCompatActivity implements
     private void consultarNoServidor(){
         if (ConexaoUtils.temConexao(this)) {
             if (shared.getIPServidor().isEmpty()){
-                MensagemUtils mu = new MensagemUtils(){
-                    @Override
-                    protected void clicouSim() {
-                        List<Avaliacao> avaliacoes;
-                        try {
-                            AvaliacaoDAO dao = new AvaliacaoDAO(listaActivity);
-                            avaliacoes = dao.findAll();
-                            dao.close();
-                        } catch (Exception ex) {
-                            avaliacoes = null;
-                        }
-                        new RealizaSincronizacao(listaActivity, listaActivity, avaliacoes);
-                        customDialog.dismiss();
+                this.configurarIPServidor();
+                if (!shared.getIPServidor().isEmpty()){
+                    List<Avaliacao> avaliacoes;
+                    try {
+                        AvaliacaoDAO dao = new AvaliacaoDAO(listaActivity);
+                        avaliacoes = dao.findAll();
+                        dao.close();
+                    } catch (Exception ex) {
+                        avaliacoes = null;
                     }
-
-                    @Override
-                    protected void clicouNao() {
-                        customDialog.dismiss();
-                    }
-                };
-
-                customDialog = mu.gerarCustomDialog(this, getString(R.string.app_name), getString(R.string.informa_ip));
-                customDialog.show();
+                    new RealizaSincronizacao(listaActivity, listaActivity, avaliacoes);
+                } else {
+                    MensagemUtils mutils = new MensagemUtils();
+                    mutils.gerarEExibirAlertDialogOK(this, getString(R.string.titulo_erro_conexao),
+                            getString(R.string.msg_necessario_ip), getString(R.string.ok));
+                }
             } else {
                 List<Avaliacao> avaliacoes;
                 try {
@@ -280,7 +278,7 @@ public class ListaActivity extends AppCompatActivity implements
             };
 
             mu.gerarEExibirAlertDialogOK(this, getString(R.string.titulo_erro_conexao),
-                    getString(R.string.erro_sincronizacao), getString(R.string.ok));
+                    getString(R.string.msg_erro_sincronizacao), getString(R.string.ok));
         }
         lvEstabelecimentos.requestFocus();
         DeviceUtils.esconderTeclado(this, etPesquisa);
@@ -321,21 +319,14 @@ public class ListaActivity extends AppCompatActivity implements
     private void solicitarIndicacoes() {
         if (ConexaoUtils.temConexao(this)) {
             if (shared.getIPServidor().isEmpty()) {
-                MensagemUtils mu = new MensagemUtils(){
-                    @Override
-                    protected void clicouSim() {
-                        new SolicitaIndicacao(listaActivity, listaActivity, app.getUser());
-                        customDialog.dismiss();
-                    }
-
-                    @Override
-                    protected void clicouNao() {
-                        customDialog.dismiss();
-                    }
-                };
-
-                customDialog = mu.gerarCustomDialog(this, getString(R.string.app_name), getString(R.string.informa_ip));
-                customDialog.show();
+                this.configurarIPServidor();
+                if (!shared.getIPServidor().isEmpty()){
+                    new SolicitaIndicacao(listaActivity, listaActivity, app.getUser());
+                } else {
+                    MensagemUtils mutils = new MensagemUtils();
+                    mutils.gerarEExibirAlertDialogOK(this, getString(R.string.titulo_erro_conexao),
+                            getString(R.string.msg_necessario_ip), getString(R.string.ok));
+                }
             } else {
                 new SolicitaIndicacao(listaActivity, listaActivity, app.getUser());
             }
@@ -348,7 +339,7 @@ public class ListaActivity extends AppCompatActivity implements
             };
 
             mu.gerarEExibirAlertDialogOK(this, getString(R.string.titulo_erro_conexao),
-                    getString(R.string.erro_conexao), getString(R.string.ok));
+                    getString(R.string.msg_erro_conexao), getString(R.string.ok));
         }
     }
 
@@ -397,17 +388,13 @@ public class ListaActivity extends AppCompatActivity implements
 
     private void testarConexao(){
         if (ConexaoUtils.temConexao(this)) {
-            MensagemUtils.gerarEExibirToast(this, getString(R.string.conexao_ok));
+            MensagemUtils.gerarEExibirToast(this, getString(R.string.msg_sucesso_conexao));
         } else {
-            MensagemUtils.gerarEExibirToast(this, getString(R.string.conexao_erro));
+            MensagemUtils.gerarEExibirToast(this, getString(R.string.msg_erro_conexao));
         }
     }
 
-    private void setPrimeiroAcesso(boolean primeiroAcesso) {
-        shared.setPrimeiroAcesso(primeiroAcesso);
-    }
-
-    private void setIPServidor() {
+    private void configurarIPServidor() {
         MensagemUtils mu = new MensagemUtils(){
             @Override
             protected void clicouSim() {
@@ -423,7 +410,7 @@ public class ListaActivity extends AppCompatActivity implements
             }
         };
 
-        customDialog = mu.gerarCustomDialog(this, getString(R.string.app_name), getString(R.string.informa_ip));
+        customDialog = mu.gerarCustomDialog(this, getString(R.string.app_name), getString(R.string.msg_informa_ip));
         EditText et = (EditText) customDialog.findViewById(R.id.et_valordigitado);
         et.setText(shared.getIPServidor());
         customDialog.show();

@@ -3,27 +3,16 @@
 
     <item
         android:id="@+id/mn_banco_local"
-        android:title="@string/consultar_banco_local">
+        android:title="@string/titulo_consultar_banco_local">
     </item>
 
     <item
         android:id="@+id/mn_lista_indicacao"
-        android:title="@string/msg_consulta_indicacoes">
+        android:title="@string/titulo_consulta_indicacoes">
     </item>
 
     <item
         android:id="@+id/mn_testar_conexao"
-        android:title="@string/testar_conexao">
+        android:title="@string/titulo_testar_conexao">
     </item>
-
-    <item
-        android:id="@+id/mn_set_ip_servidor"
-        android:title="@string/set_ip_servidor">
-    </item>
-
-    <item
-        android:id="@+id/mn_limpar_primeiro_acesso"
-        android:title="@string/limpar_primeiro_acesso">
-    </item>
-
 </menu>

@@ -1,30 +1,29 @@
 <resources>
     <string name="app_name">Para Onde Ir?!</string>
-    <string name="gostei">Gostei! :)</string>
-    <string name="nao_gostei">Hmm.. Não gostei :(</string>
-    <string name="erro_ligacao">Não foi possível realizar a ligação.</string>
-    <string name="msg_sincronizacao">Sincronizando os registros com o servidor.</string>
+
+    <!-- Títulos -->
     <string name="titulo_sincronizacao">Sincronização</string>
-    <string name="avaliacao_salva_sucesso">Avaliação salva com sucesso!</string>
     <string name="titulo_confirmacao">Confirmação</string>
-    <string name="sincronizacao_sucesso">Sincronização concluída com sucesso!</string>
-    <string name="erro_sincronizacao">Não foi possível sincronizar os registros.
-        Verifique sua conexão e tente novamente!</string>
     <string name="titulo_erro_conexao">Problemas com a conexão</string>
-    <string name="erro_conexao">Ocorreram erros com a conexão.</string>
-    <string name="ok">OK</string>
-    <string name="conexao_ok">Conexão OK!</string>
-    <string name="conexao_erro">Ops.. Falha na conexão!</string>
-    <string name="testar_conexao">Testar conexão</string>
-    <string name="consultar_banco_local">Consultar banco local</string>
-    <string name="ligar_estabelecimento">Ligar para estabelecimento</string>
-    <string name="fim_sincronizacao">Sincronização concluída com sucesso.</string>
-    <string name="aguarde">Aguarde...</string>
-    <string name="tracar_rota">Traçando a rota até $e</string>
-    <string name="informa_ip">Informe o IP/Porta para conexão com o servidor</string>
-    <string name="ops">Ops..</string>
-    <string name="cancelar">Cancelar</string>
-    <string name="permissao">Permissão</string>
+    <string name="titulo_testar_conexao">Testar conexão</string>
+    <string name="titulo_consultar_banco_local">Consultar banco local</string>
+    <string name="titulo_ligar_estabelecimento">Ligar para estabelecimento</string>
+    <string name="titulo_definir_ip">Definir o IP/Porta do Servidor</string>
+    <string name="titulo_limpar_prim_acesso">Limpar a config. \"Primeiro Acesso\"</string>
+    <string name="titulo_activity_mapa">Mapa</string>
+    <string name="titulo_consulta_indicacoes">Consultar últimas indicações</string>
+
+    <!-- Mensagens -->
+    <string name="msg_sucesso_avaliacao">Avaliação salva com sucesso!</string>
+    <string name="msg_sucesso_sincronizacao">Sincronização concluída com sucesso!</string>
+    <string name="msg_sucesso_conexao">Conexão OK!</string>
+    <string name="msg_erro_conexao">Ocorreram erros com a conexão.</string>
+    <string name="msg_erro_sincronizacao">Não foi possível sincronizar os registros.
+        Verifique sua conexão e tente novamente!</string>
+    <string name="msg_erro_ligacao">Não foi possível realizar a ligação.</string>
+    <string name="msg_erro_indicacao">Erro na geração de indicações. Detalhe: $e</string>
+    <string name="msg_sincronizacao">Sincronizando os registros com o servidor.</string>
+    <string name="msg_informa_ip">Informe o IP/Porta para conexão com o servidor:</string>
     <string name="msg_permissao_conta">Precisamos da sua permissão para utilizar a sua conta
         Google como identificação.
         Fique tranquilo! Esta é apenas uma forma de lhe identificar como usuário do aplicativo,
@@ -35,12 +34,18 @@
         estabelecimentos desejados.</string>
     <string name="msg_permissao_mapa">Precisamos da sua permissão para localizarmos sua posição no
         mapa.</string>
-    <string name="titulo_mapa">Mapa</string>
     <string name="msg_indicacao">Gerando indicações de visita.</string>
+    <string name="msg_necessario_ip">É necessário informar configurar o IP/Porta do servidor para realizar
+        esta operação.</string>
+
+    <!-- Títulos/Mensagens curtas -->
+    <string name="gostei">Gostei! :)</string>
+    <string name="nao_gostei">Hmm.. Não gostei :(</string>
+    <string name="ops">Ops..</string>
+    <string name="aguarde">Aguarde...</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="permissao">Permissão</string>
     <string name="sim">Sim</string>
     <string name="nao">Não</string>
-    <string name="title_activity_mapa">Mapa</string>
-    <string name="msg_consulta_indicacoes">Consultar últimas indicações</string>
-    <string name="set_ip_servidor">Redefinir o IP/Porta do servidor</string>
-    <string name="limpar_primeiro_acesso">Limpar a config. \"Primeiro Acesso\"</string>
+    <string name="ok">OK</string>
 </resources>

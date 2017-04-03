@@ -21,7 +21,7 @@ public class FoneUtils {
                 PhoneNumberUtils.isGlobalPhoneNumber(StringUtils.apenasNumeros(telefone))) {
             ligar(StringUtils.apenasNumeros(telefone), ctx);
         } else {
-            MensagemUtils.gerarEExibirToast(ctx, ctx.getString(R.string.erro_ligacao));
+            MensagemUtils.gerarEExibirToast(ctx, ctx.getString(R.string.msg_erro_ligacao));
         }
     }
 
@@ -38,7 +38,7 @@ public class FoneUtils {
             ctx.startActivity(it);
         } catch (ActivityNotFoundException ex) {
             ex.printStackTrace();
-            MensagemUtils.gerarEExibirToast(ctx, ctx.getString(R.string.erro_ligacao));
+            MensagemUtils.gerarEExibirToast(ctx, ctx.getString(R.string.msg_erro_ligacao));
         } finally {
             it = null;
         }

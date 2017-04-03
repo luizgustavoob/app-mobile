@@ -18,7 +18,6 @@ import android.widget.RelativeLayout;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -70,8 +69,8 @@ public class DetalheActivity extends AppCompatActivity implements
             case android.R.id.home:
                 finish();
                 return true;
-            case R.id.mn_ver_no_mapa:
-                MensagemUtils.gerarEExibirToast(this, "Vai abrir o mapa");
+            /*case R.id.mn_ver_no_mapa:
+                MensagemUtils.gerarEExibirToast(this, "Vai abrir o mapa");*/
         }
         return true;
     }
@@ -148,7 +147,7 @@ public class DetalheActivity extends AppCompatActivity implements
 
             AvaliacaoDAO dao = new AvaliacaoDAO(this);
             dao.save(avaliacao);
-            MensagemUtils.gerarEExibirToast(this, getString(R.string.avaliacao_salva_sucesso));
+            MensagemUtils.gerarEExibirToast(this, getString(R.string.msg_sucesso_avaliacao));
             dao.close();
             finish();
         } catch (SQLException ex){

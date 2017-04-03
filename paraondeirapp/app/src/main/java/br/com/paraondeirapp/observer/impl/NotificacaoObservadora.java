@@ -18,6 +18,6 @@ public class NotificacaoObservadora implements IObservador {
         PendingIntent intent = PendingIntent.getActivity(ctx, 0, new Intent(ctx, StartActivity.class), 0);
         NotificacaoUtils.notificar(IConstantesNotificacao.NOTIFICA_SINCRONIZACAO, ctx, intent,
                 ctx.getString(R.string.app_name), ctx.getString(R.string.app_name),
-                ctx.getString(R.string.fim_sincronizacao));
+                ctx.getString(R.string.msg_sucesso_sincronizacao));
     }
 }
