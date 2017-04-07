@@ -37,6 +37,8 @@
     <string name="msg_indicacao">Gerando indicações de visita.</string>
     <string name="msg_necessario_ip">É necessário informar configurar o IP/Porta do servidor para realizar
         esta operação.</string>
+    <string name="msg_indicacao_vazia">Nenhum estabelecimento foi retornado para indicação. Realize novas avaliações
+        e tente novamente!</string>
 
     <!-- Títulos/Mensagens curtas -->
     <string name="gostei">Gostei! :)</string>

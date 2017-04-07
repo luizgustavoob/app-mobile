@@ -202,29 +202,41 @@ public class ListaActivity extends AppCompatActivity implements
 
     @Override
     public void processarRetornoIndicacao(List<Estabelecimento> lista) {
-        List<Estabelecimento> listaFiltrada = new ArrayList<>();
-        try {
-            EstabelecimentoDAO estabelecimentoDAO = new EstabelecimentoDAO(this);
-            for (Estabelecimento estab : lista) {
-                if (estabelecimentoDAO.findByID(estab.getIdEstabelecimento()) != null){
-                    listaFiltrada.add(estab);
+        if (lista.size() > 0) {
+            List<Estabelecimento> listaFiltrada = new ArrayList<>();
+            try {
+                EstabelecimentoDAO estabelecimentoDAO = new EstabelecimentoDAO(this);
+                for (Estabelecimento estab : lista) {
+                    if (estabelecimentoDAO.findByID(estab.getIdEstabelecimento()) != null) {
+                        listaFiltrada.add(estab);
+                    }
                 }
+                estabelecimentoDAO.close();
+            } catch (Exception ex) {
+                MensagemUtils.gerarEExibirToast(this, getString(R.string.msg_erro_indicacao).replace("$e", ex.getMessage()));
             }
-            estabelecimentoDAO.close();
-        } catch (Exception ex){
-            MensagemUtils.gerarEExibirToast(this, getString(R.string.msg_erro_indicacao).replace("$e", ex.getMessage()));
+
+            lvEstabelecimentos.setAdapter(null);
+            app.setEstabelecimentos(listaFiltrada);
+            adapter.setContext(this);
+            adapter.setEstabelecimentos(listaFiltrada);
+            lvEstabelecimentos.setAdapter(adapter);
+            lvEstabelecimentos.requestFocus();
+
+            app.setUltimaVisualizacao(1);
+
+            DeviceUtils.esconderTeclado(this, etPesquisa);
+        } else {
+            MensagemUtils mu = new MensagemUtils(){
+                @Override
+                protected void clicouSim(){
+                    consultarNoBancoLocal();
+                }
+            };
+
+            mu.gerarEExibirAlertDialogOK(this, getString(R.string.app_name), getString(R.string.msg_indicacao_vazia),
+                    getString(R.string.ok));
         }
-
-        lvEstabelecimentos.setAdapter(null);
-        app.setEstabelecimentos(listaFiltrada);
-        adapter.setContext(this);
-        adapter.setEstabelecimentos(listaFiltrada);
-        lvEstabelecimentos.setAdapter(adapter);
-        lvEstabelecimentos.requestFocus();
-
-        app.setUltimaVisualizacao(1);
-
-        DeviceUtils.esconderTeclado(this, etPesquisa);
     }
 
     @Override
