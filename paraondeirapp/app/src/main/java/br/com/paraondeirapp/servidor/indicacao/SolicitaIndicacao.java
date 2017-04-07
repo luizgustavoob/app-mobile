@@ -58,13 +58,14 @@ public class SolicitaIndicacao {
         protected String doInBackground(String... params) {
             try {
                 Gson gson = new Gson();
-                JsonElement element = gson.toJsonTree(AppParaOndeIr.getInstance().getUser(), new TypeToken<Usuario>() {}.getType());
+                JsonElement element = gson.toJsonTree(AppParaOndeIr.getInstance().getUser(),
+                        new TypeToken<Usuario>() {}.getType());
                 String usuario = element.getAsJsonObject().toString();
 
                 InputStream stream = ConexaoUtils.post(IConstantesServidor.LINK_SINCRONIZACAO_INDICACAO, usuario);
                 if (stream != null) {
                     Reader reader = new InputStreamReader(stream);
-                    lista = (List<Estabelecimento>) new Gson().fromJson(reader, new TypeToken<List<Estabelecimento>>() {}.getType());
+                    lista = new Gson().fromJson(reader, new TypeToken<List<Estabelecimento>>() {}.getType());
                 }
             } catch (Exception ex){
                 lista = null;

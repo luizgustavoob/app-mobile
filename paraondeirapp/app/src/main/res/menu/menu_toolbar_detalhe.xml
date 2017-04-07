@@ -6,10 +6,10 @@
     tools:context=".view.DetalheActivity">
 
     <item
-        android:id="@+id/mn_ver_no_mapa"
+        android:id="@+id/mn_ligar"
         android:orderInCategory="1"
         android:title=""
-        android:icon="@drawable/ic_action_location"
-        app:showAsAction="never">
+        android:icon="@drawable/ic_action_ligar"
+        app:showAsAction="always">
     </item>
 </menu>

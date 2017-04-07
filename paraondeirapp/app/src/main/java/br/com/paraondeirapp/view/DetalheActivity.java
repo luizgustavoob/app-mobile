@@ -58,31 +58,16 @@ public class DetalheActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        getMenuInflater().inflate(R.menu.menu_context_detalhe, menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
                 finish();
                 return true;
-            /*case R.id.mn_ver_no_mapa:
-                MensagemUtils.gerarEExibirToast(this, "Vai abrir o mapa");*/
+            case R.id.mn_ligar:
+                ligarParaEstabelecimento();
+                return true;
         }
         return true;
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.mn_ligacao:
-                ligarParaEstabelecimento();
-                break;
-        }
-        return super.onContextItemSelected(item);
     }
 
     @Override
