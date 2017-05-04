@@ -6,7 +6,7 @@
     <string name="titulo_confirmacao">Confirmação</string>
     <string name="titulo_erro_conexao">Problemas com a conexão</string>
     <string name="titulo_testar_conexao">Testar conexão</string>
-    <string name="titulo_consultar_banco_local">Consultar banco local</string>
+    <string name="titulo_consultar_banco_local">Consultar banco de dados local</string>
     <string name="titulo_ligar_estabelecimento">Ligar para estabelecimento</string>
     <string name="titulo_definir_ip">Definir o IP/Porta do Servidor</string>
     <string name="titulo_limpar_prim_acesso">Limpar a config. \"Primeiro Acesso\"</string>
