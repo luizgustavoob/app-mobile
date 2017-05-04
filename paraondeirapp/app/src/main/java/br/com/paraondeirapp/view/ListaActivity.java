@@ -106,9 +106,6 @@ public class ListaActivity extends AppCompatActivity implements
             case R.id.mn_setipservidor:
                 configurarIPServidor();
                 break;
-            case R.id.mn_limparprimeiroacesso:
-                shared.setPrimeiroAcesso(true);
-                break;
         }
         return true;
     }
@@ -317,15 +314,19 @@ public class ListaActivity extends AppCompatActivity implements
     }
 
     private void consultarUltimasIndicacoes(){
-        lvEstabelecimentos.setAdapter(null);
-        adapter.setContext(this);
-        adapter.setEstabelecimentos(app.getEstabelecimentos());
-        lvEstabelecimentos.setAdapter(adapter);
-        lvEstabelecimentos.requestFocus();
+        if (app.getEstabelecimentos().size() > 0) {
+            lvEstabelecimentos.setAdapter(null);
+            adapter.setContext(this);
+            adapter.setEstabelecimentos(app.getEstabelecimentos());
+            lvEstabelecimentos.setAdapter(adapter);
+            lvEstabelecimentos.requestFocus();
 
-        app.setUltimaVisualizacao(1);
+            app.setUltimaVisualizacao(1);
 
-        DeviceUtils.esconderTeclado(this, etPesquisa);
+            DeviceUtils.esconderTeclado(this, etPesquisa);
+        } else {
+            MensagemUtils.gerarEExibirToast(this, "Não existem estabelecimentos para exibir. Solicite novas indicações!");
+        }
     }
 
     private void solicitarIndicacoes() {

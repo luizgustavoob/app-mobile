@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/mn_banco_local"
-        android:title="@string/titulo_consultar_banco_local">
+        android:id="@+id/mn_lista_indicacao"
+        android:title="@string/titulo_consulta_indicacoes">
     </item>
 
     <item
-        android:id="@+id/mn_lista_indicacao"
-        android:title="@string/titulo_consulta_indicacoes">
+        android:id="@+id/mn_banco_local"
+        android:title="@string/titulo_consultar_banco_local">
     </item>
 
     <item

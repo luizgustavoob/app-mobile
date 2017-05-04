@@ -24,17 +24,9 @@
     <item
         android:id="@+id/mn_setipservidor"
         android:orderInCategory="3"
-        android:icon="@drawable/ic_action_setipservidor"
-        android:title="@string/titulo_definir_ip"
-        app:showAsAction="ifRoom">
-    </item>
-
-    <item
-        android:id="@+id/mn_limparprimeiroacesso"
-        android:orderInCategory="4"
         android:icon="@drawable/ic_action_limparprimacesso"
-        android:title="@string/titulo_limpar_prim_acesso"
-        app:showAsAction="ifRoom">
+        android:title="@string/titulo_definir_ip"
+        app:showAsAction="always">
     </item>
 
 </menu>
