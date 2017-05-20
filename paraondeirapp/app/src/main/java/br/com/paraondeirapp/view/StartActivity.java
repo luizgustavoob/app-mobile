@@ -34,13 +34,12 @@ public class StartActivity extends Activity {
                         if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                             inicializar();
                         } else {
-                            MensagemUtils mu = new MensagemUtils(){
+                            new MensagemUtils(){
                                 @Override
                                 protected void clicouSim() {
                                     finish();
                                 }
-                            };
-                            mu.gerarEExibirAlertDialogOK(this, getString(R.string.app_name),
+                            }.gerarEExibirAlertDialogOK(this, getString(R.string.app_name),
                                     getString(R.string.msg_encerra_app), getString(R.string.ok));
                         }
                     }
@@ -51,14 +50,9 @@ public class StartActivity extends Activity {
 
     private void inicializar(){
         setUsuarioAplicacao();
-        SharedPreferencesUtils shared = new SharedPreferencesUtils();
-        try {
-            Intent intent = new Intent(this, shared.isPrimeiroAcesso()
-                    ? SplashActivity.class : ListaActivity.class);
-            startActivity(intent);
-        } finally {
-            shared = null;
-        }
+        Intent intent = new Intent(this, SharedPreferencesUtils.isPrimeiroAcesso()
+                ? SplashActivity.class : ListaActivity.class);
+        startActivity(intent);
         finish();
     }
 
@@ -69,8 +63,7 @@ public class StartActivity extends Activity {
             if (conta != null){
                 Usuario user = new Usuario();
                 user.setUsuario(conta);
-                SharedPreferencesUtils shared = new SharedPreferencesUtils();
-                user.setFcmid(shared.getTokenFirebase());
+                user.setFcmid(SharedPreferencesUtils.getTokenFirebase());
                 app.setUser(user);
             }
         }

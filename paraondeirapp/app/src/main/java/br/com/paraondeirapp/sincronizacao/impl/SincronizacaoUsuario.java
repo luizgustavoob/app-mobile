@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.servidor.sincronizacao.impl;
+package br.com.paraondeirapp.sincronizacao.impl;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -6,13 +6,12 @@ import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
 
-import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.Calendar;
 import java.util.List;
 import br.com.paraondeirapp.constantes.IConstantesServidor;
 import br.com.paraondeirapp.model.Usuario;
-import br.com.paraondeirapp.servidor.sincronizacao.Sincronizacao;
+import br.com.paraondeirapp.sincronizacao.Sincronizacao;
 import br.com.paraondeirapp.utils.ConexaoUtils;
 
 public class SincronizacaoUsuario extends Sincronizacao<Usuario> {
@@ -20,7 +19,7 @@ public class SincronizacaoUsuario extends Sincronizacao<Usuario> {
     private Context ctx;
 
     public SincronizacaoUsuario(Context ctx, ProgressDialog progressDialog, String json){
-        super(progressDialog, 7, IConstantesServidor.LINK_SINCRONIZACAO_FIREBASE, json);
+        super(progressDialog, 7, IConstantesServidor.LINK_SINCRONIZACAO_USUARIO, json);
         this.ctx = ctx;
     }
 

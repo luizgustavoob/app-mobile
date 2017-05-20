@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.repository.dao;
+package br.com.paraondeirapp.dao.impl;
 
 import android.content.Context;
 
@@ -29,13 +29,6 @@ public class AvaliacaoDAO extends GenericDAO<Avaliacao> {
         }
     }
 
-    /**
-     * Retorna o próximo ID da avaliação, sendo um sequencial por usuário e estabelecimento.
-     * @param usuario
-     * @param estabelecimento
-     * @return
-     * @throws SQLException
-     */
     private int getProximoId(String usuario) throws SQLException {
         try {
             QueryBuilder<Avaliacao, Integer> builder = getDao().queryBuilder();
@@ -54,12 +47,6 @@ public class AvaliacaoDAO extends GenericDAO<Avaliacao> {
         }
     }
 
-    /**
-     * Consulta as avaliações pela chave Estabelecimento + Usuario.
-     * @param obj
-     * @return
-     * @throws SQLException
-     */
     private Avaliacao findByIdEstabelecimentoAndUsuario(Avaliacao obj) throws SQLException {
         try {
             QueryBuilder<Avaliacao, Integer> builder = getDao().queryBuilder();

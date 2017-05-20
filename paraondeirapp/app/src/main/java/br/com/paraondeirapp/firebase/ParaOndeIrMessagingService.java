@@ -8,7 +8,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Map;
 
 import br.com.paraondeirapp.observer.impl.NotificacaoObservadora;
-import br.com.paraondeirapp.servidor.sincronizacao.SincronizacaoRunnable;
+import br.com.paraondeirapp.sincronizacao.SincronizacaoRunnable;
 
 public class ParaOndeIrMessagingService extends FirebaseMessagingService {
 
@@ -26,9 +26,8 @@ public class ParaOndeIrMessagingService extends FirebaseMessagingService {
         Map<String, String> map = remoteMessage.getData();
         if (map.containsKey("sincronizar")) {
             if (map.get("sincronizar").trim().equalsIgnoreCase("sincronizar")) {
-                SincronizacaoRunnable sinc = new SincronizacaoRunnable(this)
-                        .addObservador(new NotificacaoObservadora());
-                sinc.run();
+                new SincronizacaoRunnable(this)
+                        .addObservador(new NotificacaoObservadora()).run();
             }
         }
     }

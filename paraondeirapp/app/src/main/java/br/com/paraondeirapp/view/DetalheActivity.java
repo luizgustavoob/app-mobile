@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +26,7 @@ import br.com.paraondeirapp.adapter.DetalheAdapter;
 import br.com.paraondeirapp.model.Avaliacao;
 import br.com.paraondeirapp.model.Estabelecimento;
 import br.com.paraondeirapp.enumeration.YesNo;
-import br.com.paraondeirapp.repository.dao.AvaliacaoDAO;
+import br.com.paraondeirapp.dao.impl.AvaliacaoDAO;
 import br.com.paraondeirapp.utils.DeviceUtils;
 import br.com.paraondeirapp.utils.FoneUtils;
 import br.com.paraondeirapp.utils.MensagemUtils;
@@ -37,7 +36,7 @@ public class DetalheActivity extends AppCompatActivity implements
         IActivity,
         View.OnClickListener {
 
-    private RelativeLayout layoutPrinc;
+    private RelativeLayout layout;
     private Toolbar tbDetalhe;
     private ImageView ivFoto;
     private ListView lvDetalhe;
@@ -78,7 +77,7 @@ public class DetalheActivity extends AppCompatActivity implements
         setSupportActionBar(tbDetalhe);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        this.layoutPrinc = (RelativeLayout) findViewById(R.id.layoutPrinc);
+        this.layout = (RelativeLayout) findViewById(R.id.layoutPrinc);
         this.ivFoto = (ImageView) findViewById(R.id.iv_foto);
         this.lvDetalhe = (ListView) findViewById(R.id.lv_detalhe_estab);
         this.lvDetalhe.setAdapter(new DetalheAdapter(this, estabelecimento));
@@ -89,7 +88,7 @@ public class DetalheActivity extends AppCompatActivity implements
 
         this.btGostei.setOnClickListener(this);
         this.btNaoGostei.setOnClickListener(this);
-        registerForContextMenu(layoutPrinc);
+        registerForContextMenu(layout);
     }
 
     @Override

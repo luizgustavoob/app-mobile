@@ -14,8 +14,7 @@ public class ParaOndeIrInstanceIDService extends FirebaseInstanceIdService {
     public void onTokenRefresh() {
         super.onTokenRefresh();
         String token = FirebaseInstanceId.getInstance().getToken();
-        SharedPreferencesUtils shared = new SharedPreferencesUtils();
-        shared.setTokenFirebase(token);
+        SharedPreferencesUtils.setTokenFirebase(token);
         Usuario user = AppParaOndeIr.getInstance().getUser();
         if (user != null && !user.getFcmid().equals(token)){
             user.setFcmid(token);

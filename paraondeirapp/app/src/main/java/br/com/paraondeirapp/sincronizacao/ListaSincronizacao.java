@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.servidor.sincronizacao;
+package br.com.paraondeirapp.sincronizacao;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -13,13 +13,13 @@ import java.util.List;
 import br.com.paraondeirapp.AppParaOndeIr;
 import br.com.paraondeirapp.model.Avaliacao;
 import br.com.paraondeirapp.model.Usuario;
-import br.com.paraondeirapp.servidor.sincronizacao.impl.SincronizacaoAvaliacao;
-import br.com.paraondeirapp.servidor.sincronizacao.impl.SincronizacaoCidade;
-import br.com.paraondeirapp.servidor.sincronizacao.impl.SincronizacaoEndereco;
-import br.com.paraondeirapp.servidor.sincronizacao.impl.SincronizacaoEstabelecimento;
-import br.com.paraondeirapp.servidor.sincronizacao.impl.SincronizacaoRegistroDeletado;
-import br.com.paraondeirapp.servidor.sincronizacao.impl.SincronizacaoUF;
-import br.com.paraondeirapp.servidor.sincronizacao.impl.SincronizacaoUsuario;
+import br.com.paraondeirapp.sincronizacao.impl.SincronizacaoAvaliacao;
+import br.com.paraondeirapp.sincronizacao.impl.SincronizacaoCidade;
+import br.com.paraondeirapp.sincronizacao.impl.SincronizacaoEndereco;
+import br.com.paraondeirapp.sincronizacao.impl.SincronizacaoEstabelecimento;
+import br.com.paraondeirapp.sincronizacao.impl.SincronizacaoRegistroDeletado;
+import br.com.paraondeirapp.sincronizacao.impl.SincronizacaoUF;
+import br.com.paraondeirapp.sincronizacao.impl.SincronizacaoUsuario;
 
 public class ListaSincronizacao {
 

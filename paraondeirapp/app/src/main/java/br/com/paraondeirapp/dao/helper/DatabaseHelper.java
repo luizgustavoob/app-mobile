@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.repository.helper;
+package br.com.paraondeirapp.dao.helper;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.observer.interfaces;
+package br.com.paraondeirapp.observer;
 
 public interface IObservador {
 

@@ -30,8 +30,7 @@ public class ConexaoUtils {
      * @return - Link formatado
      */
     public static String formatarLinkConexao(String link){
-        SharedPreferencesUtils shared = new SharedPreferencesUtils();
-        return "http://" + shared.getIPServidor() + link;
+        return "http://" + SharedPreferencesUtils.getIPServidor() + link;
     }
 
     /**

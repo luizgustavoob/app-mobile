@@ -1,16 +1,14 @@
-package br.com.paraondeirapp.servidor.sincronizacao;
+package br.com.paraondeirapp.sincronizacao;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import br.com.paraondeirapp.model.Avaliacao;
 import br.com.paraondeirapp.utils.ConexaoUtils;
-import br.com.paraondeirapp.repository.dao.AvaliacaoDAO;
-import br.com.paraondeirapp.observer.interfaces.IObservador;
+import br.com.paraondeirapp.dao.impl.AvaliacaoDAO;
+import br.com.paraondeirapp.observer.IObservador;
 
 public class SincronizacaoRunnable implements Runnable {
 
@@ -29,7 +27,6 @@ public class SincronizacaoRunnable implements Runnable {
 
     @Override
     public void run() {
-        Log.i("SincronizacaoRunnable", "Sincronizacao automática iniciada em " + Calendar.getInstance());
         try {
             if (ConexaoUtils.temConexao(ctx)) {
                 AvaliacaoDAO dao = new AvaliacaoDAO(ctx);
@@ -39,13 +36,11 @@ public class SincronizacaoRunnable implements Runnable {
                 ListaSincronizacao sincronizacao = new ListaSincronizacao(null);
                 sincronizacao.sincronizarTudo(ctx, avaliacoes);
 
-                //NotificacaoObservadora
                 if (observadores != null && observadores.size() > 0) {
                     for (IObservador observador : observadores) {
                         observador.notificarObservadores();
                     }
                 }
-                Log.i("SincronizacaoRunnable", "Sincronizacao automática finalizada em " + Calendar.getInstance());
             }
         } catch (Exception ex) {
             ex.printStackTrace();

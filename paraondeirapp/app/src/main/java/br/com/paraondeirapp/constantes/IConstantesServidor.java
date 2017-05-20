@@ -9,7 +9,7 @@ public interface IConstantesServidor {
     static final String LINK_SINCRONIZACAO_ENDERECOS = "/web-service/endereco/sincronizaEndereco";
     static final String LINK_SINCRONIZACAO_ESTABELECIMENTOS = "/web-service/estab/sincronizaEstab";
     static final String LINK_SINCRONIZACAO_AVALIACOES = "/web-service/avaliacao/sincronizaAvaliacao";
-    static final String LINK_SINCRONIZACAO_INDICACAO = "/web-service/indicacao/";
-    static final String LINK_SINCRONIZACAO_FIREBASE = "/web-service/usuario/";
+    static final String LINK_SINCRONIZACAO_USUARIO = "/web-service/usuario/";
+    static final String LINK_INDICACAO = "/web-service/indicacao/";
     static final String LINK_MAPA = "http://maps.googleapis.com/maps/api/geocode/json?";
 }

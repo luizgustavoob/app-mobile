@@ -1,13 +1,12 @@
-package br.com.paraondeirapp.servidor.sincronizacao;
+package br.com.paraondeirapp.sincronizacao;
 
 import android.app.ProgressDialog;
-import android.util.Log;
+
 import com.google.gson.Gson;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
-import java.util.Calendar;
 import java.util.List;
 import br.com.paraondeirapp.utils.ConexaoUtils;
 
@@ -18,17 +17,16 @@ public abstract class Sincronizacao<T> {
     private String linkSincronizacao;
     private String jsonPost;
 
+    protected abstract boolean isPost();
+    protected abstract Type getCollectionType();
+    protected abstract void salvarSincronizacao(List<T> lista);
+
     public Sincronizacao(ProgressDialog progressDialog, int etapa, String linkSincronizacao, String jsonPost) {
         this.progressDialog = progressDialog;
         this.etapa = etapa;
         this.linkSincronizacao = linkSincronizacao;
         this.jsonPost = jsonPost;
     }
-
-    // Implementar nos descendentes.
-    protected abstract boolean isPost();
-    protected abstract Type getCollectionType();
-    protected abstract void salvarSincronizacao(List<T> lista);
 
     protected int getEtapa(){
         return this.etapa;

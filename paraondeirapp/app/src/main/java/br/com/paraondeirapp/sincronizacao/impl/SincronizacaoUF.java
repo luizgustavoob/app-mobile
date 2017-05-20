@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.servidor.sincronizacao.impl;
+package br.com.paraondeirapp.sincronizacao.impl;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -7,8 +7,8 @@ import java.lang.reflect.Type;
 import java.util.List;
 import br.com.paraondeirapp.model.Estado;
 import br.com.paraondeirapp.constantes.IConstantesServidor;
-import br.com.paraondeirapp.repository.dao.EstadoDAO;
-import br.com.paraondeirapp.servidor.sincronizacao.Sincronizacao;
+import br.com.paraondeirapp.dao.impl.EstadoDAO;
+import br.com.paraondeirapp.sincronizacao.Sincronizacao;
 
 public class SincronizacaoUF extends Sincronizacao<Estado> {
 

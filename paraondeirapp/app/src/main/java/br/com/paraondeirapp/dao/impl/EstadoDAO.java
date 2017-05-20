@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.repository.dao;
+package br.com.paraondeirapp.dao.impl;
 
 import android.content.Context;
 

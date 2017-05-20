@@ -16,7 +16,8 @@ public class Avaliacao implements Serializable {
     private int idAvaliacao;
 
     @DatabaseField(columnName = IConstantesDatabase.AVALIACAO_ESTABELECIMENTO, canBeNull = false,
-            foreign = true, foreignAutoRefresh = true, foreignColumnName = IConstantesDatabase.ESTABELECIMENTO_ID)
+            foreign = true, foreignAutoRefresh = true,
+            foreignColumnName = IConstantesDatabase.ESTABELECIMENTO_ID)
     private Estabelecimento estabelecimento;
 
     @DatabaseField(columnName = IConstantesDatabase.AVALIACAO_LIKE, canBeNull = false,
@@ -27,7 +28,8 @@ public class Avaliacao implements Serializable {
             dataType = DataType.STRING)
     private String usuario;
 
-    @DatabaseField(columnName = IConstantesDatabase.AVALIACAO_DTAVALIACAO, dataType = DataType.STRING)
+    @DatabaseField(columnName = IConstantesDatabase.AVALIACAO_DTAVALIACAO,
+            dataType = DataType.STRING)
     private String data;
 
     public Avaliacao(){

@@ -7,47 +7,42 @@ import br.com.paraondeirapp.constantes.IConstantesPreferences;
 
 public class SharedPreferencesUtils {
 
-    public SharedPreferences getSharedPreferences(){
+    private static SharedPreferences getSharedPreferences() {
         return AppParaOndeIr.getInstance()
                 .getSharedPreferences(IConstantesPreferences.APP_NAME, Context.MODE_PRIVATE);
     }
 
-    private SharedPreferences.Editor getEditor(){
+    private static SharedPreferences.Editor getEditor() {
         return getSharedPreferences().edit();
     }
 
-    public boolean isPrimeiroAcesso(){
+    public static boolean isPrimeiroAcesso() {
         return getSharedPreferences().getBoolean(IConstantesPreferences.PREF_PRIMEIRO_ACESSO, true);
     }
 
-    public void setPrimeiroAcesso(boolean primeiroAcesso){
+    public static void setPrimeiroAcesso(boolean primeiroAcesso) {
         SharedPreferences.Editor editor = getEditor();
         editor.putBoolean(IConstantesPreferences.PREF_PRIMEIRO_ACESSO, primeiroAcesso);
         editor.commit();
     }
 
-    public String getIPServidor(){
+    public static String getIPServidor() {
         return getSharedPreferences().getString(IConstantesPreferences.PREF_IP_SERVIDOR, "");
     }
 
-    public void setIPServidor(String ipServidor){
+    public static void setIPServidor(String ipServidor) {
         SharedPreferences.Editor editor = getEditor();
         editor.putString(IConstantesPreferences.PREF_IP_SERVIDOR, ipServidor);
         editor.commit();
     }
 
-    public void setTokenFirebase(String token){
+    public static void setTokenFirebase(String token) {
         SharedPreferences.Editor editor = getEditor();
         editor.putString(IConstantesPreferences.PREF_TOKEN_FIREBASE, token);
         editor.commit();
     }
 
-    public String getTokenFirebase(){
+    public static String getTokenFirebase() {
         return getSharedPreferences().getString(IConstantesPreferences.PREF_TOKEN_FIREBASE, "");
-    }
-
-    public void deleteAll(){
-        setIPServidor("");
-        setPrimeiroAcesso(true);
     }
 }

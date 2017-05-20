@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.servidor.sincronizacao.impl;
+package br.com.paraondeirapp.sincronizacao.impl;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,12 +9,12 @@ import java.util.List;
 import br.com.paraondeirapp.model.RegistroDeletado;
 import br.com.paraondeirapp.constantes.IConstantesDatabase;
 import br.com.paraondeirapp.constantes.IConstantesServidor;
-import br.com.paraondeirapp.repository.dao.AvaliacaoDAO;
-import br.com.paraondeirapp.repository.dao.CidadeDAO;
-import br.com.paraondeirapp.repository.dao.EnderecoDAO;
-import br.com.paraondeirapp.repository.dao.EstabelecimentoDAO;
-import br.com.paraondeirapp.repository.dao.EstadoDAO;
-import br.com.paraondeirapp.servidor.sincronizacao.Sincronizacao;
+import br.com.paraondeirapp.dao.impl.AvaliacaoDAO;
+import br.com.paraondeirapp.dao.impl.CidadeDAO;
+import br.com.paraondeirapp.dao.impl.EnderecoDAO;
+import br.com.paraondeirapp.dao.impl.EstabelecimentoDAO;
+import br.com.paraondeirapp.dao.impl.EstadoDAO;
+import br.com.paraondeirapp.sincronizacao.Sincronizacao;
 
 public class SincronizacaoRegistroDeletado extends Sincronizacao<RegistroDeletado> {
 

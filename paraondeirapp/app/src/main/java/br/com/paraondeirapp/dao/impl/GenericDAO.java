@@ -1,4 +1,4 @@
-package br.com.paraondeirapp.repository.dao;
+package br.com.paraondeirapp.dao.impl;
 
 import android.content.Context;
 
@@ -8,7 +8,7 @@ import com.j256.ormlite.dao.DaoManager;
 import java.sql.SQLException;
 import java.util.List;
 
-import br.com.paraondeirapp.repository.helper.DatabaseHelper;
+import br.com.paraondeirapp.dao.helper.DatabaseHelper;
 
 public abstract class GenericDAO<E> extends DatabaseHelper<E> {
 
@@ -22,10 +22,6 @@ public abstract class GenericDAO<E> extends DatabaseHelper<E> {
         } catch (SQLException ex){
             throw new SQLException(ex.getMessage());
         }
-    }
-
-    public Dao<E, Integer> getDao() {
-        return dao;
     }
 
     public E findByID(int id) throws SQLException {
@@ -81,5 +77,9 @@ public abstract class GenericDAO<E> extends DatabaseHelper<E> {
         } catch (SQLException ex){
             throw new SQLException(ex.getMessage());
         }
+    }
+
+    public Dao<E, Integer> getDao() {
+        return dao;
     }
 }
