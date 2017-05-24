@@ -15,11 +15,6 @@ import me.drakeet.materialdialog.MaterialDialog;
 
 public class DeviceUtils {
 
-    /**
-     * Recupera a conta do dispositivo. Identificador do usuário do app.
-     * @param ctx - Contexto de aplicação.
-     * @return - Conta do dispositivo
-     */
     public static String getContaDispositivo(Context ctx) {
         AccountManager manager = AccountManager.get(ctx);
         Account[] contas = manager.getAccountsByType("com.google");
@@ -31,11 +26,6 @@ public class DeviceUtils {
         return "";
     }
 
-    /**
-     * Esconde o teclado do dispositivo.
-     * @param ctx - Contexto de utilização.
-     * @param view - View que aciona evento.
-     */
     public static void esconderTeclado(Context ctx, View view){
         InputMethodManager imm;
         try {
@@ -46,22 +36,10 @@ public class DeviceUtils {
         }
     }
 
-    /**
-     * Verifica se o aplicativo tem permissão para determinado recurso.
-     * @param ctx
-     * @param permissao
-     * @return
-     */
     public static boolean temPermissao(Activity ctx, String permissao){
         return ContextCompat.checkSelfPermission(ctx, permissao) == PackageManager.PERMISSION_GRANTED;
     }
 
-    /**
-     * Solicita a permissão do usuário para determinados recuros do dispositivo.
-     * @param ctx - Contexto de utilização.
-     * @param mensagem - Mensagem de permissão.
-     * @param permissao - Permissão desejada.
-     */
     public static void solicitarPermissao(Activity ctx, String mensagem, String permissao){
         if (ActivityCompat.shouldShowRequestPermissionRationale(ctx, permissao)) { //já teve uma solicitação e foi negada?
             exibirDialogDePermissao(ctx, mensagem, permissao); //explicação do porquê precisa da permissão.
@@ -70,12 +48,6 @@ public class DeviceUtils {
         }
     }
 
-    /**
-     * Exibe o dialog explicando a solicitação da permissão.
-     * @param ctx - Contexto de utilização.
-     * @param mensagem - Mensagem de permissão.
-     * @param permissao - Permissão solicitada.
-     */
     private static void exibirDialogDePermissao(final Activity ctx, String mensagem, final String permissao) {
         final MaterialDialog dialog = new MaterialDialog(ctx);
         dialog.setTitle(ctx.getString(R.string.permissao))
