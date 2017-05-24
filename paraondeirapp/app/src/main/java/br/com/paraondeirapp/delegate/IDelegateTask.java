@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.com.paraondeirapp.model.Estabelecimento;
 
-public interface IDelegate {
+public interface IDelegateTask {
 
     void executarQuandoSucesso();
     void executarQuandoSucesso(List<Estabelecimento> lista);

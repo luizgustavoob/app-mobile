@@ -7,19 +7,19 @@ import android.os.AsyncTask;
 import java.util.List;
 
 import br.com.paraondeirapp.R;
+import br.com.paraondeirapp.delegate.IDelegateTask;
 import br.com.paraondeirapp.model.Avaliacao;
 import br.com.paraondeirapp.sincronizacao.ListaSincronizacao;
-import br.com.paraondeirapp.delegate.IDelegate;
 
 public class SincronizacaoTask extends AsyncTask<String, String, String> {
 
     private Context ctx;
-    private IDelegate delegate;
+    private IDelegateTask delegate;
     private List<Avaliacao> listaAvaliacao;
     private String erro;
     private ProgressDialog progressDialog;
 
-    public SincronizacaoTask(Context ctx, IDelegate delegate, List<Avaliacao> listaAvaliacao) {
+    public SincronizacaoTask(Context ctx, IDelegateTask delegate, List<Avaliacao> listaAvaliacao) {
         this.ctx = ctx;
         this.delegate = delegate;
         this.listaAvaliacao = listaAvaliacao;

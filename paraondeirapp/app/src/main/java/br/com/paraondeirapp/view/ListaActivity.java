@@ -20,6 +20,7 @@ import java.util.List;
 import br.com.paraondeirapp.AppParaOndeIr;
 import br.com.paraondeirapp.R;
 import br.com.paraondeirapp.adapter.ListAdapter;
+import br.com.paraondeirapp.delegate.IDelegateTask;
 import br.com.paraondeirapp.model.Avaliacao;
 import br.com.paraondeirapp.model.Estabelecimento;
 import br.com.paraondeirapp.constantes.IConstantesNotificacao;
@@ -28,7 +29,6 @@ import br.com.paraondeirapp.utils.ConexaoUtils;
 import br.com.paraondeirapp.utils.DeviceUtils;
 import br.com.paraondeirapp.utils.MensagemUtils;
 import br.com.paraondeirapp.utils.SharedPreferencesUtils;
-import br.com.paraondeirapp.delegate.IDelegate;
 import br.com.paraondeirapp.dao.impl.AvaliacaoDAO;
 import br.com.paraondeirapp.dao.impl.EstabelecimentoDAO;
 import br.com.paraondeirapp.task.SincronizacaoTask;
@@ -38,7 +38,7 @@ public class ListaActivity extends AppCompatActivity implements
         IActivity,
         AdapterView.OnItemClickListener,
         Toolbar.OnMenuItemClickListener,
-        IDelegate {
+        IDelegateTask {
 
     private ListView lvEstabelecimentos;
     private Toolbar toolbar, toolbarPesquisa;

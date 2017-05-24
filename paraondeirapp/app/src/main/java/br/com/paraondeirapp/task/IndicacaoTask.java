@@ -15,7 +15,7 @@ import java.util.List;
 
 import br.com.paraondeirapp.AppParaOndeIr;
 import br.com.paraondeirapp.R;
-import br.com.paraondeirapp.delegate.IDelegate;
+import br.com.paraondeirapp.delegate.IDelegateTask;
 import br.com.paraondeirapp.model.Estabelecimento;
 import br.com.paraondeirapp.model.Usuario;
 import br.com.paraondeirapp.constantes.IConstantesServidor;
@@ -24,12 +24,12 @@ import br.com.paraondeirapp.utils.ConexaoUtils;
 public class IndicacaoTask extends AsyncTask<String, String, String> {
 
     private Context ctx;
-    private IDelegate delegate;
+    private IDelegateTask delegate;
     private String erro;
     private ProgressDialog progressDialog;
     private List<Estabelecimento> lista;
 
-    public IndicacaoTask(Context ctx, IDelegate delegate) {
+    public IndicacaoTask(Context ctx, IDelegateTask delegate) {
         this.ctx = ctx;
         this.delegate = delegate;
         this.erro = "";
