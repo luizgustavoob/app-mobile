@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import br.com.paraondeirapp.AppParaOndeIr;
 import br.com.paraondeirapp.R;
@@ -17,9 +18,13 @@ public class StartActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!DeviceUtils.temPermissao(this, Manifest.permission.GET_ACCOUNTS)) {
-            DeviceUtils.solicitarPermissao(this, getString(R.string.msg_permissao_conta),
-                    Manifest.permission.GET_ACCOUNTS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!DeviceUtils.temPermissao(this, Manifest.permission.GET_ACCOUNTS)) {
+                DeviceUtils.solicitarPermissao(this, getString(R.string.msg_permissao_conta),
+                        Manifest.permission.GET_ACCOUNTS);
+            } else {
+                inicializar();
+            }
         } else {
             inicializar();
         }

@@ -13,16 +13,18 @@ import br.com.paraondeirapp.model.Avaliacao;
 import br.com.paraondeirapp.observer.Observador;
 import br.com.paraondeirapp.sincronizacao.ListaSincronizacao;
 
-public class SincronizacaoTask extends AsyncTask<List<Avaliacao>, Void, Void> {
+public class SincronizacaoTask extends AsyncTask<Void, Void, Void> {
 
     private Context context;
     private DelegateTask delegate;
     private String erro;
     private ProgressDialog progressDialog;
+    private List<Avaliacao> avaliacoes;
 
-    public SincronizacaoTask(Context context, DelegateTask delegate) {
+    public SincronizacaoTask(Context context, DelegateTask delegate, List<Avaliacao> avaliacoes) {
         this.context = context;
         this.delegate = delegate;
+        this.avaliacoes = avaliacoes;
         this.erro = "";
     }
 
@@ -38,9 +40,9 @@ public class SincronizacaoTask extends AsyncTask<List<Avaliacao>, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(List<Avaliacao>... avaliacoes) {
+    protected Void doInBackground(Void... aVoid) {
         try {
-            new ListaSincronizacao(progressDialog).sincronizarTudo(context, avaliacoes[0]);
+            new ListaSincronizacao(progressDialog).sincronizarTudo(context, avaliacoes);
         } catch (Exception ex) {
             erro = ex.getMessage();
             cancel(true);

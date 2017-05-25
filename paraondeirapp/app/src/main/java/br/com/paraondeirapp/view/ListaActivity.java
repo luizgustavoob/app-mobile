@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
@@ -20,12 +21,14 @@ import java.util.List;
 import br.com.paraondeirapp.AppParaOndeIr;
 import br.com.paraondeirapp.R;
 import br.com.paraondeirapp.adapter.ListAdapter;
+import br.com.paraondeirapp.async.runnable.SincronizacaoRunnable;
 import br.com.paraondeirapp.delegate.DelegateTask;
 import br.com.paraondeirapp.enumeration.UltimaVisualizacao;
 import br.com.paraondeirapp.model.Avaliacao;
 import br.com.paraondeirapp.model.Estabelecimento;
 import br.com.paraondeirapp.constantes.IConstantesNotificacao;
 import br.com.paraondeirapp.async.task.IndicacaoTask;
+import br.com.paraondeirapp.observer.impl.NotificacaoObservadora;
 import br.com.paraondeirapp.utils.ConexaoUtils;
 import br.com.paraondeirapp.utils.DeviceUtils;
 import br.com.paraondeirapp.utils.MensagemUtils;
@@ -37,8 +40,10 @@ import br.com.paraondeirapp.async.task.SincronizacaoTask;
 public class ListaActivity extends AppCompatActivity implements
         AdapterView.OnItemClickListener,
         Toolbar.OnMenuItemClickListener,
+        SwipeRefreshLayout.OnRefreshListener,
         DelegateTask {
 
+    private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listViewEstabelecimentos;
     private Toolbar toolbarTopo, toolbarPesquisa;
     private EditText editTextPesquisa;
@@ -125,11 +130,19 @@ public class ListaActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onRefresh() {
+        //consultarNoServidor();
+    }
+
+    @Override
     public void executarQuandoSucessoNaSincronizacao() {
+        //swipeRefreshLayout.setRefreshing(false);
+
         new MensagemUtils() {
             @Override
             protected void clicouSim() {
                 consultarNoBancoLocal(true);
+                swipeRefreshLayout.setRefreshing(false);
             }
         }.gerarEExibirAlertDialogOK(this, getString(R.string.titulo_confirmacao),
                 getString(R.string.msg_sucesso_sincronizacao), getString(R.string.ok));
@@ -195,8 +208,12 @@ public class ListaActivity extends AppCompatActivity implements
         listAdapter = new ListAdapter(this, null);
         listViewEstabelecimentos = (ListView) findViewById(R.id.lv_estabelecimentos);
         listViewEstabelecimentos.setOnItemClickListener(this);
+
         registerForContextMenu(listViewEstabelecimentos);
         myApp = AppParaOndeIr.getInstance();
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout_list);
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     private void configuracoesIniciais() {
@@ -232,9 +249,13 @@ public class ListaActivity extends AppCompatActivity implements
         }
 
         if (SharedPreferencesUtils.getIPServidor().isEmpty()) {
-            configurarIPServidor();
             if (SharedPreferencesUtils.getIPServidor().isEmpty()) {
-                new MensagemUtils().gerarEExibirAlertDialogOK(this, getString(R.string.titulo_erro_conexao),
+                new MensagemUtils(){
+                    @Override
+                    protected void clicouSim() {
+                        configurarIPServidor();
+                    }
+                }.gerarEExibirAlertDialogOK(this, getString(R.string.titulo_erro_conexao),
                         getString(R.string.msg_necessario_ip), getString(R.string.ok));
                 return;
             }
@@ -249,10 +270,7 @@ public class ListaActivity extends AppCompatActivity implements
             avaliacoes = null;
         }
 
-        new SincronizacaoTask(this, this).execute(avaliacoes);
-
-        listViewEstabelecimentos.requestFocus();
-        DeviceUtils.esconderTeclado(this, editTextPesquisa);
+        new SincronizacaoTask(this, this, avaliacoes).execute();
     }
 
     private void consultarNoBancoLocal(boolean forcarConsultaNoBD){

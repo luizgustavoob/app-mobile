@@ -1,39 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.ListaActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tb_lista"
-        android:title="@string/app_name"
+    <RelativeLayout
+        android:id="@+id/relative_layout_list_top"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:layout_alignParentLeft="true"
-        app:theme="@style/ToolbarPrincipal"/>
+        android:layout_height="wrap_content">
 
-    <ListView
-        android:id="@+id/lv_estabelecimentos"
-        android:layout_below="@+id/tb_lista"
-        android:layout_above="@+id/tb_pesquisa"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tb_pesquisa"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:minHeight="?attr/actionBarSize"
-        android:background="@color/branco"
-        android:layout_alignParentBottom="true">
-
-        <EditText
-            android:id="@+id/et_pesquisa"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tb_lista"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </android.support.v7.widget.Toolbar>
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentLeft="true"
+            android:background="?attr/colorPrimary"
+            android:title="@string/app_name"
+            app:theme="@style/ToolbarPrincipal" />
+    </RelativeLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relative_layout_list_top">
+
+        <ListView
+            android:id="@+id/lv_estabelecimentos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative_layout_list_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tb_pesquisa"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentBottom="true"
+            android:background="@color/branco"
+            android:minHeight="?attr/actionBarSize">
+
+            <EditText
+                android:id="@+id/et_pesquisa"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.v7.widget.Toolbar>
+    </RelativeLayout>
 </RelativeLayout>
