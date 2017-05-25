@@ -10,6 +10,7 @@ import br.com.paraondeirapp.utils.SharedPreferencesUtils;
 
 public class ParaOndeIrInstanceIDService extends FirebaseInstanceIdService {
 
+    private static String TAG = ParaOndeIrInstanceIDService.class.getSimpleName();
     @Override
     public void onTokenRefresh() {
         super.onTokenRefresh();
@@ -19,6 +20,6 @@ public class ParaOndeIrInstanceIDService extends FirebaseInstanceIdService {
         if (user != null && !user.getFcmid().equals(token)){
             user.setFcmid(token);
         }
-        Log.i("Token do app", token);
+        Log.i(TAG, "Token do app: " + token);
     }
 }

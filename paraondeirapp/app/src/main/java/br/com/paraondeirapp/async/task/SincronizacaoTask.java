@@ -1,46 +1,46 @@
-package br.com.paraondeirapp.task;
+package br.com.paraondeirapp.async.task;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.paraondeirapp.R;
-import br.com.paraondeirapp.delegate.IDelegateTask;
+import br.com.paraondeirapp.delegate.DelegateTask;
 import br.com.paraondeirapp.model.Avaliacao;
+import br.com.paraondeirapp.observer.Observador;
 import br.com.paraondeirapp.sincronizacao.ListaSincronizacao;
 
-public class SincronizacaoTask extends AsyncTask<String, String, String> {
+public class SincronizacaoTask extends AsyncTask<List<Avaliacao>, Void, Void> {
 
-    private Context ctx;
-    private IDelegateTask delegate;
-    private List<Avaliacao> listaAvaliacao;
+    private Context context;
+    private DelegateTask delegate;
     private String erro;
     private ProgressDialog progressDialog;
 
-    public SincronizacaoTask(Context ctx, IDelegateTask delegate, List<Avaliacao> listaAvaliacao) {
-        this.ctx = ctx;
+    public SincronizacaoTask(Context context, DelegateTask delegate) {
+        this.context = context;
         this.delegate = delegate;
-        this.listaAvaliacao = listaAvaliacao;
         this.erro = "";
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(ctx);
-        progressDialog.setMessage(ctx.getString(R.string.msg_sincronizacao));
-        progressDialog.setTitle(ctx.getString(R.string.titulo_sincronizacao));
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage(context.getString(R.string.msg_sincronizacao));
+        progressDialog.setTitle(context.getString(R.string.titulo_sincronizacao));
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setCancelable(false);
         progressDialog.show();
     }
 
     @Override
-    protected String doInBackground(String... params) {
+    protected Void doInBackground(List<Avaliacao>... avaliacoes) {
         try {
-            new ListaSincronizacao(progressDialog).sincronizarTudo(ctx, listaAvaliacao);
+            new ListaSincronizacao(progressDialog).sincronizarTudo(context, avaliacoes[0]);
         } catch (Exception ex) {
             erro = ex.getMessage();
             cancel(true);
@@ -56,8 +56,9 @@ public class SincronizacaoTask extends AsyncTask<String, String, String> {
     }
 
     @Override
-    protected void onPostExecute(String retorno) {
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
         progressDialog.dismiss();
-        delegate.executarQuandoSucesso();
+        delegate.executarQuandoSucessoNaSincronizacao();
     }
 }

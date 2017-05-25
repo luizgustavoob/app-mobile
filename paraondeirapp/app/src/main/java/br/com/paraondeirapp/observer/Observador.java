@@ -1,6 +1,6 @@
 package br.com.paraondeirapp.observer;
 
-public interface IObservador {
+public interface Observador {
 
     void notificarObservadores();
 }

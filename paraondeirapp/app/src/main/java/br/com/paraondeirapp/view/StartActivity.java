@@ -27,44 +27,42 @@ public class StartActivity extends Activity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode){
-            case 1:
-                for (int i = 0; i < permissions.length; i++){
-                    if (permissions[i].equalsIgnoreCase(Manifest.permission.GET_ACCOUNTS)){
-                        if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                            inicializar();
-                        } else {
-                            new MensagemUtils(){
-                                @Override
-                                protected void clicouSim() {
-                                    finish();
-                                }
-                            }.gerarEExibirAlertDialogOK(this, getString(R.string.app_name),
-                                    getString(R.string.msg_encerra_app), getString(R.string.ok));
-                        }
+        if (requestCode == 1){
+            for (int i = 0; i < permissions.length; i++){
+                if (permissions[i].equalsIgnoreCase(Manifest.permission.GET_ACCOUNTS)){
+                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                        inicializar();
+                    } else {
+                        new MensagemUtils(){
+                            @Override
+                            protected void clicouSim() {
+                                finish();
+                            }
+                        }.gerarEExibirAlertDialogOK(this, getString(R.string.app_name),
+                                getString(R.string.msg_encerra_app), getString(R.string.ok));
                     }
                 }
+            }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private void inicializar(){
         setUsuarioAplicacao();
-        Intent intent = new Intent(this, SharedPreferencesUtils.isPrimeiroAcesso()
-                ? SplashActivity.class : ListaActivity.class);
+        Intent intent = new Intent(this, SplashActivity.class);
         startActivity(intent);
         finish();
     }
 
     private void setUsuarioAplicacao() {
-        AppParaOndeIr app = AppParaOndeIr.getInstance();
-        if (app.getUser() == null ){
+        AppParaOndeIr myApp = AppParaOndeIr.getInstance();
+        if (myApp.getUser() == null) {
             String conta = DeviceUtils.getContaDispositivo(this);
             if (conta != null){
                 Usuario user = new Usuario();
                 user.setUsuario(conta);
                 user.setFcmid(SharedPreferencesUtils.getTokenFirebase());
-                app.setUser(user);
+                myApp.setUser(user);
             }
         }
     }

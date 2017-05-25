@@ -14,15 +14,15 @@ import br.com.paraondeirapp.dao.impl.CidadeDAO;
 import br.com.paraondeirapp.dao.impl.EnderecoDAO;
 import br.com.paraondeirapp.dao.impl.EstabelecimentoDAO;
 import br.com.paraondeirapp.dao.impl.EstadoDAO;
-import br.com.paraondeirapp.sincronizacao.Sincronizacao;
+import br.com.paraondeirapp.sincronizacao.SincronizacaoAbstract;
 
-public class SincronizacaoRegistroDeletado extends Sincronizacao<RegistroDeletado> {
+public class SincronizacaoRegistroDeletado extends SincronizacaoAbstract<RegistroDeletado> {
 
-    private Context ctx;
+    private Context context;
 
-    public SincronizacaoRegistroDeletado(Context ctx, ProgressDialog progressDialog, String jsonPost) {
-        super(progressDialog, 1, IConstantesServidor.LINK_SINCRONIZACAO_REGISTROS_DELETADOS, jsonPost);
-        this.ctx = ctx;
+    public SincronizacaoRegistroDeletado(Context context, ProgressDialog progressDialog, String body) {
+        super(progressDialog, 1, IConstantesServidor.URL_SINCRONIZA_REGISTROS_DELETADOS, body);
+        this.context = context;
     }
 
     @Override
@@ -37,28 +37,28 @@ public class SincronizacaoRegistroDeletado extends Sincronizacao<RegistroDeletad
 
     @Override
     protected void salvarSincronizacao(List<RegistroDeletado> lista) {
-        List<Integer> listaAvaliacao = new ArrayList<>();
-        List<Integer> listaEstab = new ArrayList<>();
-        List<Integer> listaEndereco = new ArrayList<>();
-        List<Integer> listaCidade = new ArrayList<>();
-        List<Integer> listaEstado = new ArrayList<>();
+        List<Integer> avaliacoes = new ArrayList<>();
+        List<Integer> estabelecimentos = new ArrayList<>();
+        List<Integer> enderecos = new ArrayList<>();
+        List<Integer> cidades = new ArrayList<>();
+        List<Integer> estados = new ArrayList<>();
 
         for (RegistroDeletado registro : lista) {
             switch (registro.getNome_tabela().toUpperCase().trim()){
                 case IConstantesDatabase.TABELA_AVALIACAO:
-                    listaAvaliacao.add(registro.getChave_tabela());
+                    avaliacoes.add(registro.getChave_tabela());
                     break;
                 case IConstantesDatabase.TABELA_ESTABELECIMENTO:
-                    listaEstab.add(registro.getChave_tabela());
+                    estabelecimentos.add(registro.getChave_tabela());
                     break;
                 case IConstantesDatabase.TABELA_ENDERECO:
-                    listaEndereco.add(registro.getChave_tabela());
+                    enderecos.add(registro.getChave_tabela());
                     break;
                 case IConstantesDatabase.TABELA_CIDADE:
-                    listaCidade.add(registro.getChave_tabela());
+                    cidades.add(registro.getChave_tabela());
                     break;
                 case IConstantesDatabase.TABELA_ESTADO:
-                    listaEstado.add(registro.getChave_tabela());
+                    estados.add(registro.getChave_tabela());
                     break;
                 default:
                     break;
@@ -67,62 +67,62 @@ public class SincronizacaoRegistroDeletado extends Sincronizacao<RegistroDeletad
 
         if (lista.size() > 0) {
             try {
-                deletarAvaliacoes(listaAvaliacao);
-                deletarEstabelecimentos(listaEstab);
-                deletarEnderecos(listaEndereco);
-                deletarCidades(listaCidade);
-                deletarEstados(listaEstado);
+                deletarAvaliacoes(avaliacoes);
+                deletarEstabelecimentos(estabelecimentos);
+                deletarEnderecos(enderecos);
+                deletarCidades(cidades);
+                deletarEstados(estados);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
     }
 
-    private void deletarAvaliacoes(List<Integer> chaves) {
+    private void deletarAvaliacoes(List<Integer> idsEstabelecimentos) {
         try {
-            AvaliacaoDAO dao = new AvaliacaoDAO(ctx);
-            dao.deleteByListIdEstabelecimento(chaves);
-            dao.close();
+            AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO(context);
+            avaliacaoDAO.deleteByListIdEstabelecimento(idsEstabelecimentos);
+            avaliacaoDAO.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    private void deletarEstabelecimentos(List<Integer> chaves) {
+    private void deletarEstabelecimentos(List<Integer> idsEstabelecimentos) {
         try {
-            EstabelecimentoDAO dao = new EstabelecimentoDAO(ctx);
-            dao.deleteByListIdEstabelecimento(chaves);
-            dao.close();
+            EstabelecimentoDAO estabelecimentoDAO = new EstabelecimentoDAO(context);
+            estabelecimentoDAO.deleteByListIdEstabelecimento(idsEstabelecimentos);
+            estabelecimentoDAO.close();
         } catch (Exception ex){
             ex.printStackTrace();
         }
     }
 
-    private void deletarEnderecos(List<Integer> chaves) {
+    private void deletarEnderecos(List<Integer> idsEnderecos) {
         try {
-            EnderecoDAO dao = new EnderecoDAO(ctx);
-            dao.deleteByListIdEndereco(chaves);
-            dao.close();
+            EnderecoDAO enderecoDAO = new EnderecoDAO(context);
+            enderecoDAO.deleteByListIdEndereco(idsEnderecos);
+            enderecoDAO.close();
         } catch (Exception ex){
             ex.printStackTrace();
         }
     }
 
-    private void deletarCidades(List<Integer> chaves) {
+    private void deletarCidades(List<Integer> idsCidades) {
         try {
-            CidadeDAO dao = new CidadeDAO(ctx);
-            dao.deleteByListIdCidade(chaves);
-            dao.close();
+            CidadeDAO cidadeDAO = new CidadeDAO(context);
+            cidadeDAO.deleteByListIdCidade(idsCidades);
+            cidadeDAO.close();
         } catch (Exception ex){
             ex.printStackTrace();
         }
     }
 
-    private void deletarEstados(List<Integer> chaves) {
+    private void deletarEstados(List<Integer> idsEstados) {
         try {
-            EstadoDAO dao = new EstadoDAO(ctx);
-            dao.deleteByListIdEstado(chaves);
-            dao.close();
+            EstadoDAO estadoDAO = new EstadoDAO(context);
+            estadoDAO.deleteByListIdEstado(idsEstados);
+            estadoDAO.close();
         } catch (Exception ex){
             ex.printStackTrace();
         }

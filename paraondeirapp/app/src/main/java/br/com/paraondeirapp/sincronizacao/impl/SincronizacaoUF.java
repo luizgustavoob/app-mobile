@@ -8,15 +8,15 @@ import java.util.List;
 import br.com.paraondeirapp.model.Estado;
 import br.com.paraondeirapp.constantes.IConstantesServidor;
 import br.com.paraondeirapp.dao.impl.EstadoDAO;
-import br.com.paraondeirapp.sincronizacao.Sincronizacao;
+import br.com.paraondeirapp.sincronizacao.SincronizacaoAbstract;
 
-public class SincronizacaoUF extends Sincronizacao<Estado> {
+public class SincronizacaoUF extends SincronizacaoAbstract<Estado> {
 
-    private Context ctx;
+    private Context context;
 
-    public SincronizacaoUF(Context ctx, ProgressDialog progressDialog) {
-        super(progressDialog, 2, IConstantesServidor.LINK_SINCRONIZACAO_ESTADOS, "");
-        this.ctx = ctx;
+    public SincronizacaoUF(Context context, ProgressDialog progressDialog) {
+        super(progressDialog, 2, IConstantesServidor.URL_SINCRONIZA_ESTADOS, "");
+        this.context = context;
     }
 
     @Override
@@ -32,10 +32,10 @@ public class SincronizacaoUF extends Sincronizacao<Estado> {
     @Override
     protected void salvarSincronizacao(List<Estado> lista) {
         try {
-            EstadoDAO estadoDAO = new EstadoDAO(ctx);
+            EstadoDAO estadoDAO = new EstadoDAO(context);
             for (int i = 0; i < lista.size(); i++){
-                Estado uf = lista.get(i);
-                estadoDAO.save(uf);
+                Estado estado = lista.get(i);
+                estadoDAO.save(estado);
             }
             estadoDAO.close();
         } catch (Exception ex){

@@ -10,7 +10,6 @@
     <string name="titulo_ligar_estabelecimento">Ligar para estabelecimento</string>
     <string name="titulo_definir_ip">Definir o IP/Porta do Servidor</string>
     <string name="titulo_limpar_prim_acesso">Limpar a config. \"Primeiro Acesso\"</string>
-    <string name="titulo_activity_mapa">Mapa</string>
     <string name="titulo_consulta_indicacoes">Consultar últimas indicações</string>
 
     <!-- Mensagens -->
@@ -39,6 +38,8 @@
         esta operação.</string>
     <string name="msg_indicacao_vazia">Nenhum estabelecimento foi retornado para indicação. Realize novas avaliações
         e tente novamente!</string>
+    <string name="msg_sem_estabs">Não existem estabelecmientos para exibir. Solicite novas indicações!</string>
+    <string name="msg_erro_pesquisa">Erro na pesquisa de estabelecimentos. Detalhe: $e</string>
 
     <!-- Títulos/Mensagens curtas -->
     <string name="gostei">Gostei! :)</string>

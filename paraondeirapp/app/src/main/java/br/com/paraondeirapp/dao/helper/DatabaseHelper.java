@@ -14,8 +14,8 @@ import br.com.paraondeirapp.constantes.IConstantesDatabase;
 
 public class DatabaseHelper<E> extends OrmLiteSqliteOpenHelper {
 
-    public DatabaseHelper(Context ctx) {
-        super(ctx, IConstantesDatabase.NAME_DATABASE, null, IConstantesDatabase.VERSION_DATABASE);
+    public DatabaseHelper(Context context) {
+        super(context, IConstantesDatabase.NOME_DATABASE, null, IConstantesDatabase.VERSAO_DATABASE);
     }
 
     @Override

@@ -10,34 +10,34 @@ import java.lang.reflect.Type;
 import java.util.List;
 import br.com.paraondeirapp.utils.ConexaoUtils;
 
-public abstract class Sincronizacao<T> {
+public abstract class SincronizacaoAbstract<T> {
 
     private ProgressDialog progressDialog;
     private int etapa;
-    private String linkSincronizacao;
-    private String jsonPost;
+    private String urlSincronizacao;
+    private String body;
 
     protected abstract boolean isPost();
     protected abstract Type getCollectionType();
     protected abstract void salvarSincronizacao(List<T> lista);
 
-    public Sincronizacao(ProgressDialog progressDialog, int etapa, String linkSincronizacao, String jsonPost) {
+    public SincronizacaoAbstract(ProgressDialog progressDialog, int etapa, String urlSincronizacao, String body) {
         this.progressDialog = progressDialog;
         this.etapa = etapa;
-        this.linkSincronizacao = linkSincronizacao;
-        this.jsonPost = jsonPost;
+        this.urlSincronizacao = urlSincronizacao;
+        this.body = body;
     }
 
     protected int getEtapa(){
         return this.etapa;
     }
 
-    protected String getLinkSincronizacao(){
-        return this.linkSincronizacao;
+    protected String getUrlSincronizacao(){
+        return this.urlSincronizacao;
     }
 
-    protected String getJsonPost(){
-        return this.jsonPost;
+    protected String getBody(){
+        return this.body;
     }
 
     protected void atualizarProgressBar() {
@@ -50,9 +50,9 @@ public abstract class Sincronizacao<T> {
     protected List<T> post() throws Exception {
         List<T> lista = null;
         try {
-            InputStream stream = ConexaoUtils.post(linkSincronizacao, jsonPost);
-            if (stream != null){
-                Reader reader = new InputStreamReader(stream);
+            InputStream inputStream = ConexaoUtils.post(urlSincronizacao, body);
+            if (inputStream != null){
+                Reader reader = new InputStreamReader(inputStream);
                 lista = (List<T>) new Gson().fromJson(reader, getCollectionType());
             }
         } catch (Exception ex) {
@@ -64,9 +64,9 @@ public abstract class Sincronizacao<T> {
     protected List<T> get() throws Exception {
         List<T> lista = null;
         try {
-            InputStream stream = ConexaoUtils.get(linkSincronizacao);
-            if (stream != null) {
-                Reader reader = new InputStreamReader(stream);
+            InputStream inputStream = ConexaoUtils.get(urlSincronizacao);
+            if (inputStream != null) {
+                Reader reader = new InputStreamReader(inputStream);
                 lista = (List<T>) new Gson().fromJson(reader, getCollectionType());
             }
         } catch (Exception ex){
@@ -79,9 +79,9 @@ public abstract class Sincronizacao<T> {
         atualizarProgressBar();
         try {
             if (isPost()) {
-                salvarSincronizacao(post());
+                salvarSincronizacao( post() );
             } else {
-                salvarSincronizacao(get());
+                salvarSincronizacao( get() );
             }
         } catch (Exception ex){
             throw new Exception("Erro na etapa " + etapa + ". " + ex.getMessage());

@@ -20,31 +20,30 @@ import java.util.List;
 import br.com.paraondeirapp.AppParaOndeIr;
 import br.com.paraondeirapp.R;
 import br.com.paraondeirapp.adapter.ListAdapter;
-import br.com.paraondeirapp.delegate.IDelegateTask;
+import br.com.paraondeirapp.delegate.DelegateTask;
+import br.com.paraondeirapp.enumeration.UltimaVisualizacao;
 import br.com.paraondeirapp.model.Avaliacao;
 import br.com.paraondeirapp.model.Estabelecimento;
 import br.com.paraondeirapp.constantes.IConstantesNotificacao;
-import br.com.paraondeirapp.task.IndicacaoTask;
+import br.com.paraondeirapp.async.task.IndicacaoTask;
 import br.com.paraondeirapp.utils.ConexaoUtils;
 import br.com.paraondeirapp.utils.DeviceUtils;
 import br.com.paraondeirapp.utils.MensagemUtils;
 import br.com.paraondeirapp.utils.SharedPreferencesUtils;
 import br.com.paraondeirapp.dao.impl.AvaliacaoDAO;
 import br.com.paraondeirapp.dao.impl.EstabelecimentoDAO;
-import br.com.paraondeirapp.task.SincronizacaoTask;
-import br.com.paraondeirapp.view.interfaces.IActivity;
+import br.com.paraondeirapp.async.task.SincronizacaoTask;
 
 public class ListaActivity extends AppCompatActivity implements
-        IActivity,
         AdapterView.OnItemClickListener,
         Toolbar.OnMenuItemClickListener,
-        IDelegateTask {
+        DelegateTask {
 
-    private ListView lvEstabelecimentos;
-    private Toolbar toolbar, toolbarPesquisa;
-    private EditText etPesquisa;
-    private ListAdapter adapter;
-    private AppParaOndeIr app;
+    private ListView listViewEstabelecimentos;
+    private Toolbar toolbarTopo, toolbarPesquisa;
+    private EditText editTextPesquisa;
+    private ListAdapter listAdapter;
+    private AppParaOndeIr myApp;
     private Dialog customDialog;
 
     @Override
@@ -96,11 +95,7 @@ public class ListaActivity extends AppCompatActivity implements
                 exibirTelaInicial();
                 break;
             case R.id.mn_pesquisar:
-                try {
-                    pesquisarEstabelecimentos();
-                } catch (SQLException ex){
-                    ex.printStackTrace();
-                }
+                pesquisarEstabelecimentos();
                 break;
         }
         return true;
@@ -110,7 +105,7 @@ public class ListaActivity extends AppCompatActivity implements
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.mn_banco_local:
-                consultarNoBancoLocal();
+                consultarNoBancoLocal(true);
                 break;
             case R.id.mn_lista_indicacao:
                 consultarUltimasIndicacoes();
@@ -123,73 +118,21 @@ public class ListaActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void inicializarComponentes() {
-        toolbar = (Toolbar) findViewById(R.id.tb_lista);
-        setSupportActionBar(toolbar);
-
-        toolbarPesquisa = (Toolbar) findViewById(R.id.tb_pesquisa);
-        toolbarPesquisa.setOnMenuItemClickListener(this);
-        toolbarPesquisa.inflateMenu(R.menu.menu_toolbar_pesquisa);
-
-        etPesquisa = (EditText) findViewById(R.id.et_pesquisa);
-        adapter = new ListAdapter(this, null);
-        lvEstabelecimentos = (ListView) findViewById(R.id.lv_estabelecimentos);
-        lvEstabelecimentos.setOnItemClickListener(this);
-        registerForContextMenu(lvEstabelecimentos);
-        app = AppParaOndeIr.getInstance();
-    }
-
-    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent i = new Intent(this, DetalheActivity.class);
-        i.putExtra("estabelecimento", adapter.getItem(position));
+        i.putExtra("estabelecimento", listAdapter.getItem(position));
         startActivity(i);
     }
 
     @Override
-    public void executarQuandoSucesso() {
+    public void executarQuandoSucessoNaSincronizacao() {
         new MensagemUtils() {
             @Override
             protected void clicouSim() {
-                consultarNoBancoLocal();
+                consultarNoBancoLocal(true);
             }
         }.gerarEExibirAlertDialogOK(this, getString(R.string.titulo_confirmacao),
                 getString(R.string.msg_sucesso_sincronizacao), getString(R.string.ok));
-    }
-
-    @Override
-    public void executarQuandoSucesso(List<Estabelecimento> lista) {
-        if (lista.size() > 0) {
-            List<Estabelecimento> listaFiltrada = new ArrayList<>();
-            try {
-                EstabelecimentoDAO estabelecimentoDAO = new EstabelecimentoDAO(this);
-                for (Estabelecimento estab : lista) {
-                    if (estabelecimentoDAO.findByID(estab.getIdEstabelecimento()) != null) {
-                        listaFiltrada.add(estab);
-                    }
-                }
-                estabelecimentoDAO.close();
-            } catch (Exception ex) {
-                MensagemUtils.gerarEExibirToast(this, getString(R.string.msg_erro_indicacao).replace("$e", ex.getMessage()));
-            }
-
-            lvEstabelecimentos.setAdapter(null);
-            app.setEstabelecimentos(listaFiltrada);
-            adapter.setContext(this);
-            adapter.setEstabelecimentos(listaFiltrada);
-            lvEstabelecimentos.setAdapter(adapter);
-            lvEstabelecimentos.requestFocus();
-            app.setUltimaVisualizacao(1);
-            DeviceUtils.esconderTeclado(this, etPesquisa);
-        } else {
-            new MensagemUtils(){
-                @Override
-                protected void clicouSim(){
-                    consultarNoBancoLocal();
-                }
-            }.gerarEExibirAlertDialogOK(this, getString(R.string.app_name),
-                    getString(R.string.msg_indicacao_vazia), getString(R.string.ok));
-        }
     }
 
     @Override
@@ -197,9 +140,63 @@ public class ListaActivity extends AppCompatActivity implements
         new MensagemUtils(){
             @Override
             protected void clicouSim() {
-                consultarNoBancoLocal();
+                consultarNoBancoLocal(false);
             }
         }.gerarEExibirAlertDialogOK(this, getString(R.string.ops), erro, getString(R.string.ok));
+    }
+
+    @Override
+    public void executarQuandoSucessoNaIndicacao(List<Estabelecimento> estabelecimentos) {
+        if (estabelecimentos.size() <= 0) {
+            new MensagemUtils(){
+                @Override
+                protected void clicouSim(){
+                    consultarNoBancoLocal(false);
+                }
+            }.gerarEExibirAlertDialogOK(this, getString(R.string.app_name),
+                    getString(R.string.msg_indicacao_vazia), getString(R.string.ok));
+            return;
+        }
+
+        List<Estabelecimento> estabelecimentosFiltrados = new ArrayList<>();
+        try {
+            EstabelecimentoDAO estabelecimentoDAO = new EstabelecimentoDAO(this);
+            for (Estabelecimento estabelecimento : estabelecimentos) {
+                if (estabelecimentoDAO.findByID(estabelecimento.getIdEstabelecimento()) != null) {
+                    estabelecimentosFiltrados.add(estabelecimento);
+                }
+            }
+            estabelecimentoDAO.close();
+        } catch (SQLException ex) {
+            MensagemUtils.gerarEExibirToast(this, getString(R.string.msg_erro_indicacao)
+                    .replace("$e", ex.getMessage()));
+            return;
+        }
+
+        listViewEstabelecimentos.setAdapter(null);
+        myApp.setUltimosEstabsIndicacao(estabelecimentosFiltrados);
+        listAdapter.setContext(this);
+        listAdapter.setEstabelecimentos(estabelecimentosFiltrados);
+        listViewEstabelecimentos.setAdapter(listAdapter);
+        listViewEstabelecimentos.requestFocus();
+        myApp.setUltimaVisualizacao(UltimaVisualizacao.ULTIMAS_INDICACOES);
+        DeviceUtils.esconderTeclado(this, editTextPesquisa);
+    }
+
+    public void inicializarComponentes() {
+        toolbarTopo = (Toolbar) findViewById(R.id.tb_lista);
+        setSupportActionBar(toolbarTopo);
+
+        toolbarPesquisa = (Toolbar) findViewById(R.id.tb_pesquisa);
+        toolbarPesquisa.setOnMenuItemClickListener(this);
+        toolbarPesquisa.inflateMenu(R.menu.menu_toolbar_pesquisa);
+
+        editTextPesquisa = (EditText) findViewById(R.id.et_pesquisa);
+        listAdapter = new ListAdapter(this, null);
+        listViewEstabelecimentos = (ListView) findViewById(R.id.lv_estabelecimentos);
+        listViewEstabelecimentos.setOnItemClickListener(this);
+        registerForContextMenu(listViewEstabelecimentos);
+        myApp = AppParaOndeIr.getInstance();
     }
 
     private void configuracoesIniciais() {
@@ -223,111 +220,110 @@ public class ListaActivity extends AppCompatActivity implements
     }
 
     private void consultarNoServidor(){
-        if (ConexaoUtils.temConexao(this)) {
-            if (SharedPreferencesUtils.getIPServidor().isEmpty()){
-                configurarIPServidor();
-                if (!SharedPreferencesUtils.getIPServidor().isEmpty()){
-                    List<Avaliacao> avaliacoes;
-                    try {
-                        AvaliacaoDAO dao = new AvaliacaoDAO(this);
-                        avaliacoes = dao.findAll();
-                        dao.close();
-                    } catch (Exception ex) {
-                        avaliacoes = null;
-                    }
-                    new SincronizacaoTask(this, this, avaliacoes).execute();
-                } else {
-                    new MensagemUtils().gerarEExibirAlertDialogOK(this, getString(R.string.titulo_erro_conexao),
-                            getString(R.string.msg_necessario_ip), getString(R.string.ok));
-                }
-            } else {
-                List<Avaliacao> avaliacoes;
-                try {
-                    AvaliacaoDAO dao = new AvaliacaoDAO(this);
-                    avaliacoes = dao.findAll();
-                    dao.close();
-                } catch (Exception ex) {
-                    avaliacoes = null;
-                }
-                new SincronizacaoTask(this, this, avaliacoes).execute();
-            }
-        } else {
+        if (!ConexaoUtils.temConexao(this)) {
             new MensagemUtils(){
                 @Override
                 protected void clicouSim() {
-                    consultarNoBancoLocal();
+                    consultarNoBancoLocal(false);
                 }
             }.gerarEExibirAlertDialogOK(this, getString(R.string.titulo_erro_conexao),
                     getString(R.string.msg_erro_sincronizacao), getString(R.string.ok));
+            return;
         }
-        lvEstabelecimentos.requestFocus();
-        DeviceUtils.esconderTeclado(this, etPesquisa);
-    }
 
-    private void consultarNoBancoLocal(){
-        List<Estabelecimento> estabelecimentos;
+        if (SharedPreferencesUtils.getIPServidor().isEmpty()) {
+            configurarIPServidor();
+            if (SharedPreferencesUtils.getIPServidor().isEmpty()) {
+                new MensagemUtils().gerarEExibirAlertDialogOK(this, getString(R.string.titulo_erro_conexao),
+                        getString(R.string.msg_necessario_ip), getString(R.string.ok));
+                return;
+            }
+        }
+
+        List<Avaliacao> avaliacoes;
         try {
-            EstabelecimentoDAO dao = new EstabelecimentoDAO(this);
-            estabelecimentos = dao.findAll();
+            AvaliacaoDAO dao = new AvaliacaoDAO(this);
+            avaliacoes = dao.findAll();
             dao.close();
         } catch (Exception ex) {
-            estabelecimentos = null;
+            avaliacoes = null;
         }
-        lvEstabelecimentos.setAdapter(null);
-        adapter.setContext(this);
-        adapter.setEstabelecimentos(estabelecimentos);
-        lvEstabelecimentos.setAdapter(adapter);
-        lvEstabelecimentos.requestFocus();
-        app.setUltimaVisualizacao(0);
-        DeviceUtils.esconderTeclado(this, etPesquisa);
+
+        new SincronizacaoTask(this, this).execute(avaliacoes);
+
+        listViewEstabelecimentos.requestFocus();
+        DeviceUtils.esconderTeclado(this, editTextPesquisa);
+    }
+
+    private void consultarNoBancoLocal(boolean forcarConsultaNoBD){
+        if (myApp.getEstabsEmCache().size() <= 0 || forcarConsultaNoBD) {
+            try {
+                EstabelecimentoDAO dao = new EstabelecimentoDAO(this);
+                List<Estabelecimento> estabelecimentos = dao.findAll();
+                dao.close();
+                myApp.setEstabsEmCache(estabelecimentos);
+            } catch (Exception ex) {
+                return;
+            }
+        }
+
+        listViewEstabelecimentos.setAdapter(null);
+        listAdapter.setContext(this);
+        listAdapter.setEstabelecimentos(myApp.getEstabsEmCache());
+        listViewEstabelecimentos.setAdapter(listAdapter);
+        listViewEstabelecimentos.requestFocus();
+        myApp.setUltimaVisualizacao(UltimaVisualizacao.BD_LOCAL);
+        DeviceUtils.esconderTeclado(this, editTextPesquisa);
     }
 
     private void consultarUltimasIndicacoes(){
-        if (app.getEstabelecimentos().size() > 0) {
-            lvEstabelecimentos.setAdapter(null);
-            adapter.setContext(this);
-            adapter.setEstabelecimentos(app.getEstabelecimentos());
-            lvEstabelecimentos.setAdapter(adapter);
-            lvEstabelecimentos.requestFocus();
-            app.setUltimaVisualizacao(1);
-            DeviceUtils.esconderTeclado(this, etPesquisa);
-        } else {
-            MensagemUtils.gerarEExibirToast(this, "Não existem estabelecimentos para exibir. Solicite novas indicações!");
+        if (myApp.getUltimosEstabsIndicacao().size() <= 0){
+            MensagemUtils.gerarEExibirToast(this, getString(R.string.msg_sem_estabs));
+            return;
         }
+
+        listViewEstabelecimentos.setAdapter(null);
+        listAdapter.setContext(this);
+        listAdapter.setEstabelecimentos(myApp.getUltimosEstabsIndicacao());
+        listViewEstabelecimentos.setAdapter(listAdapter);
+        listViewEstabelecimentos.requestFocus();
+        myApp.setUltimaVisualizacao(UltimaVisualizacao.ULTIMAS_INDICACOES);
+        DeviceUtils.esconderTeclado(this, editTextPesquisa);
     }
 
     private void solicitarIndicacoes() {
-        if (ConexaoUtils.temConexao(this)) {
-            if (SharedPreferencesUtils.getIPServidor().isEmpty()) {
-                this.configurarIPServidor();
-                if (!SharedPreferencesUtils.getIPServidor().isEmpty()){
-                    new IndicacaoTask(this, this).execute();
-                } else {
-                    new MensagemUtils().gerarEExibirAlertDialogOK(this, getString(R.string.titulo_erro_conexao),
-                            getString(R.string.msg_necessario_ip), getString(R.string.ok));
-                }
-            } else {
-                new IndicacaoTask(this, this).execute();
-            }
-        } else {
+        if (!ConexaoUtils.temConexao(this)) {
             new MensagemUtils(){
                 @Override
                 protected void clicouSim() {
-                    consultarNoBancoLocal();
+                    consultarNoBancoLocal(false);
                 }
             }.gerarEExibirAlertDialogOK(this, getString(R.string.titulo_erro_conexao),
                     getString(R.string.msg_erro_conexao), getString(R.string.ok));
+            return;
         }
+
+        if (SharedPreferencesUtils.getIPServidor().isEmpty()) {
+            configurarIPServidor();
+            if (SharedPreferencesUtils.getIPServidor().isEmpty()) {
+                new MensagemUtils().gerarEExibirAlertDialogOK(this, getString(R.string.titulo_erro_conexao),
+                        getString(R.string.msg_necessario_ip), getString(R.string.ok));
+                return;
+            }
+        }
+
+        new IndicacaoTask(this, this).execute(myApp.getUser());
     }
 
     private void exibirTelaInicial(){
-        if (app.getUltimaVisualizacao() == 1){
+        if (myApp.getUltimaVisualizacao() == UltimaVisualizacao.ULTIMAS_INDICACOES){
             consultarUltimasIndicacoes();
         } else {
-            consultarNoBancoLocal();
+            consultarNoBancoLocal(false);
         }
-        this.etPesquisa.setText("");
-        this.lvEstabelecimentos.requestFocus();
+
+        this.editTextPesquisa.setText("");
+        this.listViewEstabelecimentos.requestFocus();
         NotificationManager manager = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
         StatusBarNotification[] notifications = manager.getActiveNotifications();
         for (int i = 0; i < notifications.length; i++) {
@@ -338,37 +334,36 @@ public class ListaActivity extends AppCompatActivity implements
         }
     }
 
-    private void pesquisarEstabelecimentos() throws SQLException {
-        List<Estabelecimento> lista;
+    private void pesquisarEstabelecimentos() {
+        List<Estabelecimento> estabelecimentos;
         try {
-            EstabelecimentoDAO dao = new EstabelecimentoDAO(this);
-            lista = dao.getEstabelecimentosByNomeOrEndereco(etPesquisa.getText().toString().trim());
-            dao.close();
+            EstabelecimentoDAO estabelecimentoDAO = new EstabelecimentoDAO(this);
+            estabelecimentos = estabelecimentoDAO.findEstabelecimentosByNomeOrEndereco(editTextPesquisa.getText().toString().trim());
+            estabelecimentoDAO.close();
         } catch (SQLException ex) {
-            lista = null;
+            MensagemUtils.gerarEExibirToast(this, getString(R.string.msg_erro_pesquisa)
+                    .replace("$e", ex.getMessage()));
+            return;
         }
 
-        if (lista != null){
-            List<Estabelecimento> listaFinal = new ArrayList<>();
-
-            if (app.getUltimaVisualizacao() == 1){
-                for (Estabelecimento estab : lista) {
-                    for (int i = 0; i < app.getEstabelecimentos().size(); i++){
-                        Estabelecimento e = app.getEstabelecimentos().get(i);
-                        if (estab.equals(e)){
-                            listaFinal.add(estab);
-                        }
+        List<Estabelecimento> estabelecimentosFiltrados = new ArrayList<>();
+        if (myApp.getUltimaVisualizacao() == UltimaVisualizacao.ULTIMAS_INDICACOES){
+            for (Estabelecimento estabelecimento : estabelecimentos) {
+                for (int i = 0; i < myApp.getUltimosEstabsIndicacao().size(); i++){
+                    Estabelecimento local = myApp.getUltimosEstabsIndicacao().get(i);
+                    if (estabelecimento.equals(local)){
+                        estabelecimentosFiltrados.add(estabelecimento);
                     }
                 }
-            } else {
-                listaFinal = lista;
             }
-
-            lvEstabelecimentos.setAdapter(null);
-            adapter.setContext(this);
-            adapter.setEstabelecimentos(listaFinal);
-            lvEstabelecimentos.setAdapter(adapter);
+        } else {
+            estabelecimentosFiltrados = estabelecimentos;
         }
+
+        listViewEstabelecimentos.setAdapter(null);
+        listAdapter.setContext(this);
+        listAdapter.setEstabelecimentos(estabelecimentosFiltrados);
+        listViewEstabelecimentos.setAdapter(listAdapter);
     }
 
     private void testarConexao(){
@@ -383,9 +378,9 @@ public class ListaActivity extends AppCompatActivity implements
         customDialog = new MensagemUtils(){
                         @Override
                         protected void clicouSim() {
-                            EditText etInner = (EditText) customDialog.findViewById(R.id.et_valordigitado);
-                            String ip = etInner.getText().toString();
-                            SharedPreferencesUtils.setIPServidor(ip);
+                            EditText editTextDepoisDoOK = (EditText) customDialog.findViewById(R.id.et_valordigitado);
+                            String ipServidor = editTextDepoisDoOK.getText().toString();
+                            SharedPreferencesUtils.setIPServidor(ipServidor);
                             customDialog.dismiss();
                         }
 
@@ -395,8 +390,8 @@ public class ListaActivity extends AppCompatActivity implements
                         }
         }.gerarCustomDialog(this, getString(R.string.app_name), getString(R.string.msg_informa_ip));
 
-        EditText et = (EditText) customDialog.findViewById(R.id.et_valordigitado);
-        et.setText(SharedPreferencesUtils.getIPServidor());
+        EditText editTextAtual = (EditText) customDialog.findViewById(R.id.et_valordigitado);
+        editTextAtual.setText(SharedPreferencesUtils.getIPServidor());
         customDialog.show();
     }
 }

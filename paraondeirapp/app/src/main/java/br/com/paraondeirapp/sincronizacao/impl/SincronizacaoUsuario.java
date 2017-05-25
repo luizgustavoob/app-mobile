@@ -1,7 +1,6 @@
 package br.com.paraondeirapp.sincronizacao.impl;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
@@ -11,16 +10,15 @@ import java.util.Calendar;
 import java.util.List;
 import br.com.paraondeirapp.constantes.IConstantesServidor;
 import br.com.paraondeirapp.model.Usuario;
-import br.com.paraondeirapp.sincronizacao.Sincronizacao;
+import br.com.paraondeirapp.sincronizacao.SincronizacaoAbstract;
 import br.com.paraondeirapp.utils.ConexaoUtils;
 
-public class SincronizacaoUsuario extends Sincronizacao<Usuario> {
+public class SincronizacaoUsuario extends SincronizacaoAbstract<Usuario> {
 
-    private Context ctx;
+    private static String TAG = SincronizacaoUsuario.class.getSimpleName();
 
-    public SincronizacaoUsuario(Context ctx, ProgressDialog progressDialog, String json){
-        super(progressDialog, 7, IConstantesServidor.LINK_SINCRONIZACAO_USUARIO, json);
-        this.ctx = ctx;
+    public SincronizacaoUsuario(ProgressDialog progressDialog, String json){
+        super(progressDialog, 7, IConstantesServidor.URL_SINCRONIZA_USUARIO, json);
     }
 
     @Override
@@ -35,13 +33,13 @@ public class SincronizacaoUsuario extends Sincronizacao<Usuario> {
 
     @Override
     protected void salvarSincronizacao(List<Usuario> lista) {
-
+        //Não existe tabela de usuário no app.
     }
 
     @Override
     protected List<Usuario> post() throws Exception {
         try {
-            ConexaoUtils.post(getLinkSincronizacao(), getJsonPost());
+            ConexaoUtils.post(getUrlSincronizacao(), getBody());
         } catch (Exception ex){
             throw new Exception(ex.getMessage());
         }
@@ -50,8 +48,8 @@ public class SincronizacaoUsuario extends Sincronizacao<Usuario> {
 
     @Override
     public void sincronizar() throws Exception {
-        Log.i("Sincronizacao.sincronizar()", Calendar.getInstance() + " >> Sincronizando etapa " + getEtapa());
-        atualizarProgressBar();
+        Log.i(TAG, Calendar.getInstance() + " >> Sincronizando etapa " + getEtapa());
+        super.atualizarProgressBar();
         try {
             post();
         } catch (Exception ex){

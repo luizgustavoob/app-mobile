@@ -8,15 +8,15 @@ import java.util.List;
 import br.com.paraondeirapp.model.Cidade;
 import br.com.paraondeirapp.constantes.IConstantesServidor;
 import br.com.paraondeirapp.dao.impl.CidadeDAO;
-import br.com.paraondeirapp.sincronizacao.Sincronizacao;
+import br.com.paraondeirapp.sincronizacao.SincronizacaoAbstract;
 
-public class SincronizacaoCidade extends Sincronizacao<Cidade> {
+public class SincronizacaoCidade extends SincronizacaoAbstract<Cidade> {
 
-    private Context ctx;
+    private Context context;
 
-    public SincronizacaoCidade(Context ctx, ProgressDialog progressDialog) {
-        super(progressDialog, 3, IConstantesServidor.LINK_SINCRONIZACAO_CIDADES, "");
-        this.ctx = ctx;
+    public SincronizacaoCidade(Context context, ProgressDialog progressDialog) {
+        super(progressDialog, 3, IConstantesServidor.URL_SINCRONIZA_CIDADES, "");
+        this.context = context;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class SincronizacaoCidade extends Sincronizacao<Cidade> {
     @Override
     protected void salvarSincronizacao(List<Cidade> lista) {
         try {
-            CidadeDAO cidadeDAO = new CidadeDAO(ctx);
+            CidadeDAO cidadeDAO = new CidadeDAO(context);
             for (int i = 0; i < lista.size(); i++){
                 Cidade cidade = lista.get(i);
                 cidadeDAO.save(cidade);

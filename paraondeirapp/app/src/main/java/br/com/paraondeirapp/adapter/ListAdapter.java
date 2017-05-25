@@ -20,10 +20,6 @@ public class ListAdapter extends BaseAdapter {
         this.estabelecimentos = lista;
     }
 
-    public List<Estabelecimento> getEstabelecimentos() {
-        return estabelecimentos;
-    }
-
     public void setEstabelecimentos(List<Estabelecimento> estabelecimentos) {
         this.estabelecimentos = estabelecimentos;
     }

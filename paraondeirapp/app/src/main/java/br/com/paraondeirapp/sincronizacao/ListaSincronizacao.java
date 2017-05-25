@@ -24,13 +24,13 @@ import br.com.paraondeirapp.sincronizacao.impl.SincronizacaoUsuario;
 public class ListaSincronizacao {
 
     private ProgressDialog progressDialog;
-    private List<Sincronizacao> listaSincronizacao;
+    private List<SincronizacaoAbstract> listaSincronizacao;
 
     public ListaSincronizacao(ProgressDialog progressDialog) {
         this.progressDialog = progressDialog;
     }
 
-    public void sincronizarTudo(Context ctx, List<Avaliacao> listaAvaliacao) throws Exception {
+    public void sincronizarTudo(Context context, List<Avaliacao> avaliacoes) throws Exception {
         try {
             listaSincronizacao = new ArrayList<>();
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
@@ -38,27 +38,27 @@ public class ListaSincronizacao {
             builder.object();
             builder.key("data").value(formato.format(Calendar.getInstance().getTime()));
             builder.endObject();
-            listaSincronizacao.add(new SincronizacaoRegistroDeletado(ctx, progressDialog, builder.toString()));
-            listaSincronizacao.add(new SincronizacaoUF(ctx, progressDialog));
-            listaSincronizacao.add(new SincronizacaoCidade(ctx, progressDialog));
-            listaSincronizacao.add(new SincronizacaoEndereco(ctx, progressDialog));
-            listaSincronizacao.add(new SincronizacaoEstabelecimento(ctx, progressDialog));
+            listaSincronizacao.add(new SincronizacaoRegistroDeletado(context, progressDialog, builder.toString()));
+            listaSincronizacao.add(new SincronizacaoUF(context, progressDialog));
+            listaSincronizacao.add(new SincronizacaoCidade(context, progressDialog));
+            listaSincronizacao.add(new SincronizacaoEndereco(context, progressDialog));
+            listaSincronizacao.add(new SincronizacaoEstabelecimento(context, progressDialog));
 
             Gson gson = new Gson();
             JsonElement element = null;
-            String jsonPost = null;
+            String body = null;
 
             element = gson.toJsonTree(AppParaOndeIr.getInstance().getUser(), new TypeToken<Usuario>() {}.getType());
-            jsonPost = element.getAsJsonObject().toString();
-            listaSincronizacao.add(new SincronizacaoUsuario(ctx, progressDialog, jsonPost));
+            body = element.getAsJsonObject().toString();
+            listaSincronizacao.add(new SincronizacaoUsuario(progressDialog, body));
 
-            if (listaAvaliacao != null && listaAvaliacao.size() > 0) {
-                element = gson.toJsonTree(listaAvaliacao, new TypeToken<List<Avaliacao>>() {}.getType());
-                jsonPost = element.getAsJsonArray().toString();
-                listaSincronizacao.add(new SincronizacaoAvaliacao(ctx, progressDialog, jsonPost));
+            if (avaliacoes != null && avaliacoes.size() > 0) {
+                element = gson.toJsonTree(avaliacoes, new TypeToken<List<Avaliacao>>() {}.getType());
+                body = element.getAsJsonArray().toString();
+                listaSincronizacao.add(new SincronizacaoAvaliacao(context, progressDialog, body));
             }
 
-            for (Sincronizacao sinc : listaSincronizacao) {
+            for (SincronizacaoAbstract sinc : listaSincronizacao) {
                 sinc.sincronizar();
             }
         } catch (Exception ex){

@@ -13,18 +13,18 @@ import br.com.paraondeirapp.R;
 
 public class MensagemUtils {
 
-    public static Toast gerarToast(Context ctx, String mensagem){
-        return Toast.makeText(ctx, mensagem, Toast.LENGTH_SHORT);
+    public static Toast gerarToast(Context context, String mensagem){
+        return Toast.makeText(context, mensagem, Toast.LENGTH_SHORT);
     }
 
-    public static void gerarEExibirToast(Context ctx, String mensagem) {
-        gerarToast(ctx, mensagem).show();
+    public static void gerarEExibirToast(Context context, String mensagem) {
+        gerarToast(context, mensagem).show();
     }
 
-    public AlertDialog gerarAlertDialog(Context ctx, String titulo, String mensagem,
+    public AlertDialog gerarAlertDialog(Context context, String titulo, String mensagem,
                                         String textoSim, String textoNao, String textoNeutro){
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(titulo);
         builder.setMessage(mensagem);
         builder.setCancelable(false);
@@ -59,18 +59,18 @@ public class MensagemUtils {
         return builder.create();
     }
 
-    public void gerarEExibirAlertDialog(Context ctx, String titulo, String mensagem,
+    public void gerarEExibirAlertDialog(Context context, String titulo, String mensagem,
                                         String textoSim, String textoNao, String textoNeutro){
 
-        gerarAlertDialog(ctx, titulo, mensagem, textoSim, textoNao, textoNeutro).show();
+        gerarAlertDialog(context, titulo, mensagem, textoSim, textoNao, textoNeutro).show();
     }
 
-    public void gerarEExibirAlertDialogOK(Context ctx, String titulo, String mensagem, String textoSim){
-        gerarEExibirAlertDialog(ctx, titulo, mensagem, textoSim, "", "");
+    public void gerarEExibirAlertDialogOK(Context context, String titulo, String mensagem, String textoSim){
+        gerarEExibirAlertDialog(context, titulo, mensagem, textoSim, "", "");
     }
 
-    public Dialog gerarCustomDialog(Context ctx, String titulo, String mensagem){
-        Dialog dialog = new Dialog(ctx);
+    public Dialog gerarCustomDialog(Context context, String titulo, String mensagem){
+        Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.custom_dialog);
         dialog.setCanceledOnTouchOutside(false);
 
@@ -79,10 +79,10 @@ public class MensagemUtils {
         TextView textViewMensagem = (TextView) dialog.findViewById(R.id.tv_mensagem);
         textViewMensagem.setText(mensagem);
 
-        Button btnOK = (Button) dialog.findViewById(R.id.bt_ok);
+        Button btOk = (Button) dialog.findViewById(R.id.bt_ok);
         Button btnCancelar = (Button) dialog.findViewById(R.id.bt_cancelar);
 
-        btnOK.setOnClickListener(new View.OnClickListener() {
+        btOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clicouSim();

@@ -13,19 +13,19 @@ import br.com.paraondeirapp.constantes.IConstantesDatabase;
 
 public class AvaliacaoDAO extends GenericDAO<Avaliacao> {
 
-    public AvaliacaoDAO(Context ctx) throws SQLException {
-        super(ctx, Avaliacao.class);
+    public AvaliacaoDAO(Context context) throws SQLException {
+        super(context, Avaliacao.class);
     }
 
     @Override
-    public boolean save(Avaliacao obj) throws SQLException {
-        Avaliacao avaliacaoTemp = findByIdEstabelecimentoAndUsuario(obj);
+    public boolean save(Avaliacao avaliacao) throws SQLException {
+        Avaliacao avaliacaoTemp = findByIdEstabelecimentoAndUsuario(avaliacao);
         if (avaliacaoTemp == null){
-            obj.setIdAvaliacao( getProximoId(obj.getUsuario()) );
-            return super.insert(obj);
+            avaliacao.setIdAvaliacao( getProximoId(avaliacao.getUsuario()) );
+            return super.insert(avaliacao);
         } else {
-            obj.setIdAvaliacao(avaliacaoTemp.getIdAvaliacao());
-            return super.update(obj);
+            avaliacao.setIdAvaliacao(avaliacaoTemp.getIdAvaliacao());
+            return super.update(avaliacao);
         }
     }
 
@@ -47,16 +47,16 @@ public class AvaliacaoDAO extends GenericDAO<Avaliacao> {
         }
     }
 
-    private Avaliacao findByIdEstabelecimentoAndUsuario(Avaliacao obj) throws SQLException {
+    private Avaliacao findByIdEstabelecimentoAndUsuario(Avaliacao avaliacao) throws SQLException {
         try {
             QueryBuilder<Avaliacao, Integer> builder = getDao().queryBuilder();
             builder.where()
-                    .eq(IConstantesDatabase.AVALIACAO_USER, obj.getUsuario())
+                    .eq(IConstantesDatabase.AVALIACAO_USER, avaliacao.getUsuario())
                     .and()
-                    .eq(IConstantesDatabase.AVALIACAO_ESTABELECIMENTO, obj.getEstabelecimento().getIdEstabelecimento());
+                    .eq(IConstantesDatabase.AVALIACAO_ESTABELECIMENTO, avaliacao.getEstabelecimento().getIdEstabelecimento());
 
-            List<Avaliacao> list = builder.query();
-            if (list.size() > 0) {
+            List<Avaliacao> avaliacoes = builder.query();
+            if (avaliacoes.size() > 0) {
                 return builder.query().get(0);
             } else {
                 return null;
@@ -68,14 +68,14 @@ public class AvaliacaoDAO extends GenericDAO<Avaliacao> {
 
     /**
      * Deleta as avaliações cujos estabelecimentos foram excluídos do servidor.
-     * @param chaves
+     * @param idsEstabelecimentos
      * @return
      * @throws SQLException
      */
-    public boolean deleteByListIdEstabelecimento(List<Integer> chaves) throws SQLException {
+    public boolean deleteByListIdEstabelecimento(List<Integer> idsEstabelecimentos) throws SQLException {
         try {
             DeleteBuilder<Avaliacao, Integer> builder = getDao().deleteBuilder();
-            builder.where().in(IConstantesDatabase.AVALIACAO_ESTABELECIMENTO, chaves);
+            builder.where().in(IConstantesDatabase.AVALIACAO_ESTABELECIMENTO, idsEstabelecimentos);
             builder.delete();
             return true;
         } catch (Exception ex){

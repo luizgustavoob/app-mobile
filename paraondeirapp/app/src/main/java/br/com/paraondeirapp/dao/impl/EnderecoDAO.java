@@ -12,20 +12,20 @@ import br.com.paraondeirapp.constantes.IConstantesDatabase;
 
 public class EnderecoDAO extends GenericDAO<Endereco> {
 
-    public EnderecoDAO(Context ctx) throws SQLException {
-        super(ctx, Endereco.class);
+    public EnderecoDAO(Context context) throws SQLException {
+        super(context, Endereco.class);
     }
 
     /**
      * Deleta os endereços que foram excluídos do servidor.
-     * @param chaves
+     * @param idsEnderecos
      * @return
      * @throws SQLException
      */
-    public boolean deleteByListIdEndereco(List<Integer> chaves) throws SQLException {
+    public boolean deleteByListIdEndereco(List<Integer> idsEnderecos) throws SQLException {
         try {
             DeleteBuilder<Endereco, Integer> builder = getDao().deleteBuilder();
-            builder.where().in(IConstantesDatabase.ENDERECO_ID, chaves);
+            builder.where().in(IConstantesDatabase.ENDERECO_ID, idsEnderecos);
             builder.delete();
             return true;
         } catch (Exception ex){

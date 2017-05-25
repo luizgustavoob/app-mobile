@@ -30,16 +30,14 @@ import br.com.paraondeirapp.dao.impl.AvaliacaoDAO;
 import br.com.paraondeirapp.utils.DeviceUtils;
 import br.com.paraondeirapp.utils.FoneUtils;
 import br.com.paraondeirapp.utils.MensagemUtils;
-import br.com.paraondeirapp.view.interfaces.IActivity;
 
 public class DetalheActivity extends AppCompatActivity implements
-        IActivity,
         View.OnClickListener {
 
-    private RelativeLayout layout;
-    private Toolbar tbDetalhe;
-    private ImageView ivFoto;
-    private ListView lvDetalhe;
+    private RelativeLayout relativeLayout;
+    private Toolbar toolbarTopo;
+    private ImageView imageViewFoto;
+    private ListView listViewDetalhe;
     private Button btGostei, btNaoGostei;
     private Estabelecimento estabelecimento;
 
@@ -69,18 +67,17 @@ public class DetalheActivity extends AppCompatActivity implements
         return true;
     }
 
-    @Override
     public void inicializarComponentes() {
         Intent i = getIntent();
         this.estabelecimento = (Estabelecimento) i.getSerializableExtra("estabelecimento");
-        this.tbDetalhe = (Toolbar) findViewById(R.id.tb_detalhe);
-        setSupportActionBar(tbDetalhe);
+        this.toolbarTopo = (Toolbar) findViewById(R.id.tb_detalhe);
+        setSupportActionBar(toolbarTopo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        this.layout = (RelativeLayout) findViewById(R.id.layoutPrinc);
-        this.ivFoto = (ImageView) findViewById(R.id.iv_foto);
-        this.lvDetalhe = (ListView) findViewById(R.id.lv_detalhe_estab);
-        this.lvDetalhe.setAdapter(new DetalheAdapter(this, estabelecimento));
+        this.relativeLayout = (RelativeLayout) findViewById(R.id.layoutPrinc);
+        this.imageViewFoto = (ImageView) findViewById(R.id.iv_foto);
+        this.listViewDetalhe = (ListView) findViewById(R.id.lv_detalhe_estab);
+        this.listViewDetalhe.setAdapter(new DetalheAdapter(this, estabelecimento));
         this.btGostei = (Button) findViewById(R.id.bt_gostei);
         this.btNaoGostei = (Button) findViewById(R.id.bt_nao_gostei);
 
@@ -88,25 +85,17 @@ public class DetalheActivity extends AppCompatActivity implements
 
         this.btGostei.setOnClickListener(this);
         this.btNaoGostei.setOnClickListener(this);
-        registerForContextMenu(layout);
+        registerForContextMenu(relativeLayout);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bt_gostei:
-                try {
-                    avaliar(YesNo.S);
-                } catch (SQLException ex) {
-                    MensagemUtils.gerarEExibirToast(this, ex.getMessage());
-                }
+                avaliar(YesNo.S);
                 break;
             case R.id.bt_nao_gostei:
-                try {
-                    avaliar(YesNo.N);
-                } catch (SQLException ex) {
-                    MensagemUtils.gerarEExibirToast(this, ex.getMessage());
-                }
+                avaliar(YesNo.N);
                 break;
         }
     }
@@ -116,11 +105,11 @@ public class DetalheActivity extends AppCompatActivity implements
         if (estabelecimento.getImagem() != null) {
             Bitmap imagem = BitmapFactory.decodeByteArray(estabelecimento.getImagem(), 0,
                     estabelecimento.getImagem().length);
-            this.ivFoto.setImageBitmap(imagem);
+            this.imageViewFoto.setImageBitmap(imagem);
         }
     }
 
-    private void avaliar(YesNo like) throws SQLException {
+    private void avaliar(YesNo like) {
         try {
             Avaliacao avaliacao = new Avaliacao();
             avaliacao.setEstabelecimento(estabelecimento);
@@ -129,13 +118,13 @@ public class DetalheActivity extends AppCompatActivity implements
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
             avaliacao.setData(formato.format(new Date()));
 
-            AvaliacaoDAO dao = new AvaliacaoDAO(this);
-            dao.save(avaliacao);
+            AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO(this);
+            avaliacaoDAO.save(avaliacao);
+            avaliacaoDAO.close();
             MensagemUtils.gerarEExibirToast(this, getString(R.string.msg_sucesso_avaliacao));
-            dao.close();
             finish();
         } catch (SQLException ex){
-            throw new SQLException(ex.getMessage());
+            MensagemUtils.gerarEExibirToast(this, ex.getMessage());
         }
     }
 
@@ -144,7 +133,7 @@ public class DetalheActivity extends AppCompatActivity implements
             DeviceUtils.solicitarPermissao(this, getString(R.string.msg_permissao_ligar),
                     Manifest.permission.CALL_PHONE);
         } else {
-            FoneUtils.discar(estabelecimento.getTelefone(), this);
+            FoneUtils.discar(this, estabelecimento.getTelefone());
         }
     }
 }

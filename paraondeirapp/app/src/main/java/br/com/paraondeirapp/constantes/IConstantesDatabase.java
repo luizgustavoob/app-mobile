@@ -2,8 +2,8 @@ package br.com.paraondeirapp.constantes;
 
 public interface IConstantesDatabase {
 
-    static final String NAME_DATABASE = "paraondeir_db";
-    static final int VERSION_DATABASE = 1;
+    static final String NOME_DATABASE = "paraondeir_db";
+    static final int VERSAO_DATABASE = 1;
 
     static final String TABELA_AVALIACAO = "AVALIACAO",
             AVALIACAO_ID = "IDAVALIACAO",

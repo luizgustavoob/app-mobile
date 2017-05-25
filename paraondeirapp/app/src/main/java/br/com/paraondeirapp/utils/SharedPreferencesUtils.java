@@ -20,9 +20,9 @@ public class SharedPreferencesUtils {
         return getSharedPreferences().getBoolean(IConstantesPreferences.PREF_PRIMEIRO_ACESSO, true);
     }
 
-    public static void setPrimeiroAcesso(boolean primeiroAcesso) {
+    public static void setPrimeiroAcesso(boolean isPrimeiroAcesso) {
         SharedPreferences.Editor editor = getEditor();
-        editor.putBoolean(IConstantesPreferences.PREF_PRIMEIRO_ACESSO, primeiroAcesso);
+        editor.putBoolean(IConstantesPreferences.PREF_PRIMEIRO_ACESSO, isPrimeiroAcesso);
         editor.commit();
     }
 

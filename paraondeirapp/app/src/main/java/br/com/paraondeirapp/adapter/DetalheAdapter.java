@@ -12,11 +12,11 @@ import br.com.paraondeirapp.model.Estabelecimento;
 
 public class DetalheAdapter extends BaseAdapter {
 
-    private Context ctx;
+    private Context context;
     private Estabelecimento estabelecimento;
 
     public DetalheAdapter(Context ctx, Estabelecimento estab) {
-        this.ctx = ctx;
+        this.context = ctx;
         this.estabelecimento = estab;
     }
 
@@ -41,7 +41,7 @@ public class DetalheAdapter extends BaseAdapter {
         ViewHolder holder;
 
         if (convertView == null) {
-            view = LayoutInflater.from(ctx).inflate(R.layout.elemento_detalhe, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.elemento_detalhe, parent, false);
             holder = new ViewHolder(view);
             view.setTag(holder);
         } else {
@@ -49,7 +49,6 @@ public class DetalheAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        //Seta atributos do estabelecimento na tela.
         holder.associar(getItem(position));
         return view;
     }

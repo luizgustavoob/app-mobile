@@ -8,15 +8,15 @@ import java.util.List;
 import br.com.paraondeirapp.model.Avaliacao;
 import br.com.paraondeirapp.constantes.IConstantesServidor;
 import br.com.paraondeirapp.dao.impl.AvaliacaoDAO;
-import br.com.paraondeirapp.sincronizacao.Sincronizacao;
+import br.com.paraondeirapp.sincronizacao.SincronizacaoAbstract;
 
-public class SincronizacaoAvaliacao extends Sincronizacao<Avaliacao> {
+public class SincronizacaoAvaliacao extends SincronizacaoAbstract<Avaliacao> {
 
-    private Context ctx;
+    private Context context;
 
-    public SincronizacaoAvaliacao(Context ctx, ProgressDialog progressDialog, String jsonPost) {
-        super(progressDialog, 6, IConstantesServidor.LINK_SINCRONIZACAO_AVALIACOES, jsonPost);
-        this.ctx = ctx;
+    public SincronizacaoAvaliacao(Context context, ProgressDialog progressDialog, String body) {
+        super(progressDialog, 6, IConstantesServidor.URL_SINCRONIZA_AVALIACOES, body);
+        this.context = context;
     }
 
     @Override
@@ -32,11 +32,11 @@ public class SincronizacaoAvaliacao extends Sincronizacao<Avaliacao> {
     @Override
     protected void salvarSincronizacao(List<Avaliacao> lista) {
         try {
-            AvaliacaoDAO dao = new AvaliacaoDAO(ctx);
+            AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO(context);
             for (int i = 0; i < lista.size(); i++){
-                dao.delete(lista.get(i));
+                avaliacaoDAO.delete(lista.get(i));
             }
-            dao.close();
+            avaliacaoDAO.close();
         } catch (Exception ex){
             ex.printStackTrace();
         }

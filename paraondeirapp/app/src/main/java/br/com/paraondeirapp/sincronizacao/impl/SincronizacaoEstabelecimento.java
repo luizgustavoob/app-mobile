@@ -8,15 +8,15 @@ import java.util.List;
 import br.com.paraondeirapp.model.Estabelecimento;
 import br.com.paraondeirapp.constantes.IConstantesServidor;
 import br.com.paraondeirapp.dao.impl.EstabelecimentoDAO;
-import br.com.paraondeirapp.sincronizacao.Sincronizacao;
+import br.com.paraondeirapp.sincronizacao.SincronizacaoAbstract;
 
-public class SincronizacaoEstabelecimento extends Sincronizacao<Estabelecimento> {
+public class SincronizacaoEstabelecimento extends SincronizacaoAbstract<Estabelecimento> {
 
-    private Context ctx;
+    private Context context;
 
-    public SincronizacaoEstabelecimento(Context ctx, ProgressDialog progressDialog) {
-        super(progressDialog, 5, IConstantesServidor.LINK_SINCRONIZACAO_ESTABELECIMENTOS, "");
-        this.ctx = ctx;
+    public SincronizacaoEstabelecimento(Context context, ProgressDialog progressDialog) {
+        super(progressDialog, 5, IConstantesServidor.URL_SINCRONIZA_ESTABELECIMENTOS, "");
+        this.context = context;
     }
 
     @Override
@@ -32,12 +32,12 @@ public class SincronizacaoEstabelecimento extends Sincronizacao<Estabelecimento>
     @Override
     protected void salvarSincronizacao(List<Estabelecimento> lista) {
         try {
-            EstabelecimentoDAO estabDao = new EstabelecimentoDAO(ctx);
+            EstabelecimentoDAO estabelecimentoDAO = new EstabelecimentoDAO(context);
             for (int i = 0; i < lista.size(); i++){
-                Estabelecimento estab = lista.get(i);
-                estabDao.save(estab);
+                Estabelecimento estabelecimento = lista.get(i);
+                estabelecimentoDAO.save(estabelecimento);
             }
-            estabDao.close();
+            estabelecimentoDAO.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

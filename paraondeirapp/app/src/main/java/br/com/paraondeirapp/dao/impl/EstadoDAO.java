@@ -12,20 +12,20 @@ import br.com.paraondeirapp.constantes.IConstantesDatabase;
 
 public class EstadoDAO extends GenericDAO<Estado> {
 
-    public EstadoDAO(Context ctx) throws SQLException {
-        super(ctx, Estado.class);
+    public EstadoDAO(Context context) throws SQLException {
+        super(context, Estado.class);
     }
 
     /**
      * Deleta os estados que foram excluídos do servidor.
-     * @param chaves
+     * @param idsEstados
      * @return
      * @throws SQLException
      */
-    public boolean deleteByListIdEstado(List<Integer> chaves) throws SQLException {
+    public boolean deleteByListIdEstado(List<Integer> idsEstados) throws SQLException {
         try {
             DeleteBuilder<Estado, Integer> builder = getDao().deleteBuilder();
-            builder.where().in(IConstantesDatabase.ESTADO_ID, chaves);
+            builder.where().in(IConstantesDatabase.ESTADO_ID, idsEstados);
             builder.delete();
             return true;
         } catch (Exception ex){

@@ -13,89 +13,65 @@ import br.com.paraondeirapp.constantes.IConstantesServidor;
 
 public class ConexaoUtils {
 
-    /**
-     * Verifica se o dispositivo possui conexão com a rede.
-     * @param ctx
-     * @return tem conexão/não tem conexão.
-     */
     public static boolean temConexao(Context ctx) {
-        ConnectivityManager manager = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo info = manager.getActiveNetworkInfo();
-        return (info != null && info.isConnected());
+        ConnectivityManager connectivityManager = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
     }
 
-    /**
-     * Formata a URL a ser usada na requisição, adicionando o IP do servidor ao contexto passado por parâmetro.
-     * @param link - Contexto da requisição
-     * @return - Link formatado
-     */
-    public static String formatarLinkConexao(String link){
-        return "http://" + SharedPreferencesUtils.getIPServidor() + link;
+    public static String formatarURLConexao(String url){
+        return "http://" + SharedPreferencesUtils.getIPServidor() + url;
     }
 
-    /**
-     * Realiza conexão com servidores externos através do método GET.
-     * @param urlConexao - link do servidor externo.
-     * @return - Stream obtida do servidor externo.
-     * @throws Exception
-     */
     public static InputStream get(String urlConexao) throws Exception {
-        InputStream is = null;
+        InputStream inputStream = null;
         try {
-            URL url = new URL(formatarLinkConexao(urlConexao));
-            HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
-            conexao.setReadTimeout(IConstantesServidor.TIMEOUT);
-            conexao.setConnectTimeout(IConstantesServidor.TIMEOUT);
-            conexao.setRequestProperty("Content-Type", "application/json;charset=utf8");
-            conexao.setRequestProperty("Accept", "application/json");
-            conexao.setRequestProperty("Method", "GET");
-            conexao.setDoInput(true);
-            conexao.setDoOutput(false);
-            conexao.connect();
-            if (conexao.getResponseCode() == HttpURLConnection.HTTP_OK){
-                is = conexao.getInputStream();
+            URL url = new URL(formatarURLConexao(urlConexao));
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setReadTimeout(IConstantesServidor.TIMEOUT);
+            urlConnection.setConnectTimeout(IConstantesServidor.TIMEOUT);
+            urlConnection.setRequestProperty("Content-Type", "application/json;charset=utf8");
+            urlConnection.setRequestProperty("Accept", "application/json");
+            urlConnection.setRequestProperty("Method", "GET");
+            urlConnection.setDoInput(true);
+            urlConnection.setDoOutput(false);
+            urlConnection.connect();
+            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
+                inputStream = urlConnection.getInputStream();
             }
         } catch (Exception ex){
-            is = null;
+            inputStream = null;
             throw new Exception(ex.getMessage());
         }
-        return is;
+        return inputStream;
     }
 
-
-    /**
-     * Realiza conexão com servidores externos através do método POST.
-     * @param urlConexao - link do servidor externo.
-     * @param jsonEnvio - Corpo da requisição.
-     * @return - Stream obtida do servidor externo.
-     * @throws Exception
-     */
-    public static InputStream post(String urlConexao, String jsonEnvio) throws Exception{
-        InputStream is = null;
+    public static InputStream post(String urlConexao, String body) throws Exception{
+        InputStream inputStream = null;
         try {
-            URL url = new URL(formatarLinkConexao(urlConexao));
-            HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
-            conexao.setReadTimeout(IConstantesServidor.TIMEOUT);
-            conexao.setConnectTimeout(IConstantesServidor.TIMEOUT);
-            conexao.setRequestProperty("Content-Type", "application/json;charset=utf8");
-            conexao.setRequestProperty("Accept", "application/json");
-            conexao.setRequestProperty("Method", "POST");
-            conexao.setDoInput(true);
-            conexao.setDoOutput(true);
+            URL url = new URL(formatarURLConexao(urlConexao));
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setReadTimeout(IConstantesServidor.TIMEOUT);
+            urlConnection.setConnectTimeout(IConstantesServidor.TIMEOUT);
+            urlConnection.setRequestProperty("Content-Type", "application/json;charset=utf8");
+            urlConnection.setRequestProperty("Accept", "application/json");
+            urlConnection.setRequestProperty("Method", "POST");
+            urlConnection.setDoInput(true);
+            urlConnection.setDoOutput(true);
 
-            OutputStream os = conexao.getOutputStream();
-            os.write(jsonEnvio.toString().getBytes("UTF-8"));
-            os.close();
+            OutputStream outputStream = urlConnection.getOutputStream();
+            outputStream.write(body.toString().getBytes("UTF-8"));
+            outputStream.close();
 
-            conexao.connect();
-            if (conexao.getResponseCode() == HttpURLConnection.HTTP_OK){
-                is = conexao.getInputStream();
+            urlConnection.connect();
+            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
+                inputStream = urlConnection.getInputStream();
             }
         } catch (Exception ex){
-            is = null;
+            inputStream = null;
             throw new Exception(ex.getMessage());
         }
-        return is;
+        return inputStream;
     }
 
 }

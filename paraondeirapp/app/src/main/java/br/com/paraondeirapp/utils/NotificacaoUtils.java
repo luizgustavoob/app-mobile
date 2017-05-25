@@ -9,9 +9,9 @@ import br.com.paraondeirapp.R;
 
 public class NotificacaoUtils {
 
-    public static void notificar(int idNotificacao, Context ctx, PendingIntent intent,
+    public static void notificar(int idNotificacao, Context context, PendingIntent intent,
                                  String ticker, String titulo, String texto){
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
         builder.setTicker(ticker)
                 .setContentTitle(titulo)
@@ -20,8 +20,8 @@ public class NotificacaoUtils {
                 .setContentIntent(intent)
                 .setAutoCancel(false);
 
-        Notification n = builder.build();
-        NotificationManager manager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(idNotificacao, n);
+        Notification notification = builder.build();
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(idNotificacao, notification);
     }
 }

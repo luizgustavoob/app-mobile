@@ -7,7 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import br.com.paraondeirapp.AppParaOndeIr;
 import br.com.paraondeirapp.R;
+import br.com.paraondeirapp.model.Usuario;
+import br.com.paraondeirapp.utils.DeviceUtils;
+import br.com.paraondeirapp.utils.SharedPreferencesUtils;
 
 public class SplashActivity extends AppCompatActivity implements Runnable {
 
@@ -15,8 +19,8 @@ public class SplashActivity extends AppCompatActivity implements Runnable {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        ImageView ivSplash = (ImageView) findViewById(R.id.iv_splash);
-        ivSplash.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+        ImageView imageViewSplash = (ImageView) findViewById(R.id.iv_splash);
+        imageViewSplash.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
         new Handler().postDelayed(this, 3000);
     }
 

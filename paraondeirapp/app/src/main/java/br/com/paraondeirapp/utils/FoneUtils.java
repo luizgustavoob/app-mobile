@@ -11,36 +11,26 @@ import br.com.paraondeirapp.R;
 
 public class FoneUtils {
 
-    /**
-     * Realiza ligação para o telefone passado por parâmetro.
-     * @param - Telefone para ligação
-     * @param - Contexto de aplicação.
-     */
-    public static void discar(String telefone, Context ctx){
+    public static void discar(Context context, String telefone){
         if(!TextUtils.isEmpty(telefone) &&
                 PhoneNumberUtils.isGlobalPhoneNumber(StringUtils.apenasNumeros(telefone))) {
-            ligar(StringUtils.apenasNumeros(telefone), ctx);
+            ligar(context, StringUtils.apenasNumeros(telefone));
         } else {
-            MensagemUtils.gerarEExibirToast(ctx, ctx.getString(R.string.msg_erro_ligacao));
+            MensagemUtils.gerarEExibirToast(context, context.getString(R.string.msg_erro_ligacao));
         }
     }
 
-    /**
-     * Realiza ligação para o telefone passado por parâmetro.
-     * @param - Telefone para ligação
-     * @param - Contexto de aplicação.
-     */
-    private static void ligar(String telefone, Context ctx) {
-        Intent it;
+    private static void ligar(Context context, String telefone) {
+        Intent intent;
         try {
             String ligacao = "tel:".concat(telefone);
-            it = new Intent(Intent.ACTION_DIAL, Uri.parse(ligacao));
-            ctx.startActivity(it);
+            intent = new Intent(Intent.ACTION_DIAL, Uri.parse(ligacao));
+            context.startActivity(intent);
         } catch (ActivityNotFoundException ex) {
             ex.printStackTrace();
-            MensagemUtils.gerarEExibirToast(ctx, ctx.getString(R.string.msg_erro_ligacao));
+            MensagemUtils.gerarEExibirToast(context, context.getString(R.string.msg_erro_ligacao));
         } finally {
-            it = null;
+            intent = null;
         }
     }
 }

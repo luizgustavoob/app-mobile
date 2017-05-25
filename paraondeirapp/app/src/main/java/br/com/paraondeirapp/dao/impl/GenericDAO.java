@@ -14,8 +14,8 @@ public abstract class GenericDAO<E> extends DatabaseHelper<E> {
 
     protected Dao<E, Integer> dao;
 
-    public GenericDAO(Context ctx, Class<E> type) throws SQLException {
-        super(ctx);
+    public GenericDAO(Context context, Class<E> type) throws SQLException {
+        super(context);
 
         try {
             dao = DaoManager.createDao(getConnectionSource(), type);
